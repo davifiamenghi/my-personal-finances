@@ -3,7 +3,7 @@
     using Common;
     using Enumerations;
 
-    public class Manager : BaseDeletableModel<Manager>
+    public class Manager : BaseDeletableModel
     {
         public string FirstName { get; set; }
 

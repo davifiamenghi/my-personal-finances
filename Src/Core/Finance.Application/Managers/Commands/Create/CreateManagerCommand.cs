@@ -2,7 +2,7 @@
 {
     using MediatR;
 
-    public class CreateManagerCommand : IRequest
+    public class CreateExpenceCommand : IRequest
     {
         public string FirstName { get; set; }
 

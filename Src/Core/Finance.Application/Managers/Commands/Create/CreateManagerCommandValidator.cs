@@ -2,9 +2,9 @@
 {
     using FluentValidation;
 
-    public class CreateManagerCommandValidator : AbstractValidator<CreateManagerCommand>
+    public class CreateExpenceCommandValidator : AbstractValidator<CreateExpenceCommand>
     {        
-        public CreateManagerCommandValidator()
+        public CreateExpenceCommandValidator()
         {            
             RuleFor(c => c.FirstName)
                 .MaximumLength(50)

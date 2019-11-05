@@ -4,7 +4,7 @@
 
     using Interfaces;
 
-    public abstract class BaseDeletableModel<TKey> : BaseModel, IDeletableEntity
+    public abstract class BaseDeletableModel : BaseModel, IDeletableEntity
     {
         public bool IsDeleted { get; set; }
 

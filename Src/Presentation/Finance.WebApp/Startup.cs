@@ -14,6 +14,7 @@ namespace Finance.WebApp
     using Middleware;
     using Persistence;
     using Services;
+    using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 
     public class Startup
     {
@@ -87,7 +88,7 @@ namespace Finance.WebApp
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:3000");
+                    spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
         }

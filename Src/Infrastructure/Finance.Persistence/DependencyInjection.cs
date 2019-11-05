@@ -10,10 +10,10 @@ namespace Finance.Persistence
         public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<FinanceDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("FinanceDbConnection")));
+                options.UseSqlServer(configuration.GetConnectionString("FinanceDbConnection"), b => b.MigrationsAssembly("Finance.Infrastructure")));
 
             services.AddScoped<IFinanceDbContext>(provider => provider.GetService<FinanceDbContext>());
-
+             
             return services;
         }
     }

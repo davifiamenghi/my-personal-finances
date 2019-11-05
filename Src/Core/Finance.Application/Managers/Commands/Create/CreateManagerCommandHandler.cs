@@ -10,18 +10,18 @@
     using Domain.Enumerations;
     using Finance.Application.Common.Interfaces;
 
-    public class CreateManagerCommandHandler : IRequestHandler<CreateManagerCommand, Unit>
+    public class CreateExpenceCommandHandler : IRequestHandler<CreateExpenceCommand, Unit>
     {
         private readonly IFinanceDbContext context;
         private readonly IMediator mediator;
 
-        public CreateManagerCommandHandler(IFinanceDbContext context, IMediator mediator)
+        public CreateExpenceCommandHandler(IFinanceDbContext context, IMediator mediator)
         {
             this.context = context;
             this.mediator = mediator;
         }
 
-        public async Task<Unit> Handle(CreateManagerCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateExpenceCommand request, CancellationToken cancellationToken)
         {
             var manager = new Manager
             {                

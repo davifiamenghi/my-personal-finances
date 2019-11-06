@@ -2,19 +2,24 @@ namespace Finance.Persistence
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Migrations;
-    using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
-    using Microsoft.Extensions.Options;
-    using IdentityServer4.EntityFramework.Options;
 
-    using Domain.Entities;
-    using Common;
     using Application.Common.Interfaces;
-    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Common;
+    using Domain.Entities;
 
     public class FinanceDbContext : DbContext, IFinanceDbContext
     {
-        public DbSet<Manager> Managers { get; set; }
-        
+        public DbSet<FinanceClient> FinanceClients { get; set; }
+
+        public DbSet<Expense> Expenses { get; set; }
+
+        public DbSet<ExpenseCategory> ExpenseCategories { get; set; }
+
+        public DbSet<Income> Incomes { get; set; }
+
+        public DbSet<IncomeCategory> IncomeCategories { get; set; }
+
+
         public FinanceDbContext(DbContextOptions<FinanceDbContext> options) : base(options)
         {
         }

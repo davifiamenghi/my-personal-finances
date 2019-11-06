@@ -20,28 +20,12 @@
 
         public async Task SeedAllAsync(CancellationToken cancellationToken)
         {
-            if (context.Managers.Any())
+            if (context.FinanceClients.Any())
             {
                 return;
             }
 
-            await SeedManagersAsync(cancellationToken);
-        }
-
-        private async Task SeedManagersAsync(CancellationToken cancellationToken)
-        {
-            var managers = new[]
-            {
-                new Manager { Id = Guid.NewGuid().ToString(), FirstName = "Ivan", LastName = "Ivanov", ReceptionDay = WeekDay.Monday, CreatedOn = DateTime.UtcNow },
-                new Manager { Id = Guid.NewGuid().ToString(), FirstName = "Petar", LastName = "Petrov", ReceptionDay = WeekDay.Monday, CreatedOn = DateTime.UtcNow },
-                new Manager { Id = Guid.NewGuid().ToString(), FirstName = "Sasho", LastName = "Trifonov", ReceptionDay = WeekDay.Monday, CreatedOn = DateTime.UtcNow },
-                new Manager { Id = Guid.NewGuid().ToString(), FirstName = "Lambi", LastName = "Kostov", ReceptionDay = WeekDay.Monday, CreatedOn = DateTime.UtcNow },
-                new Manager { Id = Guid.NewGuid().ToString(), FirstName = "Simeon", LastName = "Atanasov", ReceptionDay = WeekDay.Monday, CreatedOn = DateTime.UtcNow }
-            };
-
-            context.Managers.AddRange(managers);
-
-            await context.SaveChangesAsync(cancellationToken);
+            //await SeedManagersAsync(cancellationToken);
         }
     }
 }

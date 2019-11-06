@@ -1,15 +1,24 @@
 namespace Finance.Application.Common.Interfaces
 {        
+    using System.Threading.Tasks;
+    using System.Threading;
+
     using Microsoft.EntityFrameworkCore;
 
     using Domain.Entities;
-    using global::System.Threading.Tasks;
-    using global::System.Threading;
 
     public interface IFinanceDbContext
     {
-         DbSet<Manager> Managers { get; set; }
+        DbSet<Income> Incomes { get; set; }
 
-         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+        DbSet<Expense> Expenses { get; set; }
+
+        DbSet<IncomeCategory> IncomeCategories { get; set; }
+
+        DbSet<ExpenseCategory> ExpenseCategories { get; set; }
+
+        DbSet<FinanceClient> FinanceClients { get; set; }
+
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

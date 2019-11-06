@@ -1,7 +1,8 @@
 ﻿namespace Finance.Domain.Entities
 {
     using System;
-    using Entities.Common;
+
+    using Common;
 
     public class Expense : BaseModel
     {
@@ -11,8 +12,12 @@
 
         public string Note { get; set; }
 
+        public string CategoryId { get; set; }
+
         public virtual ExpenseCategory Category { get; set; }
 
-        public virtual User User { get; set; }
+        public string ClientId { get; set; }
+
+        public virtual FinanceClient Client { get; set; }
     }
 }

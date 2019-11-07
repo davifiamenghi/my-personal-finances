@@ -13,6 +13,10 @@
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Common\Logging\" />
+      <Folder Include="Expenses\Commands\Delete\" />
+      <Folder Include="Expenses\Commands\Update\" />
+      <Folder Include="Expenses\Queries\" />
+      <Folder Include="Incomes\" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Finance.Domain\Finance.Domain.csproj" />

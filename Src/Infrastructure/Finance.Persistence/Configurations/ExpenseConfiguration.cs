@@ -11,8 +11,11 @@
         {
             builder.HasKey(e => e.Id);
 
-            builder.Property(e => e.Note)
+            builder.Property(e => e.Merchant)
                    .HasMaxLength(50);
+
+            builder.Property(e => e.Note)
+                   .HasMaxLength(200);
 
             builder.Property(e => e.Date)
                    .IsRequired();

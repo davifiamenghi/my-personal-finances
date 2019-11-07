@@ -11,14 +11,16 @@ namespace Finance.Application.Common.Interfaces
     {
         DbSet<Income> Incomes { get; set; }
 
+        DbSet<FinanceUser> FinanceUsers { get; set; }
+
+        DbSet<FinanceRole> FinanceRoles { get; set; }
+
         DbSet<Expense> Expenses { get; set; }
 
         DbSet<IncomeCategory> IncomeCategories { get; set; }
 
         DbSet<ExpenseCategory> ExpenseCategories { get; set; }
-
-        DbSet<FinanceClient> FinanceClients { get; set; }
-
+        
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

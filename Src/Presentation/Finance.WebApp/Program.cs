@@ -5,7 +5,6 @@ namespace Finance.WebApp
     using System.Threading;
     using System.Threading.Tasks;
     using Finance.Application.Seed.Commands;
-    using Finance.Infrastructure.Identity;
     using Finance.Persistence;
     using MediatR;
     using Microsoft.AspNetCore;
@@ -31,8 +30,8 @@ namespace Finance.WebApp
                     var financeContext = services.GetRequiredService<FinanceDbContext>();
                     financeContext.Database.Migrate();
 
-                    var identityContext = services.GetRequiredService<ApplicationDbContext>();
-                    identityContext.Database.Migrate();
+                    //var identityContext = services.GetRequiredService<ApplicationDbContext>();
+                    //identityContext.Database.Migrate();
 
                     var mediator = services.GetRequiredService<IMediator>();
                     await mediator.Send(new SeedSampleDataCommand(), CancellationToken.None);

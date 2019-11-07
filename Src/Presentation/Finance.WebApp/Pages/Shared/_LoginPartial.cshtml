@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity;
-@using Finance.Infrastructure.Identity;
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+@using Finance.Domain.Entities;
+@inject SignInManager<FinanceUser> SignInManager
+@inject UserManager<FinanceUser> UserManager
 
 @{
     string returnUrl = null;

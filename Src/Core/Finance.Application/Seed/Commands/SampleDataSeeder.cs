@@ -6,8 +6,7 @@
     using System.Threading.Tasks;
 
     using Common.Interfaces;
-    using Domain.Entities;
-    using Domain.Enumerations;
+    using Finance.Domain.Entities;
 
     public class SampleDataSeeder
     {
@@ -20,12 +19,24 @@
 
         public async Task SeedAllAsync(CancellationToken cancellationToken)
         {
-            if (context.FinanceClients.Any())
+            if (context.FinanceRoles.Any())
             {
                 return;
             }
 
-            //await SeedManagersAsync(cancellationToken);
+            await SeedManagersAsync(cancellationToken);
+        }
+
+        private async Task SeedManagersAsync(CancellationToken cancellationToken)
+        {
+            var roles = new[]
+             {
+                new FinanceRole { Id = Guid.NewGuid().ToString(), Name = "Administrator", NormalizedName = "ADMINISTRATOR" },
+                new FinanceRole { Id = Guid.NewGuid().ToString(), Name = "User", NormalizedName = "USER" },
+            };
+
+            context.FinanceRoles.AddRange(roles);
+            await context.SaveChangesAsync(cancellationToken);
         }
     }
 }

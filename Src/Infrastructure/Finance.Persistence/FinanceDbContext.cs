@@ -6,11 +6,14 @@ namespace Finance.Persistence
     using Application.Common.Interfaces;
     using Common;
     using Domain.Entities;
+    using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Identity;
+    using IdentityServer4.EntityFramework.Options;
+    using Microsoft.Extensions.Options;
 
-    public class FinanceDbContext : DbContext, IFinanceDbContext
+    public class FinanceDbContext : KeyApiAuthorizationDbContext<FinanceUser, FinanceRole, string>, IFinanceDbContext
     {
-        public DbSet<FinanceClient> FinanceClients { get; set; }
-
         public DbSet<Expense> Expenses { get; set; }
 
         public DbSet<ExpenseCategory> ExpenseCategories { get; set; }
@@ -19,8 +22,12 @@ namespace Finance.Persistence
 
         public DbSet<IncomeCategory> IncomeCategories { get; set; }
 
+        public DbSet<FinanceUser> FinanceUsers { get; set; }
 
-        public FinanceDbContext(DbContextOptions<FinanceDbContext> options) : base(options)
+        public DbSet<FinanceRole> FinanceRoles { get; set; }
+
+        public FinanceDbContext(DbContextOptions options,
+        IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
 

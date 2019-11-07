@@ -16,8 +16,8 @@
 
         public virtual ExpenseCategory Category { get; set; }
 
-        public string ClientId { get; set; }
+        public string UserId { get; set; }
 
-        public virtual FinanceClient Client { get; set; }
+        public virtual FinanceUser User { get; set; }
     }
 }

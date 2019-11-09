@@ -12,10 +12,12 @@
     public class SampleDataSeeder
     {
         private readonly IFinanceDbContext context;
+        private readonly UserManager<FinanceUser> userManager;
 
-        public SampleDataSeeder(IFinanceDbContext context)
+        public SampleDataSeeder(IFinanceDbContext context, UserManager<FinanceUser> userManager)
         {
             this.context = context;
+            this.userManager = userManager;
         }
 
         public async Task SeedAllAsync(CancellationToken cancellationToken)
@@ -25,10 +27,44 @@
                 return;
             }
 
-            await SeedManagersAsync(cancellationToken);
-            await SeedAdminUserAsync(cancellationToken);
+            await SeedRolesAsync(cancellationToken);
+            await SeedUserAsync(cancellationToken, userManager);
             await SeedExpenseCategories(cancellationToken);
             await SeedIncomeCategories(cancellationToken);
+            await SeedExpensesAsync(cancellationToken);
+            await SeedIncomesAsync(cancellationToken);
+        }
+
+        private async Task SeedIncomesAsync(CancellationToken cancellationToken)
+        {
+            var user = context.FinanceUsers.FirstOrDefault();
+            var category = context.IncomeCategories.FirstOrDefault();
+
+            var incomes = new[]
+            {
+                new Income { Id = Guid.NewGuid().ToString(), Merchant = "VSG", CategoryId = category.Id, UserId = user.Id },
+                new Income { Id = Guid.NewGuid().ToString(), Merchant = "UniCredit", CategoryId = category.Id, UserId = user.Id },
+                new Income { Id = Guid.NewGuid().ToString(), Merchant = "University", CategoryId = category.Id, UserId = user.Id }
+            };
+
+            context.Incomes.AddRange(incomes);
+            await context.SaveChangesAsync(cancellationToken);
+        }
+
+        private async Task SeedExpensesAsync(CancellationToken cancellationToken)
+        {
+            var user = context.FinanceUsers.FirstOrDefault();
+            var category = context.ExpenseCategories.FirstOrDefault();
+
+            var expenses = new[]
+            {
+                new Expense { Id = Guid.NewGuid().ToString(), Merchant = "EnergoPro", CategoryId = category.Id, UserId = user.Id },
+                new Expense { Id = Guid.NewGuid().ToString(), Merchant = "Lukoul", CategoryId = category.Id, UserId = user.Id },
+                new Expense { Id = Guid.NewGuid().ToString(), Merchant = "Hipoland", CategoryId = category.Id, UserId = user.Id }
+            };
+
+            context.Expenses.AddRange(expenses);
+            await context.SaveChangesAsync(cancellationToken);
         }
 
         private async Task SeedIncomeCategories(CancellationToken cancellationToken)
@@ -66,7 +102,7 @@
             await context.SaveChangesAsync(cancellationToken);
         }
 
-        private async Task SeedManagersAsync(CancellationToken cancellationToken)
+        private async Task SeedRolesAsync(CancellationToken cancellationToken)
         {
             var roles = new[]
             {
@@ -78,25 +114,16 @@
             await context.SaveChangesAsync(cancellationToken);
         }
 
-        private async Task SeedAdminUserAsync(CancellationToken cancellationToken)
+        private async Task SeedUserAsync(CancellationToken cancellationToken, UserManager<FinanceUser> userManager)
         {
-            var user = new FinanceUser
+            if (userManager.FindByNameAsync("admin@admin.bg").Result == null)
             {
-                UserName = "admin@admin.com",
-                NormalizedUserName = "admin@admin.com",
-                Email = "admin@admin.com",
-                NormalizedEmail = "admin@admin.com",
-                EmailConfirmed = true,
-                LockoutEnabled = false,
-                SecurityStamp = Guid.NewGuid().ToString()
-            };
+                FinanceUser user = new FinanceUser();
+                user.UserName = "admin@admin.bg";
+                user.Email = "admin@admin.bg";
 
-            var password = new PasswordHasher<FinanceUser>();
-            var hashed = password.HashPassword(user, "123456");
-            user.PasswordHash = hashed;
-
-            context.FinanceUsers.Add(user);
-            await context.SaveChangesAsync(cancellationToken);
+                await userManager.CreateAsync(user, "123456");
+            }         
         }
     }
 }

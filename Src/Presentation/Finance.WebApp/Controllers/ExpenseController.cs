@@ -7,16 +7,17 @@
     using Application.Expenses.Commands.Create;
     using Application.Expenses.Commands.Delete;
     using Application.Expenses.Commands.Update;
+    using Finance.Application.Expenses.Queries.GetAllExpenses;
 
     public class ExpenseController : BaseController
     {
-        // GET: api/Expenses/GetAll
-        //[HttpGet]
-        //public async Task<ActionResult<ExpensesListViewModel>> GetAll()
-        //{
-        //    var result = await Mediator.Send(new GetAllExpensesListQuery());
-        //    return Ok(result);
-        //}
+       //GET: api/Expenses/GetAll
+       [HttpGet]
+        public async Task<ActionResult<ExpensesListViewModel>> GetAll()
+        {
+            var result = await Mediator.Send(new GetAllExpensesListQuery());
+            return Ok(result);
+        }
 
         // GET: api/Expenses/Get/5
         //[HttpGet("{id}")]
@@ -24,9 +25,9 @@
         //{
         //    var result = await Mediator.Send(new GetExpenseByIdQuery { Id = id });
         //    return Ok(result);
-        //}
+        //}                
 
-        // POST: api/Expenses/Create
+        // POST: Expenses/Create
         [HttpPost]
         public async Task<ActionResult> Create([FromForm]CreateExpenseCommand command)
         {

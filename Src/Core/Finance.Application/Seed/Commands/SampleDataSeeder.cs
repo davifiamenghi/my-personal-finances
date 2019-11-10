@@ -42,9 +42,9 @@
 
             var incomes = new[]
             {
-                new Income { Id = Guid.NewGuid().ToString(), Merchant = "VSG", CategoryId = category.Id, UserId = user.Id },
-                new Income { Id = Guid.NewGuid().ToString(), Merchant = "UniCredit", CategoryId = category.Id, UserId = user.Id },
-                new Income { Id = Guid.NewGuid().ToString(), Merchant = "University", CategoryId = category.Id, UserId = user.Id }
+                new Income { Id = Guid.NewGuid().ToString(), Merchant = "VSG", CategoryId = category.Id, UserId = user.Id, Date = DateTime.UtcNow, Total = 1156.60M },
+                new Income { Id = Guid.NewGuid().ToString(), Merchant = "UniCredit", CategoryId = category.Id, UserId = user.Id, Date = DateTime.UtcNow, Total = 5.80M },
+                new Income { Id = Guid.NewGuid().ToString(), Merchant = "University", CategoryId = category.Id, UserId = user.Id, Date = DateTime.UtcNow, Total = 220.60M }
             };
 
             context.Incomes.AddRange(incomes);
@@ -58,9 +58,9 @@
 
             var expenses = new[]
             {
-                new Expense { Id = Guid.NewGuid().ToString(), Merchant = "EnergoPro", CategoryId = category.Id, UserId = user.Id },
-                new Expense { Id = Guid.NewGuid().ToString(), Merchant = "Lukoul", CategoryId = category.Id, UserId = user.Id },
-                new Expense { Id = Guid.NewGuid().ToString(), Merchant = "Hipoland", CategoryId = category.Id, UserId = user.Id }
+                new Expense { Id = Guid.NewGuid().ToString(), Merchant = "EnergoPro", CategoryId = category.Id, UserId = user.Id, Date = DateTime.UtcNow, Total = 23.60M },
+                new Expense { Id = Guid.NewGuid().ToString(), Merchant = "Lukoul", CategoryId = category.Id, UserId = user.Id, Date = DateTime.UtcNow, Total = 55.30M },
+                new Expense { Id = Guid.NewGuid().ToString(), Merchant = "Hipoland", CategoryId = category.Id, UserId = user.Id, Date = DateTime.UtcNow, Total = 152.80M }
             };
 
             context.Expenses.AddRange(expenses);

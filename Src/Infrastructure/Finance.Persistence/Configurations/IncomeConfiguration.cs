@@ -19,6 +19,9 @@
 
             builder.Property(i => i.Date)
                    .IsRequired();
+
+            builder.Property(e => e.Total)
+                .HasColumnType("decimal(16, 2)");
         }
     }
 }

@@ -234,6 +234,7 @@ namespace Finance.Persistence.Migrations
                     Merchant = table.Column<string>(maxLength: 50, nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
                     Note = table.Column<string>(maxLength: 200, nullable: true),
+                    Total = table.Column<decimal>(type: "decimal(16, 2)", nullable: false),
                     CategoryId = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
                 },
@@ -266,6 +267,7 @@ namespace Finance.Persistence.Migrations
                     Merchant = table.Column<string>(maxLength: 50, nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
                     Note = table.Column<string>(maxLength: 200, nullable: true),
+                    Total = table.Column<decimal>(type: "decimal(16, 2)", nullable: false),
                     CategoryId = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
                 },

@@ -50,6 +50,9 @@ namespace Finance.Persistence.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(16, 2)");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -217,6 +220,9 @@ namespace Finance.Persistence.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(16, 2)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");

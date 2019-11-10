@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Finance.Persistence.Migrations
 {
     [DbContext(typeof(FinanceDbContext))]
-    [Migration("20191109114159_InitialCreate")]
+    [Migration("20191110135626_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,6 +51,9 @@ namespace Finance.Persistence.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(16, 2)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -219,6 +222,9 @@ namespace Finance.Persistence.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(16, 2)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");

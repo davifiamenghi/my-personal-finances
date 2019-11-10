@@ -12,6 +12,8 @@
 
         public string Note { get; set; }
 
+        public decimal Total { get; set; }
+
         public string CategoryId { get; set; }
 
         public virtual IncomeCategory Category { get; set; }

@@ -18,18 +18,11 @@
             var result = await Mediator.Send(new GetAllExpensesListQuery());
             return Ok(result);
         }
+              
 
-        // GET: api/Expenses/Get/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<ExpenseViewModel>> Get(int id)
-        //{
-        //    var result = await Mediator.Send(new GetExpenseByIdQuery { Id = id });
-        //    return Ok(result);
-        //}                
-
-        // POST: Expenses/Create
+        // POST: api/Expense/Create
         [HttpPost]
-        public async Task<ActionResult> Create([FromForm]CreateExpenseCommand command)
+        public async Task<ActionResult> Create(CreateExpenseCommand command)
         {
             await Mediator.Send(command);
 
@@ -37,16 +30,16 @@
         }
 
 
-        // PUT: api/Expenses/Update/5
+        // PUT: api/Expense/Update/5
         [HttpPut]
-        public async Task<ActionResult> Update([FromForm]UpdateExpenseCommand command)
+        public async Task<ActionResult> Update(UpdateExpenseCommand command)
         {
             await Mediator.Send(command);
 
             return NoContent();
         }
 
-        // DELETE: api/Expenses/Delete/5
+        // DELETE: api/Expense/Delete/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(string id)
         {

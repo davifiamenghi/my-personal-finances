@@ -1,74 +1,16 @@
 import React, { Component } from 'react';
-import authService from '../api-authorization/AuthorizeService'
+import { ExpensesTable } from '../Expenses/ExpensesTable'
+import { ExpensesForm } from '../Expenses/ExpensesForm'
 
 export class Expenses extends Component {
     static displayName = Expenses.name;
-
-    constructor(props) {
-        super(props);
-        this.state = { expenses: [], loading: true };
-    }
-
-    componentDidMount() {
-        this.populateExpensesData();
-    }
-
-    static renderExpensesTable(data) {
-        return (
-            <table className='table table-striped' aria-labelledby="tabelLabel">
-                <thead>
-                    <tr>
-                        <th>Merchat</th>
-                        <th>Date</th>
-                        <th>Category</th>
-                        <th>Total</th>
-                        <th>Note</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.expenses.map(expense =>
-                        <tr key={expense.merchant}>
-                            <td>{expense.merchant}</td>
-                            <td>{expense.date}</td>
-                            <td>{expense.category}</td>                            
-                            <td>{expense.total.toFixed(2)} lv.</td>
-                            <td>{expense.note}</td>
-                            <td><button type="button" /*onClick={deleteExpense(expense.id)}*/ class="btn btn-primary btn-sm">Edit</button> <button type="button" class="btn btn-danger btn-sm">Delete</button></td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
-        );
-    }
-
+    
     render() {
-        let contents = this.state.loading
-            ? <p><em>Loading...</em></p>
-            : Expenses.renderExpensesTable(this.state.expenses);
-
         return (
             <div>
-                <h1 id="tabelLabel" >Expenses</h1>
-                <p>This component demonstrates fetching data from the server.</p>
-                {contents}
+                <ExpensesForm />
+                <ExpensesTable />
             </div>
         );
     }
-
-    async populateExpensesData() {
-        const token = await authService.getAccessToken();
-        const response = await fetch('https://localhost:5001/api/Expense/GetAll', {
-            headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
-        });
-        const data = await response.json();
-        this.setState({ expenses: data, loading: false });
-    }
-
-    //async deleteExpense(id) {
-    //    const token = await authService.getAccessToken(); 
-    //    await fetch(`https://localhost:5001/api/Expense/Delete/${id}`, {
-    //        headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
-    //    });
-    //}
 }

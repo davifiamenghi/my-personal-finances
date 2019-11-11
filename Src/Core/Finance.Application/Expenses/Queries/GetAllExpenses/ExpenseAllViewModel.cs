@@ -16,6 +16,8 @@ namespace Finance.Application.Expenses.Queries.GetAllExpenses
         
         public string Category { get; set; }
 
+        public string Note { get; set; }
+
         public void CreateMappings(Profile configuration)
         {
             configuration.CreateMap<Expense, ExpenseAllViewModel>()

@@ -1,17 +1,16 @@
 ﻿import React, { Component } from 'react'
 
-
 export class Select extends Component {
     constructor() {
         super()
 
         this.state = {
-            categories: []
+            options: []
         }
     }
 
     componentDidMount() {
-        this.getExpenseCategories();        
+        this.getExpenseCategories();
     }
 
     render() {
@@ -20,32 +19,28 @@ export class Select extends Component {
                 <label htmlFor={this.props.data}>{this.props.name}</label>
                 <div>
                     <select
+                        ref={option => this.option = option}
                         className="form-control col-md-6"
                         onChange={(e) => this.props.func(e)}
                         id={this.props.data}
                         name={this.props.data}
-                    />
-                    {this.renderOptions.bind(this)}
+                    >
+                    <option value="0" selected>Select Category</option>
+                    {this.state.options.map(option =>
+                        <option value={option.id}>{option.name}</option>)}
+                    </select>
                 </div>
             </div>
         )
     }
 
-    renderOptions(e) {
-        e.preventDefault();
-        let options = [];
-
-        this.state.categories.forEach(category => {
-            options.push(<option value={category.id}>{category.name}</option>)
-        })       
-
-        return options;
+    clear() {
+        this.option.value = "0";
     }
 
     async getExpenseCategories() {
-        const response = await fetch('https://localhost:5001/api/ExpenseCategories/GetAll');
+        const response = await fetch('/api/ExpenseCategory/GetAll');
         const data = await response.json();
-        console.log(data)
-        this.setState({ categories: data.categories });
+        this.setState({ options: data.categories });
     }
 }

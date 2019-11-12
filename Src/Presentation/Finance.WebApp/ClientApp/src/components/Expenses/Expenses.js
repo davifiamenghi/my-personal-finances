@@ -8,8 +8,8 @@ export class Expenses extends Component {
     render() {
         return (
             <div>
-                <ExpensesForm />
-                <ExpensesTable />
+                <ExpensesForm refresh={() => this.content.populateExpensesData()} />
+                <ExpensesTable ref={instance => { this.content = instance; }} />
             </div>
         );
     }

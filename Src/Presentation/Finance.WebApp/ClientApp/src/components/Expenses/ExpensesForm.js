@@ -1,7 +1,8 @@
 ﻿import React, { Component } from 'react';
 import authService from '../api-authorization/AuthorizeService';
-import { Expenses } from '../Expenses/Expenses'
-import ReactDOM from 'react-dom';
+import { Input } from './FormComponents/Input';
+import { Select } from './FormComponents/Select';
+import { Button } from './FormComponents/Button';
 
 export class ExpensesForm extends Component {
     constructor() {
@@ -9,26 +10,16 @@ export class ExpensesForm extends Component {
 
         this.state = {
             merchant: '',
-            date: Date.now.toString(),
+            date: new Date().toLocaleString(),
             total: 0.00,
-            category: '',
+            categoryId: '',
             note: '',
             options: [],
-            userId: ''            
-        }
-    }
-
-    getUserId() {
-        authService
-            .getUser()
-            .then(user => {
-                return user.sub;
-            });
+            userId: ''
+        };
     }
 
     componentDidMount() {
-        this.getExpenseCategories();
-
         authService
             .getUser()
             .then(user => {
@@ -40,95 +31,55 @@ export class ExpensesForm extends Component {
 
     render() {
         return (
-            <form onSubmit={this.createExpense.bind(this)}>
-                <div className="form-group">
-                    <label htmlFor='Merchant'>Merchant</label>
-                    <div>
-                        <input
-                            id='Merchant'
-                            className="form-control col-md-6"
-                            type='text'
-                            name='Merchant'
-                            onChange={this.onMerchantChange.bind(this)}
-                            value={this.state.merchant}
-                        />
-                    </div>
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor='Date'>Date</label>
-                    <div>
-                        <input
-                            id="Date"
-                            className="form-control col-md-6"
-                            type='date'
-                            name='Date'
-                            onChange={this.onDateChange.bind(this)}
-                            value={this.state.date}
-                        />
-                    </div>
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor='Total'>Total</label>
-                    <div>
-                        <input
-                            id='Total'
-                            className="form-control col-md-6"
-                            type='number'
-                            name='Total'
-                            onChange={this.onTotalChange.bind(this)}
-                            value={this.state.total}
-                        />
-                    </div>
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor='Note'>Note</label>
-                    <div>
-                        <input
-                            id='Note'
-                            className="form-control col-md-6"
-                            name='Note'
-                            type='text'
-                            value={this.state.note}
-                            onChange={this.onNoteChange.bind(this)}
-                        />
-                    </div>
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor='Category'>Categories</label>
-                    <div>
-                        <select
-                            id='Category'
-                            className="form-control col-md-6"
-                            name='Category'
-                            value={this.state.category}
-                            onChange={this.onCategoryChange.bind(this)}
-                        >
-                            <option value="0" selected>Select Category</option>
-                            {this.state.options.map(option =>
-                                <option value={option.id}>{option.name}</option>)}
-                        </select>
-                    </div>
-                </div>
-
-                <div className="form-group">
-                    <button type="submit" className="btn btn-primary">Create</button>
-                </div>
-
-                <input
-                    type='hidden'
-                    name="UserId"
-                    value={this.state.userId}
+            <form onSubmit={this.createExpense}>
+                <Input
+                    ref={merchant => this.merchant = merchant}
+                    type='text'
+                    data='merchant'
+                    name='Merchant'
+                    func={e => { this.setState({ merchant: e.target.value }) }}
                 />
+                <Input
+                    ref={date => this.date = date}
+                    type='date'
+                    data='date'
+                    name='Date'
+                    func={e => { this.setState({ date: e.target.value }) }}
+                    defaultValue={this.state.date}
+                />
+                <Input
+                    ref={total => this.total = total}
+                    type='number'
+                    data='total'
+                    name='Total'
+                    func={e => { this.setState({ total: e.target.value }) }}
+                />
+                <Input
+                    ref={note => this.note = note}
+                    type='text'
+                    data='note'
+                    name='Note'
+                    func={e => { this.setState({ note: e.target.value }) }}
+                />
+                <Select
+                    ref={category => this.category = category}
+                    data="category"
+                    name='Category'
+                    func={e => { this.setState({ category: e.target.value }) }}
+                >
+                </Select>
+                <Input
+                    type='hidden'
+                    data='userId'
+                    userId={this.state.userId}
+                />
+                <Button />
             </form >
         );
     }
 
-    createExpense(e) {
-        e.preventDefault();
+    createExpense = event => {
+        event.preventDefault();
         let payload = {
             merchant: this.state.merchant,
             date: this.state.date.toString(),
@@ -137,7 +88,7 @@ export class ExpensesForm extends Component {
             note: this.state.note,
             userId: this.state.userId
         }
-        
+
         fetch('/api/Expense/Create', {
             method: 'POST',
             headers: {
@@ -145,50 +96,28 @@ export class ExpensesForm extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(payload)
+        }).then(() => {
+            this.resetState();
+            this.clearInputs();
+            this.props.refresh();
         });
+    }   
 
+    resetState = () => {
         this.setState({
             merchant: '',
-            date: Date.now.toString(),
+            date: new Date().toLocaleString(),
             total: 0.00,
-            category: '',
+            categoryId: '',
             note: ''
         });
     }
 
-    onMerchantChange(event) {
-        this.setState({
-            merchant: event.target.value
-        });
-    }
-
-    onDateChange(event) {
-        this.setState({
-            date: event.target.value
-        });
-    }
-
-    onTotalChange(event) {
-        this.setState({
-            total: event.target.value
-        });
-    }
-
-    onNoteChange(event) {
-        this.setState({
-            note: event.target.value
-        });
-    }
-
-    onCategoryChange(event) {
-        this.setState({
-            category: event.target.value
-        });
-    }
-
-    async getExpenseCategories() {
-        const response = await fetch('/api/ExpenseCategory/GetAll');
-        const data = await response.json();
-        this.setState({ options: data.categories });
+    clearInputs = () => {
+        this.merchant.clear();
+        this.note.clear();
+        this.total.clear();
+        this.date.clear();
+        this.category.clear();
     }
 }

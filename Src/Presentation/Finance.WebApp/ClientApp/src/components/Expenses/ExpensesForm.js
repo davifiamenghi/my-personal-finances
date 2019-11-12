@@ -1,5 +1,7 @@
 ﻿import React, { Component } from 'react';
 import authService from '../api-authorization/AuthorizeService';
+import { Expenses } from '../Expenses/Expenses'
+import ReactDOM from 'react-dom';
 
 export class ExpensesForm extends Component {
     constructor() {
@@ -20,7 +22,6 @@ export class ExpensesForm extends Component {
         authService
             .getUser()
             .then(user => {
-                console.log(user.sub)
                 return user.sub;
             });
     }
@@ -136,9 +137,7 @@ export class ExpensesForm extends Component {
             note: this.state.note,
             userId: this.state.userId
         }
-
-        console.log(payload)
-
+        
         fetch('/api/Expense/Create', {
             method: 'POST',
             headers: {
@@ -146,7 +145,15 @@ export class ExpensesForm extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(payload)
-        }).then(() => this.forceUpdate());
+        });
+
+        this.setState({
+            merchant: '',
+            date: Date.now.toString(),
+            total: 0.00,
+            category: '',
+            note: ''
+        });
     }
 
     onMerchantChange(event) {

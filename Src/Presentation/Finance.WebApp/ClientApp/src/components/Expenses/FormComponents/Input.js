@@ -4,7 +4,7 @@ export class Input extends Component {
 
     render() {
         return (
-            <div className="form-group">
+            <div className="form-row">
                     {this.getInput()}
             </div>
         )
@@ -23,7 +23,7 @@ export class Input extends Component {
                     ref={input => this.input = input}
                     min="1"
                     step="0.01"
-                    className="form-control col-md-6"
+                    className="form-control col-md-12"
                     onChange={(e) => this.props.func(e)}
                     id={this.props.data}
                     name={this.props.data}
@@ -35,7 +35,7 @@ export class Input extends Component {
             return (
                 <input
                     ref={input => this.input = input}
-                    className="form-control col-md-6"
+                    className="form-control col-md-12"
                     onChange={(e) => this.props.func(e)}
                     id={this.props.data}
                     name={this.props.data}
@@ -46,7 +46,7 @@ export class Input extends Component {
             return (
                 <input
                     ref={input => this.input = input}
-                    className="form-control col-md-6"
+                    className="form-control col-md-12"
                     onChange={(e) => this.props.func(e)}
                     id={this.props.data}
                     name={this.props.data}

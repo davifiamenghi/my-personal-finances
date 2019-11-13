@@ -26,6 +26,7 @@ namespace Finance.Application.Expenses.Queries.GetAllExpenses
             {
                 Expenses = await context.Expenses
                     .Where(x => x.Date.Month == request.Month && x.Date.Year == request.Year)
+                    .OrderByDescending(x => x.CreatedOn)
                     .Include(x => x.Category)
                     .ProjectTo<ExpenseAllViewModel>(mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken)

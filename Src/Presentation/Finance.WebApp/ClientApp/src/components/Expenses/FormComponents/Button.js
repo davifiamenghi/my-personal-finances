@@ -3,7 +3,7 @@
 export function Button() {
     return (
         <div className="form-group">
-            <button type="submit" className="btn btn-primary">Create</button>
+            <button type="submit" className="btn btn-primary" >Create</button>
         </div>
     )
 }

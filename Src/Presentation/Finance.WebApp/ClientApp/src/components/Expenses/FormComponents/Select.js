@@ -18,7 +18,7 @@ export class Select extends Component {
             <div className="form-group">
                     <select
                         ref={option => this.option = option}
-                        className="form-control col-md-6"
+                        className="form-control col-md-12"
                         onChange={(e) => this.props.func(e)}
                         id={this.props.data}
                         name={this.props.data}                    

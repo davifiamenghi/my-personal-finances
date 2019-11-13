@@ -4,5 +4,8 @@ namespace Finance.Application.Expenses.Queries.GetAllExpenses
 
     public class GetAllExpensesListQuery : IRequest<ExpensesListViewModel>
     {
+        public int Month { get; set; }
+
+        public int Year { get; set; }
     }
 }

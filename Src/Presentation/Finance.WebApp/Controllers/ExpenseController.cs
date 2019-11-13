@@ -13,9 +13,9 @@
     {
        //GET: api/Expenses/GetAll
        [HttpGet]
-        public async Task<ActionResult<ExpensesListViewModel>> GetAll()
+        public async Task<ActionResult<ExpensesListViewModel>> GetAll(int month, int year)
         {
-            var result = await Mediator.Send(new GetAllExpensesListQuery());
+            var result = await Mediator.Send(new GetAllExpensesListQuery { Month = month, Year = year });
             return Ok(result);
         }
               

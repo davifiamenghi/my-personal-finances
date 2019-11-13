@@ -7,6 +7,7 @@ namespace Finance.Application.Expenses.Queries.GetAllExpenses
     using MediatR;
     using Microsoft.EntityFrameworkCore;
     using Application.Common.Interfaces;
+    using System.Linq;
 
     public class GetAllExpensesListQueryHandler : IRequestHandler<GetAllExpensesListQuery, ExpensesListViewModel>
     {
@@ -24,6 +25,7 @@ namespace Finance.Application.Expenses.Queries.GetAllExpenses
             return new ExpensesListViewModel
             {
                 Expenses = await context.Expenses
+                    .Where(x => x.Date.Month == request.Month && x.Date.Year == request.Year)
                     .Include(x => x.Category)
                     .ProjectTo<ExpenseAllViewModel>(mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken)

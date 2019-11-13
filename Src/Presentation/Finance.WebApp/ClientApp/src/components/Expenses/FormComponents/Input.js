@@ -5,16 +5,14 @@ export class Input extends Component {
     render() {
         return (
             <div className="form-group">
-                <label htmlFor={this.props.data}>{this.props.name}</label>
-                <div>
                     {this.getInput()}
-                </div>
             </div>
         )
     }
 
     clear() {
-        this.input.value = '';
+        this.props.type === 'date' ?
+            this.input.value = new Date().toLocaleString() : this.input.value = '';       
     }
 
 
@@ -30,15 +28,7 @@ export class Input extends Component {
                     id={this.props.data}
                     name={this.props.data}
                     type={this.props.type}
-                />
-            )
-        } else if (this.props.type === 'hidden') {
-            return (
-                <input
-                    id={this.props.data}
-                    name={this.props.data}
-                    value={this.props.userId}
-                    type="hidden"
+                    placeholder={this.props.name}
                 />
             )
         } else if (this.props.type === 'date') {
@@ -61,6 +51,7 @@ export class Input extends Component {
                     id={this.props.data}
                     name={this.props.data}
                     type={this.props.type}
+                    placeholder={this.props.name}
                 />
             )
         }

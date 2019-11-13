@@ -8,17 +8,11 @@ export class ExpensesTable extends Component {
     constructor(props) {
         super(props);
         this.state = { expenses: [], loading: true };
-
-        //this.populateExpensesData = this.populateExpensesData.bind(this);
-        //this.renderExpensesTable = this.renderExpensesTable.bind(this);
-
     }
 
     componentDidMount() {
         this.populateExpensesData();
-    }
-
-    
+    }    
 
     render() {
         let contents = this.state.loading
@@ -26,9 +20,7 @@ export class ExpensesTable extends Component {
             : this.renderExpensesTable(this.state.expenses);
 
         return (
-            <div>
-                <h1 id="tabelLabel" >Expenses</h1>
-                <p>This component demonstrates fetching data from the server.</p>
+            <div>               
                 {contents}
             </div>
         );

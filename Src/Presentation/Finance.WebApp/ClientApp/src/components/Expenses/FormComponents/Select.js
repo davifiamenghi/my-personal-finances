@@ -16,26 +16,23 @@ export class Select extends Component {
     render() {
         return (
             <div className="form-group">
-                <label htmlFor={this.props.data}>{this.props.name}</label>
-                <div>
                     <select
                         ref={option => this.option = option}
                         className="form-control col-md-6"
                         onChange={(e) => this.props.func(e)}
                         id={this.props.data}
-                        name={this.props.data}
+                        name={this.props.data}                    
                     >
-                    <option value="0" selected>Select Category</option>
+                    <option value="" selected disabled hoidden>Select Category</option>
                     {this.state.options.map(option =>
                         <option value={option.id}>{option.name}</option>)}
                     </select>
-                </div>
             </div>
         )
     }
 
     clear() {
-        this.option.value = "0";
+        this.option.value = "";
     }
 
     async getExpenseCategories() {

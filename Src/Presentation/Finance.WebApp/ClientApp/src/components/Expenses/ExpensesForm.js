@@ -68,11 +68,7 @@ export class ExpensesForm extends Component {
                     func={e => { this.setState({ category: e.target.value }) }}
                 >
                 </Select>
-                <Input
-                    type='hidden'
-                    data='userId'
-                    userId={this.state.userId}
-                />
+                <input id="userId" name="userId" value={this.state.userId} type="hidden" />
                 <Button />
             </form >
         );

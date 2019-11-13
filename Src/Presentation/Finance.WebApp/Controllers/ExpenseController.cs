@@ -8,6 +8,7 @@
     using Application.Expenses.Commands.Delete;
     using Application.Expenses.Commands.Update;
     using Finance.Application.Expenses.Queries.GetAllExpenses;
+    using Finance.Application.Expenses.Queries.GetExpenseById;
 
     public class ExpenseController : BaseController
     {
@@ -18,7 +19,15 @@
             var result = await Mediator.Send(new GetAllExpensesListQuery { Month = month, Year = year });
             return Ok(result);
         }
-              
+
+        //GET: api/Expense/Get/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ExpenseViewModel>> Get(string id)
+        {
+            var result = await Mediator.Send(new GetExpenseByIdQuery { Id = id });
+            return Ok(result);
+        }
+
 
         // POST: api/Expense/Create
         [HttpPost]

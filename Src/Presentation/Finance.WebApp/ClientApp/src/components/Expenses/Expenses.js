@@ -53,26 +53,26 @@ export class Expenses extends Component {
             <div>
                 <h2>Monthly Expenses</h2>
                 <br />
-                <div class="form-row">
-                    <div class="col-md-2">
-                        <input class="form-control" name="Month" onChange={this.onMonthChange} placeholder={this.state.month} />
+                <div className="form-row">
+                    <div className="col-md-2">
+                        <input className="form-control" name="Month" onChange={this.onMonthChange} placeholder={this.state.month} />
                     </div>
-                    <div class="col-md-2">
-                        <input class="form-control" name="Year" onChange={this.onYearChange} placeholder={this.state.year} />
+                    <div className="col-md-2">
+                        <input className="form-control" name="Year" onChange={this.onYearChange} placeholder={this.state.year} />
                     </div>
-                    <button class="btn btn-primary" onClick={this.populateExpensesData.bind(this)} >Get Expenses</button>
+                    <button className="btn btn-primary" onClick={this.populateExpensesData.bind(this)} >Get Expenses</button>
                 </div>
                 <br />
                 <form onSubmit={this.createExpense}>
                     <table className='table table-striped' aria-labelledby="tabelLabel">
                         <thead>
                             <tr>
-                                <th class="col-md-2">Merchat</th>
-                                <th class="col-md-1">Date</th>
-                                <th class="col-md-3">Category</th>
-                                <th class="col-md-2">Total</th>
-                                <th class="col-md-2">Note</th>
-                                <th class="col-md-3">Actions</th>
+                                <th className="col-md-2">Merchat</th>
+                                <th className="col-md-1">Date</th>
+                                <th className="col-md-3">Category</th>
+                                <th className="col-md-2">Total</th>
+                                <th className="col-md-2">Note</th>
+                                <th className="col-md-3">Actions</th>
                             </tr>
                         </thead>
                         <tbody>

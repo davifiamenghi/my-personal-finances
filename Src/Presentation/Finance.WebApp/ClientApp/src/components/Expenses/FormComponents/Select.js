@@ -16,23 +16,24 @@ export class Select extends Component {
     render() {
         return (
             <div className="form-group">
-                    <select
+                <select
+                        defaultValue="0"
                         ref={option => this.option = option}
                         className="form-control col-md-12"
                         onChange={(e) => this.props.func(e)}
                         id={this.props.data}
                         name={this.props.data}                    
                     >
-                    <option value="" selected disabled hoidden>Select Category</option>
+                    <option value="0" key="0" disabled hidden>Select Category</option>
                     {this.state.options.map(option =>
-                        <option value={option.id}>{option.name}</option>)}
+                        <option key={option.id} value={option.id}>{option.name}</option>)}
                     </select>
             </div>
         )
     }
 
     clear() {
-        this.option.value = "";
+        this.option.value = "0";
     }
 
     async getExpenseCategories() {

@@ -115,7 +115,7 @@ export class Expenses extends Component {
                     </thead>
                     <tbody>
                         {data.expenses.map(expense =>
-                            <tr key={expense.merchant}>
+                            <tr key={expense.id}>
                                 <td>{expense.merchant}</td>
                                 <td>{expense.date}</td>
                                 <td>{expense.category}</td>
@@ -157,6 +157,7 @@ export class Expenses extends Component {
             headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
         });
         const data = await response.json();
+        console.log(data)
         this.setState({ expenses: data, loading: false });
     }
 

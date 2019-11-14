@@ -15,4 +15,5 @@ code {
 
 .form-group, .form-row {
     margin: 1rem 0;
+    margin-right: 0.5rem;
 }

@@ -63,78 +63,77 @@ export class Expenses extends Component {
                     <button className="btn btn-primary" onClick={this.populateExpensesData.bind(this)} >Get Expenses</button>
                 </div>
                 <br />
-                <form onSubmit={this.createExpense}>
-                    <table className='table table-striped' aria-labelledby="tabelLabel">
-                        <thead>
-                            <tr>
-                                <th className="col-md-2">Merchat</th>
-                                <th className="col-md-1">Date</th>
-                                <th className="col-md-3">Category</th>
-                                <th className="col-md-2">Total</th>
-                                <th className="col-md-2">Note</th>
-                                <th className="col-md-3">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><Input
-                                    ref={merchant => this.merchant = merchant}
-                                    type='text'
-                                    data='merchant'
-                                    name='Merchant'
-                                    func={e => { this.setState({ merchant: e.target.value }) }}
-                                /></td>
-                                <td><Input
-                                    ref={date => this.date = date}
-                                    type='date'
-                                    data='date'
-                                    name='Date'
-                                    func={e => { this.setState({ date: e.target.value }) }}
-                                    defaultValue={this.state.date}
-                                /></td>
-                                <td><Select
-                                    ref={category => this.category = category}
-                                    data="category"
-                                    name='Category'
-                                    func={e => { this.setState({ category: e.target.value }) }}
-                                >
-                                </Select></td>
-                                <td><Input
-                                    ref={total => this.total = total}
-                                    type='number'
-                                    data='total'
-                                    name='Total'
-                                    func={e => { this.setState({ total: e.target.value }) }}
-                                /></td>
-                                <td><Input
-                                    ref={note => this.note = note}
-                                    type='text'
-                                    data='note'
-                                    name='Note'
-                                    func={e => { this.setState({ note: e.target.value }) }}
-                                /></td>
-                                <td><Button /></td>
-                            </tr>
-                            {data.expenses.map(expense =>
-                                <tr key={expense.merchant}>
-                                    <td>{expense.merchant}</td>
-                                    <td>{expense.date}</td>
-                                    <td>{expense.category}</td>
-                                    <td>{expense.total.toFixed(2)} lv.</td>
-                                    <td>{expense.note}</td>
-                                    <td><EditButton /> <DeleteButton deleteExpense={() => {
-                                        fetch(`/api/Expense/Delete/${expense.id}`, {
-                                            method: 'DELETE',
-                                            headers: { 'content-type': 'application/json' }
-                                        }).then(() => {
-                                            this.populateExpensesData()
-                                        });
-                                    }} /></td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
+                <form onSubmit={this.createExpense} className="form-row">
+                    <Input
+                        ref={merchant => this.merchant = merchant}
+                        type='text'
+                        data='merchant'
+                        name='Merchant'
+                        func={e => { this.setState({ merchant: e.target.value }) }}
+                    />
+                    <Input
+                        ref={date => this.date = date}
+                        type='date'
+                        data='date'
+                        name='Date'
+                        func={e => { this.setState({ date: e.target.value }) }}
+                        defaultValue={this.state.date}
+                    />
+                    <Select
+                        ref={category => this.category = category}
+                        data="category"
+                        name='Category'
+                        func={e => { this.setState({ category: e.target.value }) }}
+                    >
+                    </Select>
+                    <Input
+                        ref={total => this.total = total}
+                        type='number'
+                        data='total'
+                        name='Total'
+                        func={e => { this.setState({ total: e.target.value }) }}
+                    />
+                    <Input
+                        ref={note => this.note = note}
+                        type='text'
+                        data='note'
+                        name='Note'
+                        func={e => { this.setState({ note: e.target.value }) }}
+                    />
+                    <Button />
                 </form>
+                <table className='table table-striped' aria-labelledby="tabelLabel">
+                    <thead>
+                        <tr>
+                            <th className="col-md-2">Merchat</th>
+                            <th className="col-md-2">Date</th>
+                            <th className="col-md-2">Category</th>
+                            <th className="col-md-2">Total</th>
+                            <th className="col-md-2">Note</th>
+                            <th className="col-md-2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.expenses.map(expense =>
+                            <tr key={expense.merchant}>
+                                <td>{expense.merchant}</td>
+                                <td>{expense.date}</td>
+                                <td>{expense.category}</td>
+                                <td>{expense.total.toFixed(2)} lv.</td>
+                                <td>{expense.note}</td>
+                                <td><EditButton /> <DeleteButton deleteExpense={() => {
+                                    fetch(`/api/Expense/Delete/${expense.id}`, {
+                                        method: 'DELETE',
+                                        headers: { 'content-type': 'application/json' }
+                                    }).then(() => {
+                                        this.populateExpensesData()
+                                    });
+                                }} /></td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+
             </div>
         );
     }

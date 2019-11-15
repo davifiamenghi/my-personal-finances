@@ -1,9 +1,11 @@
-﻿import React from 'react';
+﻿import React, { Component } from 'react';
 
-export function Button() {
-    return (
-        <div className="form-group">
-            <button type="submit" className="btn btn-primary" >Create</button>
-        </div>
-    )
+export class Button extends Component {
+    render() {
+        return (
+            <div className="form-group">
+                <button type="submit" className="btn btn-primary" onClick={this.props.clearInputs}>Create</button>
+            </div>
+        )
+    }    
 }

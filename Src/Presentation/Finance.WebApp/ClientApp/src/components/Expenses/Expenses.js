@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import authService from '../api-authorization/AuthorizeService'
 import { DeleteButton } from './Table/DeleteButton';
 import { EditButton } from './Table/EditButton';
-import { Input } from './Form/Input';
-import { Select } from './Form/Select';
-import { Button } from './Form/Button';
 import { Filter } from '../../shared/Filter/Filter';
+import { Form } from './Form/Form';
 import { getAllExpenses } from '../../services/expense-service';
 import { createExpense } from '../../services/expense-service';
 
@@ -63,45 +61,15 @@ export class Expenses extends Component {
                     year={this.state.year}
                 />
 
-                <form onSubmit={this.create} className="form-row">
-                    <Input
-                        ref={merchant => this.merchant = merchant}
-                        type='text'
-                        data='merchant'
-                        name='Merchant'
-                        func={e => { this.setState({ merchant: e.target.value }) }}
-                    />
-                    <Input
-                        ref={date => this.date = date}
-                        type='date'
-                        data='date'
-                        name='Date'
-                        func={e => { this.setState({ date: e.target.value }) }}
-                        defaultValue={this.state.date}
-                    />
-                    <Select
-                        ref={category => this.category = category}
-                        data="category"
-                        name='Category'
-                        func={e => { this.setState({ categoryId: e.target.value }) }}
-                    >
-                    </Select>
-                    <Input
-                        ref={total => this.total = total}
-                        type='number'
-                        data='total'
-                        name='Total'
-                        func={e => { this.setState({ total: e.target.value }) }}
-                    />
-                    <Input
-                        ref={note => this.note = note}
-                        type='text'
-                        data='note'
-                        name='Note'
-                        func={e => { this.setState({ note: e.target.value }) }}
-                    />
-                    <Button />
-                </form>
+                <Form
+                    create={this.create}
+                    merchantSet={e => { this.setState({ merchant: e.target.value }) }}
+                    dateSet={e => { this.setState({ date: e.target.value }) }}
+                    categorySet={e => { this.setState({ categoryId: e.target.value }) }}
+                    totalSet={e => { this.setState({ total: e.target.value }) }}
+                    noteSet={e => { this.setState({ note: e.target.value }) }}
+                />
+
                 <table className='table table-striped' aria-labelledby="tabelLabel">
                     <thead>
                         <tr>
@@ -170,7 +138,6 @@ export class Expenses extends Component {
         createExpense(payload)
             .then(() => {
                 this.resetState();
-                this.clearInputs();
                 this.populateExpensesData();
             });
     }
@@ -183,13 +150,5 @@ export class Expenses extends Component {
             categoryId: '',
             note: ''
         });
-    }
-
-    clearInputs = () => {
-        this.merchant.clear();
-        this.note.clear();
-        this.total.clear();
-        this.date.clear();
-        this.category.clear();
     }
 }

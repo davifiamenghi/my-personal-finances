@@ -5,6 +5,7 @@ import { EditButton } from './Table/EditButton';
 import { Input } from './Form/Input';
 import { Select } from './Form/Select';
 import { Button } from './Form/Button';
+import { Filter } from '../../shared/Filter/Filter';
 import { getAllExpenses } from '../../services/expense-service';
 import { createExpense } from '../../services/expense-service';
 
@@ -54,17 +55,14 @@ export class Expenses extends Component {
         return (
             <div>
                 <h2>Monthly Expenses</h2>
-                <br />
-                <div className="form-row">
-                    <div className="col-md-2">
-                        <input className="form-control" name="Month" onChange={this.onMonthChange} placeholder={this.state.month} />
-                    </div>
-                    <div className="col-md-2">
-                        <input className="form-control" name="Year" onChange={this.onYearChange} placeholder={this.state.year} />
-                    </div>
-                    <button className="btn btn-primary" onClick={this.populateExpensesData.bind(this)} >Get Expenses</button>
-                </div>
-                <br />
+                <Filter
+                    monthChange={this.onMonthChange}
+                    yearchange={this.onYearChange}
+                    refresh={this.populateExpensesData.bind(this)}
+                    month={this.state.month}
+                    year={this.state.year}
+                />
+
                 <form onSubmit={this.createExpense} className="form-row">
                     <Input
                         ref={merchant => this.merchant = merchant}
@@ -155,7 +153,7 @@ export class Expenses extends Component {
     populateExpensesData = () => {
         getAllExpenses(this.state.month, this.state.year)
             .then(data => this.setState({ expenses: data, loading: false }))
-            .catch(err => console.log(err));        
+            .catch(err => console.log(err));
     }
 
     createExpense = event => {
@@ -171,9 +169,9 @@ export class Expenses extends Component {
 
         createExpense(payload)
             .then(() => {
-            this.resetState();
-            this.clearInputs();
-            this.populateExpensesData();
+                this.resetState();
+                this.clearInputs();
+                this.populateExpensesData();
             });
     }
 

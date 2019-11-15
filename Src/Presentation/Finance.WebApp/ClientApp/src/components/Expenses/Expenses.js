@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import authService from '../api-authorization/AuthorizeService'
-import { DeleteButton } from '../Expenses/TableComponents/DeleteButton';
-import { EditButton } from '../Expenses/TableComponents/EditButton';
-import { Input } from '../Expenses/FormComponents/Input';
-import { Select } from './FormComponents/Select';
-import { Button } from './FormComponents/Button';
+import { DeleteButton } from './Table/DeleteButton';
+import { EditButton } from './Table/EditButton';
+import { Input } from './Form/Input';
+import { Select } from './Form/Select';
+import { Button } from './Form/Button';
+import { getAllExpenses } from '../../services/expense-service';
+import { createExpense } from '../../services/expense-service';
 
 export class Expenses extends Component {
 
@@ -150,15 +152,10 @@ export class Expenses extends Component {
         });
     }
 
-    async populateExpensesData() {
-        const token = await authService.getAccessToken();
-        const response = await fetch(`/api/Expense/GetAll?month=${this.state.month}&year=${this.state.year}`, {
-            method: 'GET',
-            headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
-        });
-        const data = await response.json();
-        console.log(data)
-        this.setState({ expenses: data, loading: false });
+    populateExpensesData = () => {
+        getAllExpenses(this.state.month, this.state.year)
+            .then(data => this.setState({ expenses: data, loading: false }))
+            .catch(err => console.log(err));        
     }
 
     createExpense = event => {
@@ -172,18 +169,12 @@ export class Expenses extends Component {
             userId: this.state.userId
         }
 
-        fetch('/api/Expense/Create', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        }).then(() => {
+        createExpense(payload)
+            .then(() => {
             this.resetState();
             this.clearInputs();
             this.populateExpensesData();
-        });
+            });
     }
 
     resetState = () => {

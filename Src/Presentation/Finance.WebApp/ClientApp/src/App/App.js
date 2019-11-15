@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router';
-import { Layout } from './components/Layout';
-import { Home } from './components/Home';
-import { Expenses } from './components/Expenses/Expenses';
-import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
-import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
-import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
+import { Layout } from '../components/Layout/Layout';
+import { Home } from '../components/Home/Home';
+import { Expenses } from '../components/Expenses/Expenses';
+import AuthorizeRoute from '../components/api-authorization/AuthorizeRoute';
+import ApiAuthorizationRoutes from '../components/api-authorization/ApiAuthorizationRoutes';
+import { ApplicationPaths } from '../components/api-authorization/ApiAuthorizationConstants';
 
 import './custom.css'
 

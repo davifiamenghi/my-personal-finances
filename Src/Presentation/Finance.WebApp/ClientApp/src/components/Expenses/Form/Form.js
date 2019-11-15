@@ -37,7 +37,6 @@ export class Form extends Component {
                     data='date'
                     name='Date'
                     func={e => { this.setState({ date: e.target.value }) }}
-                    defaultValue={new Date().toLocaleDateString()}
                 />
                 <Select
                     ref={category => this.category = category}
@@ -83,9 +82,20 @@ export class Form extends Component {
         this.category.clear();
     }
 
+    fillFields = () => {
+        this.merchant.fill(this.state.merchant);
+        this.note.fill(this.state.note);
+        this.total.fill(this.state.total);
+        this.date.fill(this.state.date);
+        this.category.fill(this.state.categoryId);
+    }
+
     fillInputs = id => {
         getExpense(id)
-            .then(expense => console.log(expense));
+            .then(expense => {
+                this.updateState(expense);
+                this.fillFields();
+            });
     }
 
     create = event => {
@@ -113,6 +123,16 @@ export class Form extends Component {
             total: 0.00,
             categoryId: '',
             note: ''
+        });
+    }
+
+    updateState = expense => {
+        this.setState({
+            merchant: expense.merchant,
+            date: expense.date,
+            total: expense.total,
+            categoryId: expense.categoryId,
+            note: expense.note,
         });
     }
 }

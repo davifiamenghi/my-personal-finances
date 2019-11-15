@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react'
 
+
 export class Input extends Component {
 
     render() {
@@ -13,6 +14,10 @@ export class Input extends Component {
     clear() {
         this.props.type === 'date' ?
             this.input.value = new Date().toLocaleString() : this.input.value = '';       
+    }
+
+    fill(value) {
+        this.input.value = value;
     }
 
 
@@ -31,7 +36,7 @@ export class Input extends Component {
                     placeholder={this.props.name}
                 />
             )
-        } else if (this.props.type === 'date') {
+        } else if (this.props.name === 'date') {
             return (
                 <input
                     ref={input => this.input = input}
@@ -39,7 +44,6 @@ export class Input extends Component {
                     onChange={(e) => this.props.func(e)}
                     id={this.props.data}
                     name={this.props.data}
-                    type={this.props.type}
                 />
             )
         } else {

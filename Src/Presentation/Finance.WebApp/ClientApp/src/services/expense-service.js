@@ -35,3 +35,21 @@ export const createExpense = (payload) => {
             })
     });
 }
+
+export const deleteExpense = (id) => {
+    return new Promise((resolve, reject) => {
+        authService
+            .getAccessToken()
+            .then(token => {
+                fetch(`/api/Expense/Delete/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                    .then(() => resolve())
+                    .catch(err => reject(err));
+            })
+    });
+}

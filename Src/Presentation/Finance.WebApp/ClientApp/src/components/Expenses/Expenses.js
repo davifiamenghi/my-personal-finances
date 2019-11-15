@@ -58,12 +58,12 @@ export class Expenses extends Component {
                 <Filter
                     monthChange={this.onMonthChange}
                     yearchange={this.onYearChange}
-                    refresh={this.populateExpensesData.bind(this)}
+                    refresh={this.populateExpensesData}
                     month={this.state.month}
                     year={this.state.year}
                 />
 
-                <form onSubmit={this.createExpense} className="form-row">
+                <form onSubmit={this.create} className="form-row">
                     <Input
                         ref={merchant => this.merchant = merchant}
                         type='text'
@@ -83,7 +83,7 @@ export class Expenses extends Component {
                         ref={category => this.category = category}
                         data="category"
                         name='Category'
-                        func={e => { this.setState({ category: e.target.value }) }}
+                        func={e => { this.setState({ categoryId: e.target.value }) }}
                     >
                     </Select>
                     <Input
@@ -156,13 +156,13 @@ export class Expenses extends Component {
             .catch(err => console.log(err));
     }
 
-    createExpense = event => {
+    create = event => {
         event.preventDefault();
         let payload = {
             merchant: this.state.merchant,
             date: this.state.date.toString(),
             total: this.state.total,
-            categoryId: this.state.category,
+            categoryId: this.state.categoryId,
             note: this.state.note,
             userId: this.state.userId
         }

@@ -1,27 +1,19 @@
 import React, { Component } from 'react';
-import authService from '../api-authorization/AuthorizeService'
 import { Filter } from '../../shared/Filter/Filter';
 import { Form } from './Form/Form';
 import { Table } from './Table/Table';
 import { getAllExpenses } from '../../services/expense-service';
-import { createExpense } from '../../services/expense-service';
 
 export class Expenses extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            merchant: '',
-            date: new Date().toLocaleString(),
-            total: 0.00,
-            categoryId: '',
-            note: '',
-            options: [],
-            userId: '',
+        this.state = {            
             month: new Date().getMonth() + 1,
             year: new Date().getFullYear(),
             expenses: [],
-            loading: true
+            loading: true, 
+            expenseId: ''
         };
     }
 
@@ -38,15 +30,7 @@ export class Expenses extends Component {
     }
 
     componentDidMount() {
-        this.populateExpensesData();
-
-        authService
-            .getUser()
-            .then(user => {
-                this.setState({
-                    userId: user.sub
-                });
-            });
+        this.populateExpensesData();        
     }
 
     renderExpensesTable(data) {
@@ -63,15 +47,16 @@ export class Expenses extends Component {
                 />
 
                 <Form
-                    create={this.create}
-                    merchantSet={e => { this.setState({ merchant: e.target.value }) }}
-                    dateSet={e => { this.setState({ date: e.target.value }) }}
-                    categorySet={e => { this.setState({ categoryId: e.target.value }) }}
-                    totalSet={e => { this.setState({ total: e.target.value }) }}
-                    noteSet={e => { this.setState({ note: e.target.value }) }}
+                    refresh={this.populateExpensesData}
+                    ref={instance => { this.fillInputs = instance; }}
                 />
 
-                <Table refresh={this.populateExpensesData} data={data} />
+                <Table
+                    expenseIdChange={this.onExpenseIdChange}
+                    editExpense={() => this.fillInputs.fillInputs(this.state.expenseId)}
+                    refresh={this.populateExpensesData}
+                    data={data}
+                />
 
             </div>
         );
@@ -89,37 +74,15 @@ export class Expenses extends Component {
         });
     }
 
+    onExpenseIdChange = (id) => {
+        this.setState({
+            expenseId: id
+        });
+    }
+
     populateExpensesData = () => {
         getAllExpenses(this.state.month, this.state.year)
             .then(data => this.setState({ expenses: data, loading: false }))
             .catch(err => console.log(err));
-    }
-
-    create = event => {
-        event.preventDefault();
-        let payload = {
-            merchant: this.state.merchant,
-            date: this.state.date.toString(),
-            total: this.state.total,
-            categoryId: this.state.categoryId,
-            note: this.state.note,
-            userId: this.state.userId
-        }
-
-        createExpense(payload)
-            .then(() => {
-                this.resetState();
-                this.populateExpensesData();
-            });
-    }
-
-    resetState = () => {
-        this.setState({
-            merchant: '',
-            date: new Date().toLocaleString(),
-            total: 0.00,
-            categoryId: '',
-            note: ''
-        });
-    }
+    }    
 }

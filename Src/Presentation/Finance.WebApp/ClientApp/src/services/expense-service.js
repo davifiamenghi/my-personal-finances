@@ -16,6 +16,23 @@ export const getAllExpenses = (month, year) => {
     });
 }
 
+export const getExpense = (id) => {
+    return new Promise((resolve, reject) => {
+        authService
+            .getAccessToken()
+            .then(token => {
+                fetch(`/api/Expense/Get/${id}`, {
+                    method: 'GET',
+                    headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
+                })
+                    .then(response => response.json())
+                    .then(data => resolve(data))
+                    .catch(err => reject(err))
+            })
+    });
+}
+
+
 export const createExpense = (payload) => {
     return new Promise((resolve, reject) => {
         authService

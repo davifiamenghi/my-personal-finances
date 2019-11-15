@@ -25,7 +25,7 @@ export class Table extends Component {
                             <td>{expense.category}</td>
                             <td>{expense.total.toFixed(2)} lv.</td>
                             <td>{expense.note}</td>
-                            <td><EditButton /> <DeleteButton deleteExpense={this.delete} expenseId={expense.id} /></td>
+                            <td><EditButton expenseIdChange={this.props.expenseIdChange} editExpense={this.props.editExpense} expenseId={expense.id} /> <DeleteButton deleteExpense={this.delete} expenseId={expense.id} /></td>
                         </tr>
                     )}
                 </tbody>

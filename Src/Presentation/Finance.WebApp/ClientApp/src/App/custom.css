@@ -17,3 +17,8 @@ code {
     margin: 1rem 0;
     margin-right: 0.5rem;
 }
+
+.reference {
+    font-size: 15px;
+    margin: 0;
+}

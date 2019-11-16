@@ -44,6 +44,7 @@ export class Input extends Component {
                     onChange={(e) => this.props.func(e)}
                     id={this.props.data}
                     name={this.props.data}
+                    type={this.props.type}
                 />
             )
         } else {

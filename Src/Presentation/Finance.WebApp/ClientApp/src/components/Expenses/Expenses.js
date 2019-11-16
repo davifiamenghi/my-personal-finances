@@ -37,7 +37,8 @@ export class Expenses extends Component {
         return (
             <div>
                 <h2>Monthly Expenses</h2>
-
+                <br />
+                <p className="reference">* When you update expense, if you do not chose a date, the expense will be updated with the same date.</p>
                 <Filter
                     monthChange={this.onMonthChange}
                     yearchange={this.onYearChange}
@@ -58,7 +59,7 @@ export class Expenses extends Component {
                     refresh={this.populateExpensesData}
                     data={data}
                 />
-
+                
             </div>
         );
     }

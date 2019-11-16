@@ -18,8 +18,12 @@ export class Table extends Component {
                 </thead>
                 <tbody>
                     {this.props.data.expenses.map(expense =>
-                        <TableRow key={expense.id} expense={expense} expenseIdChange={this.props.expenseIdChange} editExpense={this.props.editExpense} deleteExpense={this.delete} />
-                        
+                        <TableRow
+                            key={expense.id}
+                            expense={expense}
+                            expenseIdChange={this.props.expenseIdChange}
+                            editExpense={this.props.editExpense}
+                            deleteExpense={this.delete} />                        
                     )}
                 </tbody>
             </table>

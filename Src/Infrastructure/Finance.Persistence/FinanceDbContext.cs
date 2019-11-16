@@ -22,6 +22,8 @@ namespace Finance.Persistence
 
         public DbSet<IncomeCategory> IncomeCategories { get; set; }
 
+        public DbSet<CashflowType> CashflowTypes { get; set; }
+
         public DbSet<FinanceUser> FinanceUsers { get; set; }
 
         public DbSet<FinanceRole> FinanceRoles { get; set; }

@@ -13,6 +13,10 @@
 
         public string Name { get; set; }
 
+        public int TypeId { get; set; }
+
+        public CashflowType Type { get; set; }
+
         public virtual ICollection<Expense> Expenses { get; private set; }
     }
 }

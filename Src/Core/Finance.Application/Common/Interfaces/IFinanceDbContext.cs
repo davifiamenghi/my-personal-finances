@@ -20,7 +20,9 @@ namespace Finance.Application.Common.Interfaces
         DbSet<IncomeCategory> IncomeCategories { get; set; }
 
         DbSet<ExpenseCategory> ExpenseCategories { get; set; }
-        
+
+        DbSet<CashflowType> CashflowTypes { get; set; }
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

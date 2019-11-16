@@ -47,6 +47,19 @@ namespace Finance.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CashflowTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CashflowTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DeviceCodes",
                 columns: table => new
                 {
@@ -61,42 +74,6 @@ namespace Finance.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DeviceCodes", x => x.UserCode);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ExpenseCategories",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    LastModifiedBy = table.Column<string>(nullable: true),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ExpenseCategories", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "IncomeCategories",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    LastModifiedBy = table.Column<string>(nullable: true),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_IncomeCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -223,6 +200,56 @@ namespace Finance.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ExpenseCategories",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    LastModifiedBy = table.Column<string>(nullable: true),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    TypeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExpenseCategories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ExpenseCategories_CashflowTypes_TypeId",
+                        column: x => x.TypeId,
+                        principalTable: "CashflowTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "IncomeCategories",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    LastModifiedBy = table.Column<string>(nullable: true),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    TypeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IncomeCategories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_IncomeCategories_CashflowTypes_TypeId",
+                        column: x => x.TypeId,
+                        principalTable: "CashflowTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Expenses",
                 columns: table => new
                 {
@@ -339,6 +366,11 @@ namespace Finance.Persistence.Migrations
                 column: "Expiration");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ExpenseCategories_TypeId",
+                table: "ExpenseCategories",
+                column: "TypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Expenses_CategoryId",
                 table: "Expenses",
                 column: "CategoryId");
@@ -347,6 +379,11 @@ namespace Finance.Persistence.Migrations
                 name: "IX_Expenses_UserId",
                 table: "Expenses",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IncomeCategories_TypeId",
+                table: "IncomeCategories",
+                column: "TypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Incomes_CategoryId",
@@ -409,6 +446,9 @@ namespace Finance.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "CashflowTypes");
         }
     }
 }

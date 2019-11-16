@@ -19,6 +19,21 @@ namespace Finance.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Finance.Domain.Entities.CashflowType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CashflowTypes");
+                });
+
             modelBuilder.Entity("Finance.Domain.Entities.Expense", b =>
                 {
                     b.Property<string>("Id")
@@ -93,7 +108,12 @@ namespace Finance.Persistence.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TypeId");
 
                     b.ToTable("ExpenseCategories");
                 });
@@ -264,7 +284,12 @@ namespace Finance.Persistence.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TypeId");
 
                     b.ToTable("IncomeCategories");
                 });
@@ -470,6 +495,15 @@ namespace Finance.Persistence.Migrations
                         .HasForeignKey("UserId");
                 });
 
+            modelBuilder.Entity("Finance.Domain.Entities.ExpenseCategory", b =>
+                {
+                    b.HasOne("Finance.Domain.Entities.CashflowType", "Type")
+                        .WithMany("ExpenseCategories")
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Finance.Domain.Entities.Income", b =>
                 {
                     b.HasOne("Finance.Domain.Entities.IncomeCategory", "Category")
@@ -479,6 +513,15 @@ namespace Finance.Persistence.Migrations
                     b.HasOne("Finance.Domain.Entities.FinanceUser", "User")
                         .WithMany("Incomes")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Finance.Domain.Entities.IncomeCategory", b =>
+                {
+                    b.HasOne("Finance.Domain.Entities.CashflowType", "Type")
+                        .WithMany("IncomeCategories")
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

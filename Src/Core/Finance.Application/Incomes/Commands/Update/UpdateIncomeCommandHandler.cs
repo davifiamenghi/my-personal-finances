@@ -51,6 +51,7 @@
             income.Date = DateTime.Parse(request.Date);
             income.Note = request.Note;
             income.UserId = request.UserId;
+            income.Total = request.Total;
             income.CategoryId = request.CategoryId;
             income.ModifiedOn = DateTime.UtcNow;
 

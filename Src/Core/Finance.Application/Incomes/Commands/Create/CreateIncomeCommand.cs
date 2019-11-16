@@ -8,6 +8,8 @@
 
         public string Date { get; set; }
 
+        public decimal Total { get; set; }
+
         public string Note { get; set; }
 
         public string CategoryId { get; set; }

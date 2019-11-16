@@ -40,13 +40,17 @@ export class LoginMenu extends Component {
         } else {
             const profilePath = `${ApplicationPaths.Profile}`;
             const expensesPath = '/Expenses';
+            const incomesPath = '/Incomes';
             const logoutPath = { pathname: `${ApplicationPaths.LogOut}`, state: { local: true } };
-            return this.authenticatedView(userName, expensesPath, profilePath, logoutPath);
+            return this.authenticatedView(userName, incomesPath, expensesPath, profilePath, logoutPath);
         }
     }
 
-    authenticatedView(userName, expensesPath, profilePath, logoutPath) {
+    authenticatedView(userName, incomesPath, expensesPath, profilePath, logoutPath) {
         return (<Fragment>
+            <NavItem>
+                <NavLink tag={Link} className="text-dark" to={incomesPath}>Incomes</NavLink>
+            </NavItem>
             <NavItem>
                 <NavLink tag={Link} className="text-dark" to={expensesPath}>Expenses</NavLink>
             </NavItem>

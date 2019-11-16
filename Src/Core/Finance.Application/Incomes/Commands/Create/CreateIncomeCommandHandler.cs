@@ -44,6 +44,7 @@
                 Merchant = request.Merchant,
                 Date = DateTime.Parse(request.Date),
                 Note = request.Note,
+                Total = request.Total,
                 UserId = request.UserId,
                 CategoryId = request.CategoryId,
                 CreatedOn = DateTime.UtcNow

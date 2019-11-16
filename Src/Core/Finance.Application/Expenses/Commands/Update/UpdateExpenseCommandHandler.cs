@@ -49,6 +49,7 @@
 
             expense.Merchant = request.Merchant;
             expense.Date = DateTime.Parse(request.Date);
+            expense.Total = request.Total;
             expense.Note = request.Note;
             expense.UserId = request.UserId;
             expense.CategoryId = request.CategoryId;

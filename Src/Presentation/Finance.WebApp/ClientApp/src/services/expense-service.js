@@ -53,6 +53,26 @@ export const createExpense = (payload) => {
     });
 }
 
+export const updateExpense = (payload) => {
+    return new Promise((resolve, reject) => {
+        authService
+            .getAccessToken()
+            .then(token => {
+                fetch('/api/Expense/Update', {
+                    method: 'PUT',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(payload)
+                })
+                    .then(() => resolve())
+                    .catch(err => reject(err));
+            })
+    });
+}
+
 export const deleteExpense = (id) => {
     return new Promise((resolve, reject) => {
         authService

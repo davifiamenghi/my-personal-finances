@@ -49,6 +49,7 @@ export class Expenses extends Component {
                 <Form
                     refresh={this.populateExpensesData}
                     ref={instance => { this.fillInputs = instance; }}
+                    expenseId={this.state.expenseId}
                 />
 
                 <Table

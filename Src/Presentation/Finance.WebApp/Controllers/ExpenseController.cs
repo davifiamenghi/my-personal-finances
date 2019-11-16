@@ -39,7 +39,7 @@
         }
 
 
-        // PUT: api/Expense/Update/5
+        // PUT: api/Expense/Update
         [HttpPut]
         public async Task<ActionResult> Update(UpdateExpenseCommand command)
         {

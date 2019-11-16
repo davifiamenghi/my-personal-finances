@@ -5,6 +5,7 @@ import { Select } from './Select';
 import authService from '../../api-authorization/AuthorizeService';
 import { getExpense } from '../../../services/expense-service';
 import { createExpense } from '../../../services/expense-service';
+import { updateExpense } from '../../../services/expense-service';
 
 export class Form extends Component {
     constructor() {
@@ -17,13 +18,14 @@ export class Form extends Component {
             categoryId: '',
             note: '',
             options: [],
-            userId: ''
+            userId: '',
+            isCreate: true
         }
     }
 
     render() {
         return (
-            <form onSubmit={this.create} className="form-row">
+            <form onSubmit={this.state.isCreate ? this.create : this.update} className="form-row">
                 <Input
                     ref={merchant => this.merchant = merchant}
                     type='text'
@@ -59,7 +61,7 @@ export class Form extends Component {
                     name='Note'
                     func={e => { this.setState({ note: e.target.value }) }}
                 />
-                <Button clearInputs={this.clearInputs} />
+                <Button clearInputs={this.clearInputs} isCreate={this.state.isCreate} />
             </form>
         )
     }
@@ -95,25 +97,30 @@ export class Form extends Component {
             .then(expense => {
                 this.updateState(expense);
                 this.fillFields();
+                this.setState({ isCreate: false });
             });
     }
 
     create = event => {
         event.preventDefault();
-        let payload = {
-            merchant: this.state.merchant,
-            date: this.state.date.toString(),
-            total: this.state.total,
-            categoryId: this.state.categoryId,
-            note: this.state.note,
-            userId: this.state.userId
-        }
+        let payload = this.getPayload();
 
         createExpense(payload)
             .then(() => {
                 this.resetState();
                 this.props.refresh();
-            });
+            }).catch(err => console.log(err));
+    }
+
+    update = event => {
+        event.preventDefault();
+        let payload = this.getPayload();
+
+        updateExpense(payload)
+            .then(() => {
+                this.resetState();
+                this.props.refresh();
+            }).catch(err => console.log(err))
     }
 
     resetState = () => {
@@ -122,7 +129,8 @@ export class Form extends Component {
             date: new Date().toLocaleString(),
             total: 0.00,
             categoryId: '',
-            note: ''
+            note: '',
+            isCreate: true
         });
     }
 
@@ -133,6 +141,21 @@ export class Form extends Component {
             total: expense.total,
             categoryId: expense.categoryId,
             note: expense.note,
+            isCreate: false
         });
+    }
+
+    getPayload = () => {
+        let payload = {
+            merchant: this.state.merchant,
+            date: this.state.date.toString(),
+            total: this.state.total,
+            categoryId: this.state.categoryId,
+            note: this.state.note,
+            userId: this.state.userId,
+            id: this.props.expenseId
+        }
+
+        return payload;
     }
 }

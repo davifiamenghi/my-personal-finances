@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Application.ExpenseCategories.Queries.GetAll;
+    using Application.ExpenseCategories.Queries.GetExpensesByCategory;
 
     public class ExpenseCategoryController : BaseController
     {
@@ -14,6 +15,15 @@
         {
             var result = await Mediator.Send(new GetAllExpenseCategoriesListQuery());
            
+            return Ok(result);
+        }
+
+        //GET: api/ExpenseCategory/GetExpensesByCategory
+        [HttpGet]
+        public async Task<ActionResult<ExpensesByCategoryListViewModel>> GetExpensesByCategory(int month, int year, string userId)
+        {
+            var result = await Mediator.Send(new GetExpensesByCategoryListQuery() { Month = month, Year = year, UserId = userId });
+
             return Ok(result);
         }
     }

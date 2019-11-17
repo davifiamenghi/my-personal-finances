@@ -22,3 +22,7 @@ code {
     font-size: 15px;
     margin: 0;
 }
+
+.last-row {
+    font-weight: bold;
+}

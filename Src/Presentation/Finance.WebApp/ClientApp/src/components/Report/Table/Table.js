@@ -4,7 +4,7 @@ import { TableRow } from '../Table/TableRow';
 export class Table extends Component {
     render() {
         return (
-            <table className='table table-striped table-bordered table-sm' aria-labelledby="tabelLabel">
+            <table className='table table-bordered table-sm' aria-labelledby="tabelLabel">
                 <thead>
                     <tr>
                         <th>Category</th>
@@ -14,16 +14,16 @@ export class Table extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {this.props.categories.map(category =>
+                    {this.props.flows.map(flow =>
                         <TableRow
-                            key={category.id}
-                            category={category}
-                            totalExpenses={this.props.totalExpenses}
+                            key={flow.id}
+                            flow={flow}
+                            totals={this.props.totals}
                         />                        
                     )}
                     <tr key={10} className="table-success last-row">                        
-                        <td colSpan="2">Total Expenses</td>
-                        <td>{(this.props.totalExpenses).toFixed(2)} lv.</td>
+                        <td colSpan="2">Total</td>
+                        <td>{(this.props.totals).toFixed(2)} lv.</td>
                         <td>100.00%</td>
                     </tr>
                 </tbody>

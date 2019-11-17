@@ -6,6 +6,6 @@
     {
         public IList<ExpenseByCategoryViewModel> ExpenseCategories { get; set; }
 
-        public decimal TotalExpenses { get; set; }
+        public decimal Totals { get; set; }
     }
 }

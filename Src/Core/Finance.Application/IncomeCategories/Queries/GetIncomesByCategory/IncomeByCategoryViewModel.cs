@@ -1,6 +1,6 @@
-﻿namespace Finance.Application.ExpenseCategories.Queries.GetExpensesByCategory
+﻿namespace Finance.Application.IncomeCategories.Queries.GetIncomesByCategory
 {
-    public class ExpenseByCategoryViewModel
+    public class IncomeByCategoryViewModel
     {
         public string Id { get; set; }
 

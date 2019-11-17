@@ -28,16 +28,17 @@
                         Name = ec.Name,
                         TypeId = ec.TypeId,
                         TypeDescription = ec.Type.Description,
-                        ExpensesSum = ec.Expenses.Where(e => e.Date.Month == request.Month).Sum(e => e.Total)
+                        Sum = ec.Expenses.Where(e => e.Date.Month == request.Month && e.Date.Year == request.Year && e.UserId == request.UserId).Sum(e => e.Total)
                     })
+                    .OrderBy(ec => ec.TypeId)
                     .ToListAsync(cancellationToken);
 
-            var totalExpenses = expenseCategories.Sum(e => e.ExpensesSum);
+            var totalExpenses = expenseCategories.Sum(e => e.Sum);
             
             return new ExpensesByCategoryListViewModel
             {
                 ExpenseCategories = expenseCategories,
-                TotalExpenses = totalExpenses
+                Totals = totalExpenses
             };
         }
     }

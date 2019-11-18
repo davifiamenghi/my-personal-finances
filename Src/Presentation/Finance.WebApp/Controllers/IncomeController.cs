@@ -9,14 +9,15 @@
     using Application.Incomes.Commands.Update;
     using Application.Incomes.Queries.GetAllIncomes;
     using Application.Incomes.Queries.GetIncomeById;
+    using Finance.Application.Incomes.Queries.GetTotalIncomesByYear;
 
     public class IncomeController : BaseController
     {
         //GET: api/Income/GetAll
         [HttpGet]
-        public async Task<ActionResult<IncomesListViewModel>> GetAll(int month, int year)
+        public async Task<ActionResult<IncomesListViewModel>> GetAll(int month, int year, string userId)
         {
-            var result = await Mediator.Send(new GetAllIncomesListQuery { Month = month, Year = year });
+            var result = await Mediator.Send(new GetAllIncomesListQuery { Month = month, Year = year, UserId = userId });
             return Ok(result);
         }
 
@@ -28,6 +29,13 @@
             return Ok(result);
         }
 
+        //GET: api/Expense/GetByYear
+        [HttpGet]
+        public async Task<ActionResult<IncomesByYearListViewModel>> GetByYear(int year, string userId)
+        {
+            var result = await Mediator.Send(new GetIncomesByYearListQuery { Year = year, UserId = userId });
+            return Ok(result);
+        }
 
         // POST: api/Income/Create
         [HttpPost]

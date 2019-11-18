@@ -3,16 +3,41 @@
 export const getAllExpenses = (month, year) => {
     return new Promise((resolve, reject) => {
         authService
-            .getAccessToken()
-            .then(token => {
-                fetch(`/api/Expense/GetAll?month=${month}&year=${year}`, {
-                    method: 'GET',
-                    headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
-                })
-                .then(response => response.json())
-                .then(data => resolve(data))
-                .catch(err => reject(err))
-            })
+            .getUser()
+            .then(user => {
+                authService
+                    .getAccessToken()
+                    .then(token => {
+                        fetch(`/api/Expense/GetAll?month=${month}&year=${year}&userId=${user.sub}`, {
+                            method: 'GET',
+                            headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
+                        })
+                            .then(response => response.json())
+                            .then(data => resolve(data))
+                            .catch(err => reject(err))
+                    })
+            });        
+    });
+}
+
+export const getExpensesByYear = (year) => {
+    return new Promise((resolve, reject) => {
+        authService
+            .getUser()
+            .then(user => {
+                authService
+                    .getAccessToken()
+                    .then(token => {
+                        fetch(`/api/Expense/GetByYear?year=${year}&userId=${user.sub}`, {
+                            method: 'GET',
+                            headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
+                        })
+                            .then(response => response.json())
+                            .then(data => resolve(data))
+                            .catch(err => reject(err))
+                    })
+            });
+
     });
 }
 

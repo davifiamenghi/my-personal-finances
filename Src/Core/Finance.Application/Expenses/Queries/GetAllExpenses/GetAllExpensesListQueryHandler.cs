@@ -25,7 +25,7 @@ namespace Finance.Application.Expenses.Queries.GetAllExpenses
             return new ExpensesListViewModel
             {
                 Expenses = await context.Expenses
-                    .Where(x => x.Date.Month == request.Month && x.Date.Year == request.Year)
+                    .Where(x => x.Date.Month == request.Month && x.Date.Year == request.Year && x.UserId == request.UserId)
                     .OrderByDescending(x => x.CreatedOn)
                     .Include(x => x.Category)
                     .ProjectTo<ExpenseAllViewModel>(mapper.ConfigurationProvider)

@@ -9,14 +9,15 @@
     using Application.Expenses.Commands.Update;
     using Finance.Application.Expenses.Queries.GetAllExpenses;
     using Finance.Application.Expenses.Queries.GetExpenseById;
+    using Finance.Application.Expenses.Queries.GetTotalExpensesByYear;
 
     public class ExpenseController : BaseController
     {
        //GET: api/Expenses/GetAll
        [HttpGet]
-        public async Task<ActionResult<ExpensesListViewModel>> GetAll(int month, int year)
+        public async Task<ActionResult<ExpensesListViewModel>> GetAll(int month, int year, string userId)
         {
-            var result = await Mediator.Send(new GetAllExpensesListQuery { Month = month, Year = year });
+            var result = await Mediator.Send(new GetAllExpensesListQuery { Month = month, Year = year, UserId = userId });
             return Ok(result);
         }
 
@@ -28,6 +29,13 @@
             return Ok(result);
         }
 
+        //GET: api/Expense/GetByYear
+        [HttpGet]
+        public async Task<ActionResult<ExpensesByYearListViewModel>> GetByYear(int year, string userId)
+        {
+            var result = await Mediator.Send(new GetExpensesByYearListQuery { Year = year, UserId = userId });
+            return Ok(result);
+        }
 
         // POST: api/Expense/Create
         [HttpPost]

@@ -7,5 +7,7 @@ namespace Finance.Application.Incomes.Queries.GetAllIncomes
         public int Month { get; set; }
 
         public int Year { get; set; }
+
+        public string UserId { get; set; }
     }
 }

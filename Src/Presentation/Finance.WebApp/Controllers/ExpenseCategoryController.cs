@@ -6,6 +6,7 @@
 
     using Application.ExpenseCategories.Queries.GetAll;
     using Application.ExpenseCategories.Queries.GetExpensesByCategory;
+    using Finance.Application.Expenses.Queries.GetTotalExpensesByYear;
 
     public class ExpenseCategoryController : BaseController
     {

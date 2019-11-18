@@ -25,7 +25,7 @@ namespace Finance.Application.Incomes.Queries.GetAllIncomes
             return new IncomesListViewModel
             {
                  Incomes = await context.Incomes
-                    .Where(x => x.Date.Month == request.Month && x.Date.Year == request.Year)
+                    .Where(x => x.Date.Month == request.Month && x.Date.Year == request.Year && x.UserId == request.UserId)
                     .OrderByDescending(x => x.CreatedOn)
                     .Include(x => x.Category)
                     .ProjectTo<IncomeAllViewModel>(mapper.ConfigurationProvider)

@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Filter } from './Filter/Filter';
+import { Table } from './Table/Table';
 import { getExpensesByYear } from '../../services/expense-service';
 import { getIncomesByYear } from '../../services/income-service';
 
@@ -35,10 +36,6 @@ export class AnnualReport extends Component {
     }
 
     renderExpensesTable() {
-        const cashflows = this.state.cashflows;
-        const totalIncomes = this.state.totalIncomes;
-        const totalExpenses = this.state.totalExpenses;
-
         return (
             <div>
                 <h2>Annual Report</h2>
@@ -49,36 +46,11 @@ export class AnnualReport extends Component {
                     year={this.state.year}
                 />
 
-                <table className='table table-striped' aria-labelledby="tabelLabel">
-                    <thead>
-                        <tr>
-                            <th>Month</th>
-                            <th>Income</th>
-                            <th>Expense</th>
-                            <th>Savings</th>
-                            <th>Savings %</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {cashflows.incomes.map((income, key) =>
-                            <tr key={income.month}>
-                                <td>{income.monthName}</td>
-                                <td>{income.sum.toFixed(2)} lv.</td>
-                                <td>{(cashflows.expenses[key].sum).toFixed(2)} lv.</td>
-                                <td>{(income.sum - cashflows.expenses[key].sum).toFixed(2)} lv.</td>
-                                <td>{(((income.sum - cashflows.expenses[key].sum) / income.sum) * 100).toFixed(2)}%</td>
-                            </tr>
-                        )}
-                        <tr key={13} className="table-success last-row">
-                            <td>Totals</td>
-                            <td>{totalIncomes.toFixed(2)} lv.</td>
-                            <td>{totalExpenses.toFixed(2)} lv.</td>
-                            <td>{(totalIncomes - totalExpenses).toFixed(2)} lv.</td>
-                            <td>{(((totalIncomes - totalExpenses) / totalIncomes) * 100).toFixed(2)}%</td>
-                        </tr>
-
-                    </tbody>
-                </table>
+                <Table
+                    cashflows={this.state.cashflows}
+                    totalIncomes={this.state.totalIncomes}
+                    totalExpenses={this.state.totalExpenses}
+                />
             </div>
         );
     }
@@ -87,10 +59,6 @@ export class AnnualReport extends Component {
         this.setState({
             year: event.target.value
         });
-    }
-
-    populateExpensesData = () => {
-        
     }
 
     populateData = () => {

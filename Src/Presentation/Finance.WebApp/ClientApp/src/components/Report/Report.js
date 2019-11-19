@@ -55,12 +55,11 @@ export class Report extends Component {
                     flows={incomes}
                     totals={totalIncomes}
                 />
-                <br />
-                <table className='table table-bordered table-sm' aria-labelledby="tabelLabel">
+                <table className='table table-warning table-bordered table-sm' aria-labelledby="tabelLabel">
                     <tbody>
                         <tr className="last-row">
-                            <td className="col-md-4">Pay to Yourself</td>
-                            <td className="col-md-2">6</td>
+                            <td>Pay to Yourself</td>
+                            <td>6</td>
                             <td colSpan="2">{(this.state.totalIncomes * this.state.payToYourself).toFixed(2)} lv.</td>
                         </tr>
                     </tbody>
@@ -72,12 +71,11 @@ export class Report extends Component {
                     flows={expenses}
                     totals={totalExpenses}
                 />
-                <br />
-                <table className='table table-bordered table-sm' aria-labelledby="tabelLabel">
+                <table className='table table-primary table-bordered table-sm' aria-labelledby="tabelLabel">
                     <tbody>
                         <tr className="last-row">
-                            <td className="col-md-4">Net Cashflow</td>
-                            <td className="col-md-2">10</td>
+                            <td>Net Cashflow</td>
+                            <td>10</td>
                             <td colSpan="2">{(this.state.totalIncomes - (this.state.totalIncomes * this.state.payToYourself) - this.state.totalExpenses).toFixed(2)} lv.</td>
                         </tr>
                     </tbody>

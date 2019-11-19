@@ -4,14 +4,14 @@ import { TableRow } from '../Table/TableRow';
 export class Table extends Component {
     render() {
         return (
-            <table className='table table-striped' aria-labelledby="tabelLabel">
+            <table className='table table-striped table-bordered' aria-labelledby="tabelLabel">
                 <thead>
                     <tr>
-                        <th>Month</th>
-                        <th>Income</th>
-                        <th>Expense</th>
-                        <th>Savings</th>
-                        <th>Savings %</th>
+                        <th className='table-dark'>Month</th>
+                        <th className='table-dark'>Income</th>
+                        <th className='table-dark'>Expense</th>
+                        <th className='table-dark'>Savings</th>
+                        <th className='table-dark'>Savings %</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -1,6 +1,6 @@
 # My Personal Finances
 
-This project is a sample application built using React and ASP.NET Core WebAPI. It follow the CQRS + MediatR pattern and clean architecture principles.
+This project is a Single Page Application built using React and ASP.NET Core WebAPI. It follows the CQRS + MediatR pattern and clean architecture principles. This application is a tool for management of personal finances. Users can easy import their income and expenses and use monthly and annual report statistics for optimize savings and investments.
 
 ## There are five base layers in the project.
 1. Domain Layer - contains all entities, enums, exceptions, types and logic specific to the domain. The Entity Framework related classes are abstract, and should be considered in the same light as .NET Core. For testing, use an InMemory provider.

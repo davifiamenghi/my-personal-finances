@@ -41,7 +41,7 @@ export class Incomes extends Component {
                 <p className="reference">* When you update income, if you do not chose a date, the Income will be updated with the same date.</p>
                 <Filter
                     monthChange={this.onMonthChange}
-                    yearchange={this.onYearChange}
+                    yearChange={this.onYearChange}
                     refresh={this.populateIncomesData}
                     month={this.state.month}
                     year={this.state.year}

@@ -1,6 +1,5 @@
 ﻿import React, { Component } from 'react';
 import { Filter } from './Filter/Filter';
-import { Table } from './Table/Table';
 import { getExpensesByYear } from '../../services/expense-service';
 import { getIncomesByYear } from '../../services/income-service';
 
@@ -9,8 +8,10 @@ export class AnnualReport extends Component {
         super(props);
         this.state = {
             year: new Date().getFullYear(),
-            expenses: [],
-            incomes: [],
+            cashflows: {
+                expenses: [],
+                incomes: [],
+            },
             totalExpenses: 0,
             totalIncomes: 0,
             loading: true
@@ -20,7 +21,7 @@ export class AnnualReport extends Component {
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : this.renderExpensesTable(this.state.expenses, this.state.totalExpenses, this.state.incomes, this.state.totalIncomes);
+            : this.renderExpensesTable();
 
         return (
             <div>
@@ -33,7 +34,11 @@ export class AnnualReport extends Component {
         this.populateData();
     }
 
-    renderExpensesTable(expenses, totalExpenses, incomes, totalIncomes) {
+    renderExpensesTable() {
+        const cashflows = this.state.cashflows;
+        const totalIncomes = this.state.totalIncomes;
+        const totalExpenses = this.state.totalExpenses;
+
         return (
             <div>
                 <h2>Annual Report</h2>
@@ -44,13 +49,36 @@ export class AnnualReport extends Component {
                     year={this.state.year}
                 />
 
-                <Table
-                    expenses={expenses}
-                    incomes={incomes}
-                    totalExpenses={totalExpenses}
-                    totalIncomes={totalIncomes}
-                    refresh={this.populateExpensesData}
-                />
+                <table className='table table-striped' aria-labelledby="tabelLabel">
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>Income</th>
+                            <th>Expense</th>
+                            <th>Savings</th>
+                            <th>Savings %</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {cashflows.incomes.map((income, key) =>
+                            <tr key={income.month}>
+                                <td>{income.monthName}</td>
+                                <td>{income.sum.toFixed(2)} lv.</td>
+                                <td>{(cashflows.expenses[key].sum).toFixed(2)} lv.</td>
+                                <td>{(income.sum - cashflows.expenses[key].sum).toFixed(2)} lv.</td>
+                                <td>{(((income.sum - cashflows.expenses[key].sum) / income.sum) * 100).toFixed(2)}%</td>
+                            </tr>
+                        )}
+                        <tr key={13} className="table-success last-row">
+                            <td>Totals</td>
+                            <td>{totalIncomes.toFixed(2)} lv.</td>
+                            <td>{totalExpenses.toFixed(2)} lv.</td>
+                            <td>{(totalIncomes - totalExpenses).toFixed(2)} lv.</td>
+                            <td>{(((totalIncomes - totalExpenses) / totalIncomes) * 100).toFixed(2)}%</td>
+                        </tr>
+
+                    </tbody>
+                </table>
             </div>
         );
     }
@@ -62,29 +90,24 @@ export class AnnualReport extends Component {
     }
 
     populateExpensesData = () => {
-        getExpensesByYear(this.state.year)
-            .then(data => {
-                this.setState({
-                    expenses: data.expenseSums,
-                    totalExpenses: data.totals,
-                    loading: false
-                });
-            }).catch(err => console.log(err));
+        
     }
 
-    populateIncomesData = () => {
-        getIncomesByYear(this.state.year)
-            .then(data => {
-                this.setState({
-                    incomes: data.incomeSums,
-                    totalIncomes: data.totals,
-                    loading: false
-                });
-            }).catch(err => console.log(err));
-    }
-    
     populateData = () => {
-        this.populateExpensesData();
-        this.populateIncomesData();    
+        getIncomesByYear(this.state.year)
+            .then(incomes => {
+                getExpensesByYear(this.state.year)
+                    .then(expenses => {
+                        this.setState({
+                            cashflows: {
+                                incomes: incomes.incomeSums,
+                                expenses: expenses.expenseSums,
+                            },
+                            totalIncomes: incomes.totals,
+                            totalExpenses: expenses.totals,
+                            loading: false
+                        });
+                    }).catch(err => console.log(err));
+                });
     }
 }

@@ -4,5 +4,6 @@
 
     public class GetAllExpenseCategoriesListQuery : IRequest<ExpenseCategoriesListViewModel>
     {
+        public string UserId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿import React, { Component } from 'react'
+﻿import React, { Component } from 'react';
+import { getAllIncomeCategories } from '../../../services/incomeCategory-service';
 
 export class Select extends Component {
     constructor() {
@@ -42,9 +43,9 @@ export class Select extends Component {
         this.option.value = id;
     }
 
-    async getIncomeCategories() {
-        const response = await fetch('/api/IncomeCategory/GetAll');
-        const data = await response.json();
-        this.setState({ options: data.categories });
+    getIncomeCategories = () => {
+        getAllIncomeCategories()
+            .then(data => this.setState({ options: data.categories }))
+            .catch(err => console.log(err));
     }
 }

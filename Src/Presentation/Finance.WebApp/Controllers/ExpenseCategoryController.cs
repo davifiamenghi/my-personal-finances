@@ -1,21 +1,18 @@
 ﻿namespace Finance.WebApp.Controllers
 {
-    using System.Threading.Tasks;
-
-    using Microsoft.AspNetCore.Mvc;
-
     using Application.ExpenseCategories.Queries.GetAll;
     using Application.ExpenseCategories.Queries.GetExpensesByCategory;
-    using Finance.Application.Expenses.Queries.GetTotalExpensesByYear;
-    using Finance.Application.CashflowTypes.Queries.GetAll;
+    using Application.Expenses.Commands.Delete;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Threading.Tasks;
 
     public class ExpenseCategoryController : BaseController
     {
         //GET: api/ExpenseCategory/GetAll
         [HttpGet]
-        public async Task<ActionResult<ExpenseCategoriesListViewModel>> GetAll()
+        public async Task<ActionResult<ExpenseCategoriesListViewModel>> GetAll(string userId)
         {
-            var result = await Mediator.Send(new GetAllExpenseCategoriesListQuery());
+            var result = await Mediator.Send(new GetAllExpenseCategoriesListQuery() { UserId = userId });
            
             return Ok(result);
         }
@@ -27,6 +24,15 @@
             var result = await Mediator.Send(new GetExpensesByCategoryListQuery() { Month = month, Year = year, UserId = userId });
 
             return Ok(result);
+        }
+
+        // DELETE: api/ExpenseCategory/Delete/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(string id)
+        {
+            await Mediator.Send(new DeleteExpenseCategoryCommand { Id = id });
+
+            return NoContent();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace Finance.Application.ExpenseCategories.Queries.GetAll
 {
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using AutoMapper;
@@ -23,7 +24,7 @@
         {
             return new ExpenseCategoriesListViewModel
             {
-                Categories = await this.context.ExpenseCategories.ProjectTo<ExpenseCategoryAllViewModel>(this.mapper.ConfigurationProvider).ToListAsync(cancellationToken)
+                Categories = await this.context.ExpenseCategories.Where(ec => ec.UserId == request.UserId).ProjectTo<ExpenseCategoryAllViewModel>(this.mapper.ConfigurationProvider).ToListAsync(cancellationToken)
             };
         }
     }

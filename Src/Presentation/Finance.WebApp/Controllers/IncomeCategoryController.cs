@@ -7,6 +7,7 @@
     using Application.IncomeCategories.Queries.GetAll;
     using Application.IncomeCategories.Queries.GetIncomesByCategory;
     using Application.Incomes.Commands.Delete;
+    using Finance.Application.Incomes.Commands.Create;
 
     public class IncomeCategoryController : BaseController
     {
@@ -26,6 +27,15 @@
             var result = await Mediator.Send(new GetIncomesByCategoryListQuery() { Month = month, Year = year, UserId = userId });
 
             return Ok(result);
+        }
+
+        // POST: api/IncomeCategory/Create
+        [HttpPost]
+        public async Task<ActionResult> Create(CreateIncomeCategoryCommand command)
+        {
+            await Mediator.Send(command);
+
+            return NoContent();
         }
 
         // DELETE: api/IncomeCategory/Delete/5

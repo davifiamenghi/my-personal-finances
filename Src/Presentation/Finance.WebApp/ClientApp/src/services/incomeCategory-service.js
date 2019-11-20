@@ -42,6 +42,26 @@ export const getAllIncomeCategories = () => {
     });
 }
 
+export const createIncomeCategory = (payload) => {
+    return new Promise((resolve, reject) => {
+        authService
+            .getAccessToken()
+            .then(token => {
+                fetch('/api/IncomeCategory/Create', {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(payload)
+                })
+                    .then(() => resolve())
+                    .catch(err => reject(err));
+            })
+    });
+}
+
 export const deleteIncomeCategory = (id) => {
     return new Promise((resolve, reject) => {
         authService

@@ -10,7 +10,7 @@ export class Table extends Component {
             <table className='table table-striped table-bordered table-sm' aria-labelledby="tabelLabel">
                 <thead className='thead-dark'>
                     <tr>
-                        <th>Name</th>
+                        <th>{this.props.isIncome ? "Income Categories" : "Expense Categories"}</th>
                         <th className='centered'>Action</th>
                     </tr>
                 </thead>

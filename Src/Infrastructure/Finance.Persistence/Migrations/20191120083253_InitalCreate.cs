@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Finance.Persistence.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitalCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -210,7 +210,8 @@ namespace Finance.Persistence.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Name = table.Column<string>(maxLength: 20, nullable: false),
+                    UserId = table.Column<string>(nullable: false),
                     TypeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -220,6 +221,12 @@ namespace Finance.Persistence.Migrations
                         name: "FK_ExpenseCategories_CashflowTypes_TypeId",
                         column: x => x.TypeId,
                         principalTable: "CashflowTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ExpenseCategories_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -235,7 +242,8 @@ namespace Finance.Persistence.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Name = table.Column<string>(maxLength: 20, nullable: false),
+                    UserId = table.Column<string>(nullable: false),
                     TypeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -245,6 +253,12 @@ namespace Finance.Persistence.Migrations
                         name: "FK_IncomeCategories_CashflowTypes_TypeId",
                         column: x => x.TypeId,
                         principalTable: "CashflowTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_IncomeCategories_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -262,8 +276,8 @@ namespace Finance.Persistence.Migrations
                     Date = table.Column<DateTime>(nullable: false),
                     Note = table.Column<string>(maxLength: 200, nullable: true),
                     Total = table.Column<decimal>(type: "decimal(16, 2)", nullable: false),
-                    CategoryId = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: true)
+                    CategoryId = table.Column<string>(nullable: false),
+                    UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -279,7 +293,7 @@ namespace Finance.Persistence.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -295,8 +309,8 @@ namespace Finance.Persistence.Migrations
                     Date = table.Column<DateTime>(nullable: false),
                     Note = table.Column<string>(maxLength: 200, nullable: true),
                     Total = table.Column<decimal>(type: "decimal(16, 2)", nullable: false),
-                    CategoryId = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: true)
+                    CategoryId = table.Column<string>(nullable: false),
+                    UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -312,7 +326,7 @@ namespace Finance.Persistence.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -371,6 +385,11 @@ namespace Finance.Persistence.Migrations
                 column: "TypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ExpenseCategories_UserId",
+                table: "ExpenseCategories",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Expenses_CategoryId",
                 table: "Expenses",
                 column: "CategoryId");
@@ -384,6 +403,11 @@ namespace Finance.Persistence.Migrations
                 name: "IX_IncomeCategories_TypeId",
                 table: "IncomeCategories",
                 column: "TypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IncomeCategories_UserId",
+                table: "IncomeCategories",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Incomes_CategoryId",
@@ -445,10 +469,10 @@ namespace Finance.Persistence.Migrations
                 name: "IncomeCategories");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "CashflowTypes");
 
             migrationBuilder.DropTable(
-                name: "CashflowTypes");
+                name: "AspNetUsers");
         }
     }
 }

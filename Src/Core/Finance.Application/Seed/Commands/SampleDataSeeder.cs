@@ -44,12 +44,12 @@
                 new CashflowType { Description = "Monthly Bonuses." },
                 new CashflowType { Description = "Partner Gross Payment." },
                 new CashflowType { Description = "Partner Monthly Bonuses." },
-                new CashflowType { Description = "Business Incomes, Dividents, Rents, Honorariums and other passive incomes." },
+                new CashflowType { Description = "Business, Dividents, Rents and others." },
                 new CashflowType { Description = "Pay to yourself first." },
                 new CashflowType { Description = "Deductions from Gross Payments." },
                 new CashflowType { Description = "Fixed monthly expenses." },
                 new CashflowType { Description = "Unfixed monthly expenses." },
-                new CashflowType {  Description = "Remainder for investments." }
+                new CashflowType { Description = "Remainder for investments." }
             };
 
             context.CashflowTypes.AddRange(cashflowTypes);
@@ -90,17 +90,19 @@
 
         private async Task SeedIncomeCategories(CancellationToken cancellationToken)
         {
+            var user = context.FinanceUsers.FirstOrDefault();
+
             var incomeCategories = new[]
             {
-                new IncomeCategory { Id = Guid.NewGuid().ToString(), Name = "Salary", TypeId = 1 },
-                new IncomeCategory { Id = Guid.NewGuid().ToString(), Name = "Bonuses", TypeId = 2 },
-                new IncomeCategory { Id = Guid.NewGuid().ToString(), Name = "Partner Salary", TypeId = 3  },
-                new IncomeCategory { Id = Guid.NewGuid().ToString(), Name = "Partner Bonuses", TypeId = 4 },
-                new IncomeCategory { Id = Guid.NewGuid().ToString(), Name = "Business", TypeId = 5 },
-                new IncomeCategory { Id = Guid.NewGuid().ToString(), Name = "Rents", TypeId = 5 },
-                new IncomeCategory { Id = Guid.NewGuid().ToString(), Name = "Horariums", TypeId = 5 },
-                new IncomeCategory { Id = Guid.NewGuid().ToString(), Name = "Dividents", TypeId = 5 },
-                new IncomeCategory { Id = Guid.NewGuid().ToString(), Name = "Others", TypeId = 5 }
+                new IncomeCategory { Id = Guid.NewGuid().ToString(), Name = "Salary", TypeId = 1, UserId = user.Id },
+                new IncomeCategory { Id = Guid.NewGuid().ToString(), Name = "Bonuses", TypeId = 2, UserId = user.Id },
+                new IncomeCategory { Id = Guid.NewGuid().ToString(), Name = "Partner Salary", TypeId = 3, UserId = user.Id  },
+                new IncomeCategory { Id = Guid.NewGuid().ToString(), Name = "Partner Bonuses", TypeId = 4, UserId = user.Id },
+                new IncomeCategory { Id = Guid.NewGuid().ToString(), Name = "Business", TypeId = 5, UserId = user.Id },
+                new IncomeCategory { Id = Guid.NewGuid().ToString(), Name = "Rents", TypeId = 5, UserId = user.Id },
+                new IncomeCategory { Id = Guid.NewGuid().ToString(), Name = "Horariums", TypeId = 5, UserId = user.Id },
+                new IncomeCategory { Id = Guid.NewGuid().ToString(), Name = "Dividents", TypeId = 5, UserId = user.Id },
+                new IncomeCategory { Id = Guid.NewGuid().ToString(), Name = "Others", TypeId = 5, UserId = user.Id }
             };
 
             context.IncomeCategories.AddRange(incomeCategories);
@@ -109,29 +111,31 @@
 
         private async Task SeedExpenseCategories(CancellationToken cancellationToken)
         {
+            var user = context.FinanceUsers.FirstOrDefault();
+
             var expenseCategories = new[]
             {
-                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Taxes", TypeId = 7 },
-                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Energy Bills", TypeId = 8 },
-                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Water Bills", TypeId = 8 },
-                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Phone Bills", TypeId = 8 },
-                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Home Bills", TypeId = 8 },
-                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Internet and TV Bills", TypeId = 8 },
-                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Car Maintenance", TypeId = 8 },
-                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Rents", TypeId = 8 },
-                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Food", TypeId = 9 },
-                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Childern", TypeId = 9 },
-                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Home Maintenance", TypeId = 9 },
-                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Cosmetics", TypeId = 9  },
-                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Clothes and Shoes", TypeId = 9 },
-                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Outlook", TypeId = 8 },
-                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Insurances", TypeId = 8 },
-                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Business", TypeId = 9 },
-                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Gifts", TypeId = 9 },
-                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Fun", TypeId = 9 },
-                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Rest", TypeId = 9 },
-                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Sport", TypeId = 9 },
-                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Others", TypeId = 9 }
+                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Taxes", TypeId = 7, UserId = user.Id },
+                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Energy Bills", TypeId = 8, UserId = user.Id },
+                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Water Bills", TypeId = 8, UserId = user.Id },
+                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Phone Bills", TypeId = 8, UserId = user.Id },
+                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Home Bills", TypeId = 8, UserId = user.Id },
+                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "I-net/TV Bills", TypeId = 8, UserId = user.Id },
+                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Car Maintenance", TypeId = 8, UserId = user.Id },
+                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Rents", TypeId = 8, UserId = user.Id },
+                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Food", TypeId = 9, UserId = user.Id },
+                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Childern", TypeId = 9, UserId = user.Id },
+                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Home Maintenance", TypeId = 9, UserId = user.Id },
+                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Cosmetics", TypeId = 9, UserId = user.Id  },
+                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Clothes and Shoes", TypeId = 9, UserId = user.Id },
+                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Outlook", TypeId = 8, UserId = user.Id },
+                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Insurances", TypeId = 8, UserId = user.Id },
+                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Business", TypeId = 9, UserId = user.Id },
+                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Gifts", TypeId = 9, UserId = user.Id },
+                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Fun", TypeId = 9, UserId = user.Id },
+                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Rest", TypeId = 9, UserId = user.Id },
+                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Sport", TypeId = 9, UserId = user.Id },
+                new ExpenseCategory { Id = Guid.NewGuid().ToString(), Name = "Others", TypeId = 9, UserId = user.Id }
             };
 
             context.ExpenseCategories.AddRange(expenseCategories);

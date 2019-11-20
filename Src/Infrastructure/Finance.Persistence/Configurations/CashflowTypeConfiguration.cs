@@ -14,11 +14,13 @@
 
             builder.HasMany(c => c.ExpenseCategories)
                    .WithOne(ec => ec.Type)
-                   .HasForeignKey(ec => ec.TypeId);
+                   .HasForeignKey(ec => ec.TypeId)
+                   .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasMany(c => c.IncomeCategories)
                    .WithOne(ic => ic.Type)
-                   .HasForeignKey(ic => ic.TypeId);
+                   .HasForeignKey(ic => ic.TypeId)
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

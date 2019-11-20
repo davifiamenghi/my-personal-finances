@@ -7,6 +7,7 @@
     using Application.ExpenseCategories.Queries.GetAll;
     using Application.ExpenseCategories.Queries.GetExpensesByCategory;
     using Finance.Application.Expenses.Queries.GetTotalExpensesByYear;
+    using Finance.Application.CashflowTypes.Queries.GetAll;
 
     public class ExpenseCategoryController : BaseController
     {

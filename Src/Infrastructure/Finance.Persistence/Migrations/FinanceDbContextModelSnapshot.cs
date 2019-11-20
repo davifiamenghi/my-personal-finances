@@ -40,6 +40,7 @@ namespace Finance.Persistence.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CategoryId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
@@ -69,6 +70,7 @@ namespace Finance.Persistence.Migrations
                         .HasColumnType("decimal(16, 2)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -105,15 +107,21 @@ namespace Finance.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.Property<int>("TypeId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("TypeId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ExpenseCategories");
                 });
@@ -216,6 +224,7 @@ namespace Finance.Persistence.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CategoryId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
@@ -245,6 +254,7 @@ namespace Finance.Persistence.Migrations
                         .HasColumnType("decimal(16, 2)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -281,15 +291,21 @@ namespace Finance.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.Property<int>("TypeId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("TypeId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("IncomeCategories");
                 });
@@ -488,11 +504,15 @@ namespace Finance.Persistence.Migrations
                 {
                     b.HasOne("Finance.Domain.Entities.ExpenseCategory", "Category")
                         .WithMany("Expenses")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Finance.Domain.Entities.FinanceUser", "User")
                         .WithMany("Expenses")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Finance.Domain.Entities.ExpenseCategory", b =>
@@ -500,6 +520,12 @@ namespace Finance.Persistence.Migrations
                     b.HasOne("Finance.Domain.Entities.CashflowType", "Type")
                         .WithMany("ExpenseCategories")
                         .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Finance.Domain.Entities.FinanceUser", "User")
+                        .WithMany("ExpenseCategories")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -508,11 +534,15 @@ namespace Finance.Persistence.Migrations
                 {
                     b.HasOne("Finance.Domain.Entities.IncomeCategory", "Category")
                         .WithMany("Incomes")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Finance.Domain.Entities.FinanceUser", "User")
                         .WithMany("Incomes")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Finance.Domain.Entities.IncomeCategory", b =>
@@ -520,6 +550,12 @@ namespace Finance.Persistence.Migrations
                     b.HasOne("Finance.Domain.Entities.CashflowType", "Type")
                         .WithMany("IncomeCategories")
                         .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Finance.Domain.Entities.FinanceUser", "User")
+                        .WithMany("IncomeCategories")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

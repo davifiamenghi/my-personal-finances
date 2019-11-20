@@ -20,6 +20,12 @@
             builder.Property(e => e.Date)
                    .IsRequired();
 
+            builder.Property(e => e.CategoryId)
+                   .IsRequired();
+
+            builder.Property(e => e.UserId)
+                   .IsRequired();
+
             builder.Property(e => e.Total)
                 .HasColumnType("decimal(16, 2)");
         }

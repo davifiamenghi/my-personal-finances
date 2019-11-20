@@ -18,6 +18,14 @@
             builder.HasMany(f => f.Expenses)
                    .WithOne(i => i.User)
                    .HasForeignKey(i => i.UserId);
+
+            builder.HasMany(f => f.IncomeCategories)
+                   .WithOne(i => i.User)
+                   .HasForeignKey(i => i.UserId);
+
+            builder.HasMany(f => f.ExpenseCategories)
+                   .WithOne(i => i.User)
+                   .HasForeignKey(i => i.UserId);
         }
     }
 }

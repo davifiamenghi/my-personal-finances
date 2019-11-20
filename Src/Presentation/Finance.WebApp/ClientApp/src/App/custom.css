@@ -46,3 +46,16 @@ code {
 .centered {
     text-align: center;
 }
+
+.categoryDelete {
+    width: 100%;
+    border-radius: 0px;
+}
+
+.btn, .form-control {
+    border-radius: 0px;
+}
+
+.flowEditDelete {
+    width: 35%;
+}

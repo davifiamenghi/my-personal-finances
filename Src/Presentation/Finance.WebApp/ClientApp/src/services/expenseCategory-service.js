@@ -42,6 +42,26 @@ export const getAllExpenseCategories = () => {
     });
 }
 
+export const createExpenseCategory = (payload) => {
+    return new Promise((resolve, reject) => {
+        authService
+            .getAccessToken()
+            .then(token => {
+                fetch('/api/ExpenseCategory/Create', {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(payload)
+                })
+                    .then(() => resolve())
+                    .catch(err => reject(err));
+            })
+    });
+}
+
 export const deleteExpenseCategory = (id) => {
     return new Promise((resolve, reject) => {
         authService

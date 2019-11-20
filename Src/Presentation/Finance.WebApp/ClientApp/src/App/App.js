@@ -28,5 +28,5 @@ export default class App extends Component {
                 <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
             </Layout>
         );
-    }
+    } 
 }

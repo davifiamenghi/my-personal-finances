@@ -3,6 +3,7 @@
     using Application.ExpenseCategories.Queries.GetAll;
     using Application.ExpenseCategories.Queries.GetExpensesByCategory;
     using Application.Expenses.Commands.Delete;
+    using Application.Expenses.Commands.Create;
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
 
@@ -24,6 +25,15 @@
             var result = await Mediator.Send(new GetExpensesByCategoryListQuery() { Month = month, Year = year, UserId = userId });
 
             return Ok(result);
+        }
+
+        // POST: api/ExpenseCategory/Create
+        [HttpPost]
+        public async Task<ActionResult> Create(CreateExpenseCategoryCommand command)
+        {
+            await Mediator.Send(command);
+
+            return NoContent();
         }
 
         // DELETE: api/ExpenseCategory/Delete/5

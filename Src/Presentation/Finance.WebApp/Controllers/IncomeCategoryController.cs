@@ -6,14 +6,15 @@
 
     using Application.IncomeCategories.Queries.GetAll;
     using Application.IncomeCategories.Queries.GetIncomesByCategory;
+    using Application.Incomes.Commands.Delete;
 
     public class IncomeCategoryController : BaseController
     {
         //GET: api/IncomeCategory/GetAll
         [HttpGet]
-        public async Task<ActionResult<IncomeCategoriesListViewModel>> GetAll()
+        public async Task<ActionResult<IncomeCategoriesListViewModel>> GetAll(string userId)
         {
-            var result = await Mediator.Send(new GetAllIncomeCategoriesListQuery());
+            var result = await Mediator.Send(new GetAllIncomeCategoriesListQuery() { UserId = userId });
            
             return Ok(result);
         }
@@ -25,6 +26,15 @@
             var result = await Mediator.Send(new GetIncomesByCategoryListQuery() { Month = month, Year = year, UserId = userId });
 
             return Ok(result);
+        }
+
+        // DELETE: api/IncomeCategory/Delete/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(string id)
+        {
+            await Mediator.Send(new DeleteIncomeCategoryCommand { Id = id });
+
+            return NoContent();
         }
     }
 }

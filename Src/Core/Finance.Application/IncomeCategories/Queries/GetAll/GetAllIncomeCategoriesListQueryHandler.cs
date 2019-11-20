@@ -1,5 +1,6 @@
 ﻿namespace Finance.Application.IncomeCategories.Queries.GetAll
 {
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using AutoMapper;
@@ -23,7 +24,7 @@
         {
             return new IncomeCategoriesListViewModel
             {
-                Categories = await this.context.IncomeCategories.ProjectTo<IncomeCategoryAllViewModel>(this.mapper.ConfigurationProvider).ToListAsync(cancellationToken)
+                Categories = await this.context.IncomeCategories.Where(ic => ic.UserId == request.UserId).ProjectTo<IncomeCategoryAllViewModel>(this.mapper.ConfigurationProvider).ToListAsync(cancellationToken)
             };
         }
     }

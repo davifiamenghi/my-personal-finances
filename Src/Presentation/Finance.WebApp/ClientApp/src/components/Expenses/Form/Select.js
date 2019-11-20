@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react'
+import { getAllExpenseCategories } from '../../../services/expenseCategory-service';
 
 export class Select extends Component {
     constructor() {
@@ -42,9 +43,9 @@ export class Select extends Component {
         this.option.value = id;
     }
 
-    async getExpenseCategories() {
-        const response = await fetch('/api/ExpenseCategory/GetAll');
-        const data = await response.json();
-        this.setState({ options: data.categories });
+    getExpenseCategories = () => {
+        getAllExpenseCategories()
+            .then(data => this.setState({ options: data.categories }))
+            .catch(err => console.log(err));
     }
 }

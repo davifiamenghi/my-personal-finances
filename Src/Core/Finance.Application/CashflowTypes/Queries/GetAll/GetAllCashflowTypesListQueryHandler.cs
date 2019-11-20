@@ -23,7 +23,7 @@
         {
             return new CashflowTypesListViewModel
             {
-                CashflowTypes = await context.ExpenseCategories.ProjectTo<CashflowTypeAllViewModel>(mapper.ConfigurationProvider).ToListAsync(cancellationToken)
+                CashflowTypes = await context.CashflowTypes.ProjectTo<CashflowTypeAllViewModel>(mapper.ConfigurationProvider).ToListAsync(cancellationToken)
             };
         }
     }

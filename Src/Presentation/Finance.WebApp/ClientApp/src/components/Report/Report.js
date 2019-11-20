@@ -1,8 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { Filter } from '../../shared/Filter/Filter';
 import { Table } from './Table/Table';
-import { getExpensesByCategory } from '../../services/expenseCaategory-service';
-import { getIncomesByCategory } from '../../services/incomeCaategory-service';
+import { getExpensesByCategory } from '../../services/expenseCategory-service';
+import { getIncomesByCategory } from '../../services/incomeCategory-service';
 
 
 export class Report extends Component {

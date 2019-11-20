@@ -6,8 +6,8 @@ export class Table extends Component {
     render() {
         return (
             <table className='table table-striped' aria-labelledby="tabelLabel">
-                <thead>
-                    <tr>
+                <thead className='thead-dark'>
+                    <tr className="centered">
                         <th>Merchat</th>
                         <th>Date</th>
                         <th>Category</th>

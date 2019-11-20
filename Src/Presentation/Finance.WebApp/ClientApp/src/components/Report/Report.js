@@ -56,12 +56,12 @@ export class Report extends Component {
                     totals={totalIncomes}
                 />
                 <br />
-                <table className='table table-bordered table-sm' aria-labelledby="tabelLabel">
+                <table className='table table-bordered table-warning table-sm' aria-labelledby="tabelLabel">
                     <tbody>
                         <tr className="last-row">
-                            <td className="col-md-4">Pay to Yourself</td>
-                            <td className="col-md-2">6</td>
-                            <td colSpan="2">{(this.state.totalIncomes * this.state.payToYourself).toFixed(2)} lv.</td>
+                            <td className="firstColumn">Pay to Yourself</td>
+                            <td className="secondColumn">6</td>
+                            <td>{(this.state.totalIncomes * this.state.payToYourself).toFixed(2)} lv.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -73,11 +73,11 @@ export class Report extends Component {
                     totals={totalExpenses}
                 />
                 <br />
-                <table className='table table-bordered table-sm' aria-labelledby="tabelLabel">
+                <table className='table table-bordered table-danger table-sm' aria-labelledby="tabelLabel">
                     <tbody>
                         <tr className="last-row">
-                            <td className="col-md-4">Net Cashflow</td>
-                            <td className="col-md-2">10</td>
+                            <td className="firstColumn">Net Cashflow</td>
+                            <td className="secondColumn">10</td>
                             <td colSpan="2">{(this.state.totalIncomes - (this.state.totalIncomes * this.state.payToYourself) - this.state.totalExpenses).toFixed(2)} lv.</td>
                         </tr>
                     </tbody>

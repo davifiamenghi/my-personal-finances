@@ -4,7 +4,7 @@ export class Button extends Component {
     render() {
         return (
             <div className="form-group">
-                <button type="submit" className={`btn ${this.getColor()}`} onClick={this.props.clearInputs}>{this.getText()}</button>
+                <button type="submit" className={`btn ${this.getColor()} action`} onClick={this.props.clearInputs}>{this.getText()}</button>
             </div>
         )
     }   

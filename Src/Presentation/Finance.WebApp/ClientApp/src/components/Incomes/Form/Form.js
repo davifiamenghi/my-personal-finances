@@ -7,8 +7,7 @@ import { getIncome } from '../../../services/income-service';
 import { createIncome } from '../../../services/income-service';
 import { updateIncome } from '../../../services/income-service';
 import { isValid, parseISO } from 'date-fns';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { collectCashflowErrors } from '../../../services/error-service';
 
 export class Form extends Component {
     constructor() {
@@ -142,7 +141,7 @@ export class Form extends Component {
         createIncome(payload)
             .then((res) => {
                 if (res) {
-                    this.collectErrors(res.errors);
+                    collectCashflowErrors(res.errors);
                     this.fillFields();
                 } else {
                     this.resetState();
@@ -158,7 +157,7 @@ export class Form extends Component {
         updateIncome(payload)
             .then((res) => {
                 if (res) {
-                    this.collectErrors(res.errors);
+                    collectCashflowErrors(res.errors);
                     this.fillFields();
                 } else {
                     this.resetState();
@@ -201,36 +200,5 @@ export class Form extends Component {
         }
 
         return payload;
-    }
-
-    collectErrors(err) {
-        let errors = [];
-
-        if (err.CategoryId) {
-            errors = [...errors, err.CategoryId.toString()]
-        }
-
-        if (err.Date) {
-            errors = [...errors, err.Date.toString()]
-        }
-
-        if (err.Merchant) {
-            errors = [...errors, err.Merchant.toString()]
-        }
-
-        if (err.Total) {
-            errors = [...errors, err.Total.toString()]
-        }
-
-        if (err.Note) {
-            errors = [...errors, err.note.toString()]
-        }
-
-        errors.forEach(error => this.notify(error));
-
-    }
-
-    notify = (message) => {
-        toast(message);
     }
 }

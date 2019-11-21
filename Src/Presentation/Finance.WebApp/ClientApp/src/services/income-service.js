@@ -74,7 +74,12 @@ export const createIncome = (payload) => {
                     },
                     body: JSON.stringify(payload)
                 })
-                    .then(() => resolve())
+                    .then((res) => {
+                        if (res.status === 400) {
+                            resolve(res.json())
+                        }
+                        resolve();
+                    })
                     .catch(err => reject(err));
             })
     });
@@ -94,7 +99,12 @@ export const updateIncome = (payload) => {
                     },
                     body: JSON.stringify(payload)
                 })
-                    .then(() => resolve())
+                    .then((res) => {
+                        if (res.status === 400) {
+                            resolve(res.json())
+                        }
+                        resolve();
+                    })
                     .catch(err => reject(err));
             })
     });
@@ -112,7 +122,12 @@ export const deleteIncome = (id) => {
                         'Authorization': `Bearer ${token}`
                     }
                 })
-                    .then(() => resolve())
+                    .then((res) => {
+                        if (res.status === 400) {
+                            resolve(res.json())
+                        }
+                        resolve();
+                    })
                     .catch(err => reject(err));
             })
     });

@@ -6,7 +6,7 @@ export class Select extends Component {
         super()
 
         this.state = {
-            selectedValue: "0",
+            selectedValue: "",
             options: []
         }
     }
@@ -27,7 +27,7 @@ export class Select extends Component {
                     name={this.props.data}
                     style={{ border: this.props.valid ? '1px solid #0062cc' : '1px solid red' }}
                 >
-                    <option value="0" key="0" disabled>Select Category</option>
+                    <option value="" key="0" disabled>Select Category</option>
                     {this.state.options.map(option =>
                         <option key={option.id} value={option.id}>{option.name}</option>)}
                 </select>
@@ -37,7 +37,7 @@ export class Select extends Component {
 
     clear() {
 
-        this.option.value = "0";
+        this.option.value = "";
     }
 
     fill(id) {

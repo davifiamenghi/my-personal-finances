@@ -1,33 +1,43 @@
 ﻿namespace Finance.Application.Incomes.Commands.Update
 {
     using System;
+    using Finance.Common.GlobalContants;
     using FluentValidation;
 
     public class UpdateIncomeCommandValidator : AbstractValidator<UpdateIncomeCommand>
     {
-        private const int MerchatMaxLength = 50;
-        private const int NoteMaxLength = 200;
-
         public UpdateIncomeCommandValidator()
         {
             RuleFor(e => e.Id)
-                .NotEmpty();
+                .NotEmpty()
+                .WithMessage(string.Format(ApplicationConstants.EmptyErrorMessage, ApplicationConstants.Id));
 
             RuleFor(e => e.Merchant)
-                .MaximumLength(MerchatMaxLength);
+                .MaximumLength(ApplicationConstants.MerchatMaxLength)
+                .WithMessage(string.Format(ApplicationConstants.LengthErrorMessage, ApplicationConstants.Merchant, ApplicationConstants.MerchatMaxLength));
 
             RuleFor(e => e.Note)
-                .MaximumLength(NoteMaxLength);
+                .MaximumLength(ApplicationConstants.NoteMaxLength)
+                .WithMessage(string.Format(ApplicationConstants.LengthErrorMessage, ApplicationConstants.Note, ApplicationConstants.NoteMaxLength));
 
             RuleFor(e => e.Date)
                 .NotEmpty()
-                .Must(BeValidDate);
+                .Must(BeValidDate)
+                .WithMessage(string.Format(ApplicationConstants.InvalidErrorMessage, ApplicationConstants.Date));
+
+            RuleFor(e => e.Total)
+                .GreaterThan(0.00M)
+                .WithMessage(string.Format(ApplicationConstants.ValueErrorMessage, ApplicationConstants.Total));
+
 
             RuleFor(e => e.CategoryId)
-                .NotEmpty();
+                .NotEmpty()
+                .WithMessage(string.Format(ApplicationConstants.EmptyErrorMessage, ApplicationConstants.Category));
+
 
             RuleFor(e => e.UserId)
-                .NotEmpty();
+                .NotEmpty()
+                .WithMessage(string.Format(ApplicationConstants.EmptyErrorMessage, ApplicationConstants.User));
         }
 
         private bool BeValidDate(string date)

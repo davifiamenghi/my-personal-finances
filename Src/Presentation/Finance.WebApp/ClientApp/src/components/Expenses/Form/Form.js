@@ -7,6 +7,8 @@ import { getExpense } from '../../../services/expense-service';
 import { createExpense } from '../../../services/expense-service';
 import { updateExpense } from '../../../services/expense-service';
 import { isValid, parseISO } from 'date-fns';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export class Form extends Component {
     constructor() {
@@ -137,10 +139,15 @@ export class Form extends Component {
         let payload = this.getPayload();
 
         createExpense(payload)
-            .then(() => {
-                this.resetState();
-                this.props.refresh();
-            }).catch(err => console.log(err));
+            .then((res) => {
+                if (res) {
+                    this.collectErrors(res.errors);
+                    this.fillFields();
+                } else {
+                    this.resetState();
+                    this.props.refresh();
+                }
+            });
     }
 
     update = event => {
@@ -148,10 +155,15 @@ export class Form extends Component {
         let payload = this.getPayload();
 
         updateExpense(payload)
-            .then(() => {
-                this.resetState();
-                this.props.refresh();
-            }).catch(err => console.log(err))
+            .then((res) => {
+                if (res) {
+                    this.collectErrors(res.errors);
+                    this.fillFields();
+                } else {
+                    this.resetState();
+                    this.props.refresh();
+                }
+            });
     }
 
     resetState = () => {
@@ -188,5 +200,35 @@ export class Form extends Component {
         }
 
         return payload;
+    }
+
+    collectErrors(err) {
+        let errors = [];
+
+        if (err.CategoryId) {
+            errors = [...errors, err.CategoryId.toString()]
+        }
+
+        if (err.Date) {
+            errors = [...errors, err.Date.toString()]
+        }
+
+        if (err.Merchant) {
+            errors = [...errors, err.Merchant.toString()]
+        }
+
+        if (err.Total) {
+            errors = [...errors, err.Total.toString()]
+        }
+
+        if (err.Note) {
+            errors = [...errors, err.note.toString()]
+        }
+
+        errors.forEach(error => this.notify(error));
+    }
+
+    notify = (message) => {
+        toast(message);
     }
 }

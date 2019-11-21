@@ -90,7 +90,6 @@ export class Categories extends Component {
     populateExpenseCategoriesData = () => {
         getAllExpenseCategories()
             .then(data => {
-                console.log(data)
                 this.setState({
                     expenseCategories: data.categories,
                     loading: false
@@ -102,8 +101,6 @@ export class Categories extends Component {
     populateIncomeCategoriesData = () => {
         getAllIncomeCategories()
             .then(data => {
-                console.log(data)
-
                 this.setState({
                     incomeCategories: data.categories,
                     loading: false
@@ -115,8 +112,6 @@ export class Categories extends Component {
     populateCashflowsTypesData = () => {
         getAllCashflowTypes()
             .then(data => {
-                console.log(data)
-
                 this.setState({
                     cashflowTypes: data.cashflowTypes,
                     loading: false

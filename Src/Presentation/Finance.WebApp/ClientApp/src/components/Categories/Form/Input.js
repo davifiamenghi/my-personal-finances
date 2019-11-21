@@ -13,6 +13,7 @@ export class Input extends Component {
                     name={this.props.data}
                     type={this.props.type}
                     placeholder={this.props.name}
+                    style={{ border: this.props.validate ? '1px solid #0062cc' : '1px solid red' }}
                 />
             </div>
         )

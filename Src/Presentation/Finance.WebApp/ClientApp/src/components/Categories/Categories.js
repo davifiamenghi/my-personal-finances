@@ -38,15 +38,16 @@ export class Categories extends Component {
             <div>
                 <div className="container mt-5 mb-5">
                     <div className="row">
-                        <div className="col-md-6">
+                        <div className="col-md-5">
                             <h2> Create Income Category</h2>
                             <Form
                                 isIncome={true}
                                 refresh={this.populateData}
                             />
                         </div>
-
-                        <div className="col-md-6">
+                        <div className="col-md-2">
+                        </div>
+                        <div className="col-md-5">
                             <h2> Create Expense Category</h2>
                             <Form
                                 isIncome={false}
@@ -67,19 +68,19 @@ export class Categories extends Component {
                         </div>
 
                         <div className="col-md-4">
-                            <Table
-                                refresh={this.populateData}
-                                categories={expenseCategories}
-                                isIncome={false}
-                            />
-                        </div>
-
-                        <div className="col-md-4">
                             <TableCashflowTypes
                                 refresh={this.populateData}
                                 cashflowTypes={cashflowTypes}
                             />
                         </div>
+
+                        <div className="col-md-4">
+                            <Table
+                                refresh={this.populateData}
+                                categories={expenseCategories}
+                                isIncome={false}
+                            />
+                        </div>                        
                     </div>
                 </div>
             </div>

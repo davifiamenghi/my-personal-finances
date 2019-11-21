@@ -1,12 +1,11 @@
 ﻿import React, { Component } from 'react'
 
-
 export class Input extends Component {
 
     render() {
         return (
             <div className="form-row">
-                    {this.getInput()}
+                {this.getInput()}
             </div>
         )
     }
@@ -34,6 +33,7 @@ export class Input extends Component {
                     name={this.props.data}
                     type={this.props.type}
                     placeholder={this.props.name}
+                    style={{ border: this.props.valid ? '1px solid #0062cc' : '1px solid red' }}
                 />
             )
         } else if (this.props.name === 'date') {
@@ -45,6 +45,7 @@ export class Input extends Component {
                     id={this.props.data}
                     name={this.props.data}
                     type={this.props.type}
+                    style={{ border: this.props.valid ? '1px solid #0062cc' : '1px solid red' }}
                 />
             )
         } else {
@@ -57,6 +58,7 @@ export class Input extends Component {
                     name={this.props.data}
                     type={this.props.type}
                     placeholder={this.props.name}
+                    style={{ border: this.props.valid ? '1px solid #0062cc' : '1px solid red' }}
                 />
             )
         }

@@ -19,6 +19,9 @@ export class Form extends Component {
     }
 
     render() {
+        let validateName = this.state.name.length >= 1 && this.state.name.length <= 20;
+        let validateTypeId = this.state.typeId >= 1 && this.state.typeId <= 5 || this.state.typeId >= 7 && this.state.typeId <= 9
+
         return (
             <form onSubmit={this.create} className="form-group">
                 <Input
@@ -27,6 +30,7 @@ export class Form extends Component {
                     data='name'
                     name='Category Name'
                     func={e => { this.setState({ name: e.target.value }) }}
+                    validate={validateName}
                 />
                 
                 <Select
@@ -34,6 +38,7 @@ export class Form extends Component {
                     data="typeId"
                     name='TypeId'
                     func={e => { this.setState({ typeId: e.target.value }) }}
+                    validate={validateTypeId}
                     isIncome={this.props.isIncome}
                 >
                 </Select>

@@ -25,6 +25,7 @@ export class Select extends Component {
                     onChange={(e) => this.props.func(e)}
                     id={this.props.data}
                     name={this.props.data}
+                    style={{ border: this.props.validate ? '1px solid #0062cc' : '1px solid red' }}
                 >
                     <option value="0" key="0" disabled hidden>Select Cashflow Type</option>
                     {this.state.options.map(option =>

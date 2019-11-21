@@ -36,6 +36,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\components\Incomes\Form\Form.js~RF4172d26.TMP" />
+    <None Remove="ClientApp\src\components\Incomes\Form\Form.js~RF425f61f.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Infrastructure\Finance.Infrastructure\Finance.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Finance.Persistence\Finance.Persistence.csproj" />
   </ItemGroup>

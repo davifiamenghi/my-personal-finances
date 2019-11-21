@@ -10,8 +10,11 @@ import { AnnualReport } from '../components/AnnualReport/AnnualReport';
 import AuthorizeRoute from '../components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from '../components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from '../components/api-authorization/ApiAuthorizationConstants';
+import { toast } from 'react-toastify';
 
 import './custom.css'
+
+toast.configure();
 
 export default class App extends Component {
     static displayName = App.name;

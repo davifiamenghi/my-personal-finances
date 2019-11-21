@@ -72,7 +72,12 @@ export const createExpense = (payload) => {
                     },
                     body: JSON.stringify(payload)
                 })
-                    .then(() => resolve())
+                    .then((res) => {
+                        if (res.status === 400) {
+                            resolve(res.json())
+                        }
+                        resolve();
+                    })
                     .catch(err => reject(err));
             })
     });
@@ -92,7 +97,12 @@ export const updateExpense = (payload) => {
                     },
                     body: JSON.stringify(payload)
                 })
-                    .then(() => resolve())
+                    .then((res) => {
+                        if (res.status === 400) {
+                            resolve(res.json())
+                        }
+                        resolve();
+                    })
                     .catch(err => reject(err));
             })
     });
@@ -110,7 +120,12 @@ export const deleteExpense = (id) => {
                         'Authorization': `Bearer ${token}`
                     }
                 })
-                    .then(() => resolve())
+                    .then((res) => {
+                        if (res.status === 400) {
+                            resolve(res.json())
+                        }
+                        resolve();
+                    })
                     .catch(err => reject(err));
             })
     });

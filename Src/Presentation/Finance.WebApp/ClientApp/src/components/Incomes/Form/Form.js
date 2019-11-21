@@ -7,6 +7,8 @@ import { getIncome } from '../../../services/income-service';
 import { createIncome } from '../../../services/income-service';
 import { updateIncome } from '../../../services/income-service';
 import { isValid, parseISO } from 'date-fns';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export class Form extends Component {
     constructor() {
@@ -16,11 +18,12 @@ export class Form extends Component {
             merchant: '',
             date: new Date().toLocaleString(),
             total: 0.00,
-            categoryId: '',
+            categoryId: "",
             note: '',
             options: [],
             userId: '',
-            isCreate: true
+            isCreate: true,
+            errors: []
         }
     }
 
@@ -29,11 +32,11 @@ export class Form extends Component {
         let validDate = isValid(parseISO(this.state.date));
         let validCategory = this.state.categoryId !== "";
         let validNote = this.state.note <= 200;
-        let validTotal = this.state.total > 0;
+        let validTotal = this.state.total >= 0.01;
 
         return (
             <div className="container">
-                <div className="row">
+                <div className="row">                   
                     <form onSubmit={this.state.isCreate ? this.create : this.update} className="form-row">
                         <div className="col-md-2">
                             <Input
@@ -105,7 +108,7 @@ export class Form extends Component {
                     userId: user.sub
                 });
             });
-    }
+    }    
 
     clearInputs = () => {
         this.merchant.clear();
@@ -137,10 +140,15 @@ export class Form extends Component {
         let payload = this.getPayload();
 
         createIncome(payload)
-            .then(() => {
-                this.resetState();
-                this.props.refresh();
-            }).catch(err => console.log(err));
+            .then((res) => {
+                if (res) {
+                    this.collectErrors(res.errors);
+                    this.fillFields();
+                } else {
+                    this.resetState();
+                    this.props.refresh();
+                }    
+            });
     }
 
     update = event => {
@@ -148,10 +156,15 @@ export class Form extends Component {
         let payload = this.getPayload();
 
         updateIncome(payload)
-            .then(() => {
-                this.resetState();
-                this.props.refresh();
-            }).catch(err => console.log(err))
+            .then((res) => {
+                if (res) {
+                    this.collectErrors(res.errors);
+                    this.fillFields();
+                } else {
+                    this.resetState();
+                    this.props.refresh();
+                }
+            });
     }
 
     resetState = () => {
@@ -159,7 +172,7 @@ export class Form extends Component {
             merchant: '',
             date: new Date().toLocaleString(),
             total: 0.00,
-            categoryId: '',
+            categoryId: "",
             note: '',
             isCreate: true
         });
@@ -188,5 +201,36 @@ export class Form extends Component {
         }
 
         return payload;
+    }
+
+    collectErrors(err) {
+        let errors = [];
+
+        if (err.CategoryId) {
+            errors = [...errors, err.CategoryId.toString()]
+        }
+
+        if (err.Date) {
+            errors = [...errors, err.Date.toString()]
+        }
+
+        if (err.Merchant) {
+            errors = [...errors, err.Merchant.toString()]
+        }
+
+        if (err.Total) {
+            errors = [...errors, err.Total.toString()]
+        }
+
+        if (err.Note) {
+            errors = [...errors, err.note.toString()]
+        }
+
+        errors.forEach(error => this.notify(error));
+
+    }
+
+    notify = (message) => {
+        toast(message);
     }
 }

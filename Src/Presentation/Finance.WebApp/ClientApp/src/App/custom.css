@@ -1,4 +1,12 @@
 /* Provide sufficient contrast against white background */
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1, h2, h3, h4, h5, th, button {
+    font-family: 'Oswald', sans-serif;
+}
+
 a {
   color: #0366d6;
 }
@@ -32,7 +40,7 @@ code {
 }
 
 .action {
-    padding: 6px 21px;
+    padding: 6px 21px 4px 21px;
 }
 
 .firstColumn {

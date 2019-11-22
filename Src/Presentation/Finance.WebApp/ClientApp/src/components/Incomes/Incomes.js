@@ -85,32 +85,28 @@ export class Incomes extends Component {
     }
 
     populateIncomesData = () => {
-        let validateMonth = this.state.month >= 1 && this.state.month <= 12;
-        let validateYear = this.state.year >= 1 && this.state.year <= 9999;
+        let isValidMonthAndYear = this.validateMonthAndYear();
 
-        if (!validateMonth) {
-            notify("Invalid month!");
-            this.setState({
-                month: new Date().getMonth() + 1,
-                year: new Date().getFullYear(),
-            });
+        if (isValidMonthAndYear) {
+            getAllIncomes(this.state.month, this.state.year)
+                .then(data => this.setState({ incomes: data, loading: false }));
+        }        
+    }
+
+    validateMonthAndYear = () => {
+        let isValidMonth = this.state.month >= 1 && this.state.month <= 12;
+        let isValidYear = this.state.year >= 1 && this.state.year <= 9999;
+
+        if (!isValidMonth || !isValidYear) {
+
+            if (!isValidMonth) notify("Invalid Month!");
+            if (!isValidYear) notify("Invalid Year!");
 
             this.refs.filter.fillFields();
-            return;
+
+            return false;
         }
 
-        if (!validateYear) {
-            notify("Invalid year!");
-            this.setState({
-                month: new Date().getMonth() + 1,
-                year: new Date().getFullYear(),
-            });
-
-            return;
-        }
-
-        getAllIncomes(this.state.month, this.state.year)
-            .then(data => this.setState({ incomes: data, loading: false }))
-            .catch(err => console.log(err));
+        return true;
     }
 }

@@ -36,7 +36,7 @@ export class Filter extends Component {
     }
 
     fillFields = () => {
-        this.month.fill(new Date().getMonth() + 1);
-        this.year.fill(new Date().getFullYear());
+        this.month.fill(this.props.month);
+        this.year.fill(this.props.year);
     }
 }

@@ -3,6 +3,7 @@ import { Filter } from './Filter/Filter';
 import { Table } from './Table/Table';
 import { getExpensesByYear } from '../../services/expense-service';
 import { getIncomesByYear } from '../../services/income-service';
+import { notify } from '../../services/error-service';
 
 export class AnnualReport extends Component {
     constructor(props) {
@@ -40,7 +41,9 @@ export class AnnualReport extends Component {
             <div>
                 <h2>Annual Report</h2>
                 <br />
+
                 <Filter
+                    ref='filter'
                     yearChange={this.onYearChange}
                     refresh={this.populateData}
                     year={this.state.year}
@@ -62,7 +65,10 @@ export class AnnualReport extends Component {
     }
 
     populateData = () => {
-        getIncomesByYear(this.state.year)
+        let isFilterValid = this.validateYear();
+
+        if (isFilterValid) {
+            getIncomesByYear(this.state.year)
             .then(incomes => {
                 getExpensesByYear(this.state.year)
                     .then(expenses => {
@@ -75,7 +81,23 @@ export class AnnualReport extends Component {
                             totalExpenses: expenses.totals,
                             loading: false
                         });
-                    }).catch(err => console.log(err));
+                    });
                 });
+        }
+        
+    }
+
+    validateYear = () => {
+        let isValidYear = this.state.year >= 1 && this.state.year <= 9999;
+
+        if (!isValidYear) {
+
+            notify("Invalid Year!");
+            this.refs.filter.fillFields();
+
+            return false;
+        }
+
+        return true;
     }
 }

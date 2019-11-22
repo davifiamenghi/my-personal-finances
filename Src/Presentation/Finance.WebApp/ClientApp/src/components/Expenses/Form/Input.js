@@ -11,8 +11,7 @@ export class Input extends Component {
     }
 
     clear() {
-        this.props.type === 'date' ?
-            this.input.value = new Date().toLocaleString() : this.input.value = '';       
+        this.input.value = '';       
     }
 
     fill(value) {

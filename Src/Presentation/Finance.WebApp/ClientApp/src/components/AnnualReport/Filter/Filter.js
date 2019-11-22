@@ -1,4 +1,5 @@
 ﻿import React, { Component, Fragment } from 'react';
+import { Input } from '../../../shared/Filter/Input';
 
 export class Filter extends Component {
     render() {
@@ -9,12 +10,12 @@ export class Filter extends Component {
                 <br />
                 <div className="form-row">
                     <div className="col-md-2">
-                        <input
-                            className="form-control"
+                        <Input
+                            ref={year => this.year = year}
                             name="Year"
-                            onChange={this.props.yearChange}
+                            timeChange={this.props.yearChange}
                             placeholder={this.props.year}
-                            style={{ border: validateYear ? '1px solid #0062cc' : '1px solid red' }}
+                            validate={validateYear}
                         />
                     </div>
                     <button className="btn btn-primary" onClick={this.props.refresh}>Get Report</button>
@@ -22,5 +23,9 @@ export class Filter extends Component {
                 <br />
             </Fragment>
         )
+    }
+
+    fillFields = () => {
+        this.year.fill(this.props.year);
     }
 }

@@ -15,7 +15,7 @@ export class Form extends Component {
 
         this.state = {
             merchant: '',
-            date: new Date().toLocaleString(),
+            date: "",
             total: 0.00,
             categoryId: "",
             note: '',
@@ -169,9 +169,9 @@ export class Form extends Component {
     resetState = () => {
         this.setState({
             merchant: '',
-            date: new Date().toLocaleString(),
+            date: '',
             total: 0.00,
-            categoryId: "",
+            categoryId: '',
             note: '',
             isCreate: true
         });

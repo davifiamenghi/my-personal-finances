@@ -3,7 +3,7 @@ import { Filter } from '../../shared/Filter/Filter';
 import { Table } from './Table/Table';
 import { getExpensesByCategory } from '../../services/expenseCategory-service';
 import { getIncomesByCategory } from '../../services/incomeCategory-service';
-
+import { notify } from '../../services/error-service';
 
 export class Report extends Component {
     constructor(props) {
@@ -42,8 +42,9 @@ export class Report extends Component {
                 <h2>Monthly Report</h2>
 
                 <Filter
+                    ref='filter'
                     monthChange={this.onMonthChange}
-                    yearchange={this.onYearChange}
+                    yearChange={this.onYearChange}
                     refresh={this.populateData}
                     month={this.state.month}
                     year={this.state.year}
@@ -98,32 +99,40 @@ export class Report extends Component {
         });
     }
 
-    populateExpensesData = () => {
-        getExpensesByCategory(this.state.month, this.state.year)
-            .then(data => {
-                this.setState({
-                    expenses: data.expenseCategories,
-                    totalExpenses: data.totals,
-                    loading: false
-                })
-            })
-            .catch(err => console.log(err));
-    }
-
-    populateIncomesData = () => {
-        getIncomesByCategory(this.state.month, this.state.year)
-            .then(data => {
-                this.setState({
-                    incomes: data.incomeCategories,
-                    totalIncomes: data.totals,
-                    loading: false
-                })
-            })
-            .catch(err => console.log(err));
-    }
-
     populateData = () => {
-        this.populateExpensesData();
-        this.populateIncomesData();
+        let isValidMonthAndYear = this.validateMonthAndYear();
+
+        if (isValidMonthAndYear) {
+            getIncomesByCategory(this.state.month, this.state.year)
+                .then(incomes => {
+                    getExpensesByCategory(this.state.month, this.state.year)
+                        .then(expenses => {
+                            this.setState({
+                                incomes: incomes.incomeCategories,
+                                totalIncomes: incomes.totals,
+                                expenses: expenses.expenseCategories,
+                                totalExpenses: expenses.totals,
+                                loading: false
+                            });
+                        });
+                });
+        }
+    }
+
+    validateMonthAndYear = () => {
+        let isValidMonth = this.state.month >= 1 && this.state.month <= 12;
+        let isValidYear = this.state.year >= 1 && this.state.year <= 9999;
+
+        if (!isValidMonth || !isValidYear) {
+
+            if (!isValidMonth) notify("Invalid Month!");
+            if (!isValidYear) notify("Invalid Year!");
+
+            this.refs.filter.fillFields();
+
+            return false;
+        }
+
+        return true;
     }
 }

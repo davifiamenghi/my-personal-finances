@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { TableRow } from '../Table/TableRow';
 import { deleteExpense } from '../../../services/expense-service';
+import { notify } from '../../../services/error-service';
 
 export class Table extends Component {
     render() {
@@ -32,7 +33,9 @@ export class Table extends Component {
 
     delete = id => {
         deleteExpense(id)
-            .then(() => this.props.refresh())
-            .catch(err => console.log(err));
+            .then(() => {
+                this.props.refresh()
+                notify("Successfully delete an Expense!");
+            });
     }
 }

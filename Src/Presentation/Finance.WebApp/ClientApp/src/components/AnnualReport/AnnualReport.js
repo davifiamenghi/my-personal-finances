@@ -4,6 +4,7 @@ import { Table } from './Table/Table';
 import { getExpensesByYear } from '../../services/expense-service';
 import { getIncomesByYear } from '../../services/income-service';
 import { notify } from '../../services/error-service';
+import { collectCashflowFilterErrors } from '../../services/error-service';
 
 export class AnnualReport extends Component {
     constructor(props) {
@@ -72,6 +73,11 @@ export class AnnualReport extends Component {
             .then(incomes => {
                 getExpensesByYear(this.state.year)
                     .then(expenses => {
+                        if (incomes.errors || expenses.errors) {
+                            if (incomes.errors) collectCashflowFilterErrors(incomes.errors);
+                            if (expenses.errors) collectCashflowFilterErrors(expenses.errors);
+                            return;
+                        }
                         this.setState({
                             cashflows: {
                                 incomes: incomes.incomeSums,

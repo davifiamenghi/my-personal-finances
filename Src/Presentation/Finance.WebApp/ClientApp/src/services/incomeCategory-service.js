@@ -56,7 +56,12 @@ export const createIncomeCategory = (payload) => {
                     },
                     body: JSON.stringify(payload)
                 })
-                    .then(() => resolve())
+                    .then((res) => {
+                        if (res.status === 400) {
+                            resolve(res.json())
+                        }
+                        resolve();
+                    })
                     .catch(err => reject(err));
             })
     });
@@ -74,7 +79,12 @@ export const deleteIncomeCategory = (id) => {
                         'Authorization': `Bearer ${token}`
                     }
                 })
-                    .then(() => resolve())
+                    .then((res) => {
+                        if (res.status === 400 || res.status === 500) {
+                            resolve(res.json())
+                        }
+                        resolve();
+                    })
                     .catch(err => reject(err));
             })
     });

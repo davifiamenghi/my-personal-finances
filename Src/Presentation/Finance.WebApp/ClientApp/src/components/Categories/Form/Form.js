@@ -5,6 +5,8 @@ import { Select } from './Select';
 import authService from '../../api-authorization/AuthorizeService';
 import { createExpenseCategory } from '../../../services/expenseCategory-service';
 import { createIncomeCategory } from '../../../services/incomeCategory-service';
+import { collectCategoriesErrors } from '../../../services/error-service';
+import { notify } from '../../../services/error-service';
 
 export class Form extends Component {
     constructor() {
@@ -22,6 +24,7 @@ export class Form extends Component {
         let validateName = this.state.name.length >= 1 && this.state.name.length <= 20;
         let validateIncomeTypeId = this.state.typeId >= 1 && this.state.typeId <= 5;
         let validateExpenseTypeId = this.state.typeId >= 7 && this.state.typeId <= 9;
+
         return (
             <form onSubmit={this.create} className="form-group">
                 <Input
@@ -65,21 +68,32 @@ export class Form extends Component {
 
     create = event => {
         event.preventDefault();
-        let payload = this.getPayload();
 
-        if (this.props.isIncome) {
-            createIncomeCategory(payload)
-                .then(() => {
-                    this.resetState();
-                    this.props.refresh();
-                }).catch(err => console.log(err));
-        } else {
-            createExpenseCategory(payload)
-                .then(() => {
-                    this.resetState();
-                    this.props.refresh();
-                }).catch(err => console.log(err));
-        }
+        let isValidNameAndType = this.validateNameAndType();
+        if (isValidNameAndType) {
+            let payload = this.getPayload();
+
+            if (this.props.isIncome) {
+                createIncomeCategory(payload)
+                    .then((res) => {
+                        if (res) {
+                            collectCategoriesErrors(res.errors);
+                            this.fillFields();
+                        } else {
+                            this.resetState();
+                            this.props.refresh();
+                            notify("Successfuly create an Income Category!");
+                        }
+                    });
+            } else {
+                createExpenseCategory(payload)
+                    .then(() => {
+                        this.resetState();
+                        this.props.refresh();
+                        notify("Successfuly create an Expense Category!");
+                    });
+            }
+        }        
     }
 
     resetState = () => {
@@ -97,5 +111,29 @@ export class Form extends Component {
         }
 
         return payload;
+    }
+
+    fillFields = () => {
+        this.name.fill(this.state.name);
+        this.typeId.fill(this.state.typeId);
+    }
+
+    validateNameAndType = () => {
+        let isValidName = this.state.name.length >= 1 && this.state.name.length <= 20;
+
+        let isValidCashflowTypeId = this.props.isIncome ?
+            this.state.typeId >= 1 && this.state.typeId <= 5 : this.state.typeId >= 7 && this.state.typeId <= 9;
+
+        if (!isValidName || !isValidCashflowTypeId) {
+
+            if (!isValidName) notify("Name cannot be empty and logner than 20 characters!");
+            if (!isValidCashflowTypeId) notify("Please, select Cashflow Type!");
+
+            this.fillFields();
+
+            return false;
+        }
+
+        return true;
     }
 }

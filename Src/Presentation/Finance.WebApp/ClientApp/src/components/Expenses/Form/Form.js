@@ -8,6 +8,7 @@ import { createExpense } from '../../../services/expense-service';
 import { updateExpense } from '../../../services/expense-service';
 import { isValid, parseISO } from 'date-fns';
 import { collectCashflowErrors } from '../../../services/error-service';
+import { notify } from '../../../services/error-service';
 
 export class Form extends Component {
     constructor() {
@@ -145,6 +146,7 @@ export class Form extends Component {
                 } else {
                     this.resetState();
                     this.props.refresh();
+                    notify("Successfuly create an Expense!");
                 }
             });
     }
@@ -161,6 +163,7 @@ export class Form extends Component {
                 } else {
                     this.resetState();
                     this.props.refresh();
+                    notify("Successfuly update an Expense!");
                 }
             });
     }

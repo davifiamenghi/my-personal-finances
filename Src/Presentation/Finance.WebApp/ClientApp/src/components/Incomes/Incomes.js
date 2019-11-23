@@ -4,6 +4,7 @@ import { Form } from './Form/Form';
 import { Table } from './Table/Table';
 import { getAllIncomes } from '../../services/income-service';
 import { notify } from '../../services/error-service';
+import { collectCashflowFilterErrors } from '../../services/error-service';
 
 export class Incomes extends Component {
 
@@ -89,7 +90,13 @@ export class Incomes extends Component {
 
         if (isValidMonthAndYear) {
             getAllIncomes(this.state.month, this.state.year)
-                .then(data => this.setState({ incomes: data, loading: false }));
+                .then(data => {
+                    if (data.errors) {
+                        collectCashflowFilterErrors(data.errors);
+                        return;
+                    }
+                    this.setState({ incomes: data, loading: false })
+                });
         }        
     }
 

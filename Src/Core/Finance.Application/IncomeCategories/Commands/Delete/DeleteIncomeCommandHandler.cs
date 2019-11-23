@@ -8,6 +8,7 @@
     using Common.Exceptions;
     using Common.Interfaces;
     using System.Linq;
+    using Microsoft.EntityFrameworkCore;
 
     public class DeleteIncomeCategoryCommandHandler : IRequestHandler<DeleteIncomeCategoryCommand>
     {
@@ -24,7 +25,9 @@
 
         public async Task<Unit> Handle(DeleteIncomeCategoryCommand request, CancellationToken cancellationToken)
         {
-            var incomeCategory = await this.context.IncomeCategories.FindAsync(request.Id);
+            var incomeCategory = await this.context.IncomeCategories
+                .Include(ec => ec.Incomes)
+                .SingleOrDefaultAsync(ec => ec.Id == request.Id);
 
             if (incomeCategory == null)
             {

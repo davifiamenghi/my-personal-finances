@@ -4,6 +4,7 @@ import { Table } from './Table/Table';
 import { getExpensesByCategory } from '../../services/expenseCategory-service';
 import { getIncomesByCategory } from '../../services/incomeCategory-service';
 import { notify } from '../../services/error-service';
+import { collectCashflowFilterErrors } from '../../services/error-service';
 
 export class Report extends Component {
     constructor(props) {
@@ -107,6 +108,12 @@ export class Report extends Component {
                 .then(incomes => {
                     getExpensesByCategory(this.state.month, this.state.year)
                         .then(expenses => {
+                            if (incomes.errors || expenses.errors) {
+                                if (incomes.errors) collectCashflowFilterErrors(incomes.errors);
+                                if (expenses.errors) collectCashflowFilterErrors(expenses.errors);
+                                return;
+                            }
+
                             this.setState({
                                 incomes: incomes.incomeCategories,
                                 totalIncomes: incomes.totals,

@@ -8,6 +8,7 @@ import { createIncome } from '../../../services/income-service';
 import { updateIncome } from '../../../services/income-service';
 import { isValid, parseISO } from 'date-fns';
 import { collectCashflowErrors } from '../../../services/error-service';
+import { notify } from '../../../services/error-service';
 
 export class Form extends Component {
     constructor() {
@@ -146,6 +147,7 @@ export class Form extends Component {
                 } else {
                     this.resetState();
                     this.props.refresh();
+                    notify("Successfuly create an Income!");
                 }    
             });
     }
@@ -162,6 +164,7 @@ export class Form extends Component {
                 } else {
                     this.resetState();
                     this.props.refresh();
+                    notify("Successfuly update an Income!");
                 }
             });
     }

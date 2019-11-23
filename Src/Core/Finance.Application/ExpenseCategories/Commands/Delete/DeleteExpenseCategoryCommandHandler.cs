@@ -8,6 +8,7 @@
     using Common.Exceptions;
     using Common.Interfaces;
     using System.Linq;
+    using Microsoft.EntityFrameworkCore;
 
     public class DeleteExpenseCategoryCommandHandler : IRequestHandler<DeleteExpenseCategoryCommand>
     {
@@ -24,7 +25,9 @@
 
         public async Task<Unit> Handle(DeleteExpenseCategoryCommand request, CancellationToken cancellationToken)
         {
-            var expenseCategory = await this.context.ExpenseCategories.FindAsync(request.Id);
+            var expenseCategory = await this.context.ExpenseCategories
+                .Include(ec => ec.Expenses)
+                .SingleOrDefaultAsync(ec => ec.Id == request.Id);
 
             if (expenseCategory == null)
             {

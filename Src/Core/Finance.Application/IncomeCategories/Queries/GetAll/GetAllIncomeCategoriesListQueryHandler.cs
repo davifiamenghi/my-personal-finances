@@ -24,7 +24,12 @@
         {
             return new IncomeCategoriesListViewModel
             {
-                Categories = await this.context.IncomeCategories.Where(ic => ic.UserId == request.UserId).ProjectTo<IncomeCategoryAllViewModel>(this.mapper.ConfigurationProvider).ToListAsync(cancellationToken)
+                Categories = await this.context.IncomeCategories
+                    .Where(ic => ic.UserId == request.UserId)
+                    .OrderBy(ec => ec.TypeId)
+                    .ThenBy(ec => ec.Name)
+                    .ProjectTo<IncomeCategoryAllViewModel>(this.mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken)
             };
         }
     }

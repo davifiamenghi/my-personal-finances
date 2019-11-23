@@ -26,7 +26,7 @@
                 .WithMessage(string.Format(ApplicationConstants.InvalidErrorMessage, ApplicationConstants.Date));
 
             RuleFor(e => e.Total)
-                .GreaterThan(0.00M)
+                .GreaterThan(ApplicationConstants.MinimumTotal)
                 .WithMessage(string.Format(ApplicationConstants.ValueErrorMessage, ApplicationConstants.Total));
 
 

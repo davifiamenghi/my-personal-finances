@@ -3,6 +3,8 @@ import { TableRow } from './TableRow';
 import { deleteExpenseCategory } from '../../../services/expenseCategory-service';
 import { deleteIncomeCategory } from '../../../services/incomeCategory-service';
 import { notify } from '../../../services/error-service';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
 export class Table extends Component {
     render() {
@@ -30,27 +32,52 @@ export class Table extends Component {
 
     delete = id => {
         if (this.props.isIncome) {
-            deleteIncomeCategory(id)
-                .then((res) => {
-                    if (res) {
-                        notify(res.error.split('. ')[1]);
-                        return;
-                    }
+            confirmAlert({
+                title: 'Confirm to submit',
+                message: 'Are you sure to delete this income.',
+                buttons: [
+                    {
+                        label: 'Yes',
+                        onClick: () => deleteIncomeCategory(id)
+                            .then((res) => {
+                                if (res) {
+                                    notify(res.error.split('. ')[1]);
+                                    return;
+                                }
 
-                    this.props.refresh();
-                    notify("Successfully delete an Income Category!");
-                });
+                                this.props.refresh();
+                                notify("Successfully delete an Income Category!");
+                            })
+                    },
+                    {
+                        label: 'No'
+                    }
+                ]
+            })
+            
         } else {
-            deleteExpenseCategory(id)
-                .then((res) => {
-                    if (res) {
-                        notify(res.error.split('. ')[1]);
-                        return;
-                    }
+            confirmAlert({
+                title: 'Confirm to submit',
+                message: 'Are you sure to delete this category.',
+                buttons: [
+                    {
+                        label: 'Yes',
+                        onClick: () => deleteExpenseCategory(id)
+                            .then((res) => {
+                                if (res) {
+                                    notify(res.error.split('. ')[1]);
+                                    return;
+                                }
 
-                    this.props.refresh();
-                    notify("Successfully delete an Expense Category!");
-                });
+                                this.props.refresh();
+                                notify("Successfully delete an Expense Category!");
+                            })
+                    },
+                    {
+                        label: 'No'
+                    }
+                ]
+            })            
         }
     }
 }

@@ -5,7 +5,7 @@
         public const int MerchatMaxLength = 50;
         public const int NoteMaxLength = 200;
         public const int NameMaxLength = 20;
-        public const int MinMonth = 1;
+        public const int MinMonth = 0;
         public const int MaxMonth = 12;
         public const int MinYear = 1;
         public const int MaxYear = 9999;

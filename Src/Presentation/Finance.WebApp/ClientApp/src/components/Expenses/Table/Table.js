@@ -2,6 +2,8 @@
 import { TableRow } from '../Table/TableRow';
 import { deleteExpense } from '../../../services/expense-service';
 import { notify } from '../../../services/error-service';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
 export class Table extends Component {
     render() {
@@ -32,10 +34,23 @@ export class Table extends Component {
     }
 
     delete = id => {
-        deleteExpense(id)
-            .then(() => {
-                this.props.refresh()
-                notify("Successfully delete an Expense!");
-            });
+        confirmAlert({
+            title: 'Confirm to submit',
+            message: 'Are you sure to delete this expense.',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => deleteExpense(id)
+                        .then(() => {
+                            this.props.refresh()
+                            notify("Successfully delete an Income!");
+                        })
+                },
+                {
+                    label: 'No'
+                }
+            ]
+        })
+
     }
 }

@@ -6,6 +6,7 @@ export class TableRow extends Component {
         return (
             <tr>
                 <td>{this.props.category.name}</td>
+                <td className='centered'>{this.props.category.typeId}</td>
                 <td className='centered'><DeleteButton delete={this.props.delete} id={this.props.category.id} /></td>
             </tr> 
         )

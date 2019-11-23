@@ -1,20 +1,28 @@
 ﻿namespace Finance.Application.Expenses.Commands.Create
 {
+    using Finance.Common.GlobalContants;
     using FluentValidation;
 
     public class CreateExpenseCategoryCommandValidator : AbstractValidator<CreateExpenseCategoryCommand>
     {
-        private const int NameMaxLength = 20;
-
         public CreateExpenseCategoryCommandValidator()
         {
             RuleFor(e => e.Name)
-                .MaximumLength(NameMaxLength)
+                .MaximumLength(ApplicationConstants.NameMaxLength)
                 .NotNull()
-                .NotEmpty();
+                .NotEmpty()
+                .WithMessage(string.Format(ApplicationConstants.EmptyErrorMessage, ApplicationConstants.CategoryName));
+
+            RuleFor(e => e.TypeId)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage(string.Format(ApplicationConstants.EmptyErrorMessage, ApplicationConstants.Type));
+
 
             RuleFor(e => e.UserId)
-                .NotEmpty();
+                .NotNull()
+                .NotEmpty()
+                .WithMessage(string.Format(ApplicationConstants.EmptyErrorMessage, ApplicationConstants.User));
         }
     }
 }

@@ -6,14 +6,14 @@ export class TableCashflowTypes extends Component {
             <table className='table table-striped table-bordered table-sm' aria-labelledby="tabelLabel">
                 <thead className='thead-dark'>
                     <tr>
-                        <th>Id</th>
-                        <th>Cashflow Type Description</th>
+                        <th className='centered'>Id</th>
+                        <th>Cashflow Types Description</th>
                     </tr>
                 </thead>
                 <tbody>
                     {this.props.cashflowTypes.map(cashflowType =>
                         <tr key={cashflowType.id}>
-                            <td>{cashflowType.id}</td>
+                            <td className='centered'>{cashflowType.id}</td>
                             <td>{cashflowType.description}</td>
                         </tr> 
                     )}

@@ -4,6 +4,7 @@ import { Form } from './Form/Form';
 import { Table } from './Table/Table';
 import { getAllExpenses } from '../../services/expense-service';
 import { notify } from '../../services/error-service';
+import { collectCashflowFilterErrors } from '../../services/error-service';
 
 export class Expenses extends Component {
 
@@ -89,7 +90,14 @@ export class Expenses extends Component {
 
         if (isValidMonthAndYear) {
             getAllExpenses(this.state.month, this.state.year)
-                .then(data => this.setState({ expenses: data, loading: false }));
+                .then(data => {
+                    if (data.errors) {
+                        collectCashflowFilterErrors(data.errors);
+                        console.log(data);
+                        return;
+                    }
+                    this.setState({ expenses: data, loading: false })
+                });
         }        
     }    
 

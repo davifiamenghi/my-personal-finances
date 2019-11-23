@@ -26,7 +26,34 @@ export const collectCashflowErrors = (err) => {
     }
 
     errors.forEach(error => notify(error));
+}
 
+export const collectCashflowFilterErrors = (err) => {
+    let errors = [];
+
+    if (err.Month) {
+        errors = [...errors, err.Month.toString()]
+    }
+
+    if (err.Year) {
+        errors = [...errors, err.Year.toString()]
+    }   
+
+    errors.forEach(error => notify(error));
+}
+
+export const collectCategoriesErrors = (err) => {
+    let errors = [];
+
+    if (err.TypeId) {
+        errors = [...errors, err.TypeId.toString()]
+    }
+
+    if (err.Name) {
+        errors = [...errors, err.Name.toString()]
+    }
+
+    errors.forEach(error => notify(error));
 }
 
 export const notify = (message) => {

@@ -24,7 +24,12 @@
         {
             return new ExpenseCategoriesListViewModel
             {
-                Categories = await this.context.ExpenseCategories.Where(ec => ec.UserId == request.UserId).ProjectTo<ExpenseCategoryAllViewModel>(this.mapper.ConfigurationProvider).ToListAsync(cancellationToken)
+                Categories = await this.context.ExpenseCategories                    
+                    .Where(ec => ec.UserId == request.UserId)
+                    .OrderBy(ec => ec.TypeId)
+                    .ThenBy(ec => ec.Name)
+                    .ProjectTo<ExpenseCategoryAllViewModel>(this.mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken)
             };
         }
     }

@@ -22,4 +22,8 @@ export class Input extends Component {
     clear() {
         this.input.value = '';
     }
+
+    fill(value) {
+        this.input.value = value;
+    } 
 }

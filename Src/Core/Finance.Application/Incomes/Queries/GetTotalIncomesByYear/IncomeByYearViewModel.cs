@@ -10,7 +10,7 @@
         {
             get
             {
-                return CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(this.Month);
+                return CultureInfo.InvariantCulture.DateTimeFormat.GetMonthName(this.Month);
             }
         }
 

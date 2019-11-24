@@ -7,7 +7,7 @@
         public const int NameMaxLength = 20;
         public const int MinMonth = 0;
         public const int MaxMonth = 12;
-        public const int MinYear = 1;
+        public const int MinYear = 0;
         public const int MaxYear = 9999;
         public const decimal MinimumTotal = 0.00M;
         public const string BaseExceptionMessage = "One or more validation failures have occurred.";

@@ -3,6 +3,9 @@ import { TableRow } from '../Table/TableRow';
 
 export class Table extends Component {
     render() {
+        let totalSavings = this.props.totalIncomes - this.props.totalExpenses < 0 ? 0 : this.props.totalIncomes - this.props.totalExpenses;
+        let totalSavingsPer = this.props.totalIncomes === 0 ? 0 : (((this.props.totalIncomes - this.props.totalExpenses) / this.props.totalIncomes) * 100);
+        
         return (
             <table className='table table-striped table-bordered' aria-labelledby="tabelLabel">
                 <thead className='thead-dark'>
@@ -26,8 +29,8 @@ export class Table extends Component {
                         <td>Totals</td>
                         <td>{this.props.totalIncomes.toFixed(2)} lv.</td>
                         <td>{this.props.totalExpenses.toFixed(2)} lv.</td>
-                        <td>{(this.props.totalIncomes - this.props.totalExpenses).toFixed(2)} lv.</td>
-                        <td>{(((this.props.totalIncomes - this.props.totalExpenses) / this.props.totalIncomes) * 100).toFixed(2)}%</td>
+                        <td>{totalSavings.toFixed(2)} lv.</td>
+                        <td>{totalSavingsPer.toFixed(2)}%</td>
                     </tr>
                 </tbody>
             </table>

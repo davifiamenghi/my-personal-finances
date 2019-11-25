@@ -11,7 +11,6 @@ import { collectCashflowErrors } from '../../../services/error-service';
 import { notify } from '../../../services/error-service';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 
-
 export class CreateForm extends Component {
     constructor() {
         super()
@@ -30,12 +29,6 @@ export class CreateForm extends Component {
     }
 
     render() {
-        let validMerchant = this.state.merchant.length <= 50;
-        let validDate = isValid(parseISO(this.state.date));
-        let validCategory = this.state.categoryId !== "";
-        let validNote = this.state.note.length <= 200;
-        let validTotal = this.state.total >= 0.01;
-
         return (
             <Container>
                 <Row>
@@ -48,7 +41,7 @@ export class CreateForm extends Component {
                                     data='merchant'
                                     name='Merchant'
                                     func={e => { this.setState({ merchant: e.target.value }) }}
-                                    valid={validMerchant}
+                                    valid={this.isMerchantValid()}
                                 />
                             </Form.Group>
                             <Form.Group as={Col} md="2">
@@ -58,7 +51,7 @@ export class CreateForm extends Component {
                                     data='date'
                                     name='Date'
                                     func={e => { this.setState({ date: e.target.value }) }}
-                                    valid={validDate}
+                                    valid={this.isDateValid()}
                                 />
                             </Form.Group>
                             <Form.Group as={Col} md="2">
@@ -67,7 +60,7 @@ export class CreateForm extends Component {
                                     data="category"
                                     name='Category'
                                     func={e => { this.setState({ categoryId: e.target.value }) }}
-                                    valid={validCategory}
+                                    valid={this.isCategoryValid()}
                                 >
                                 </Select>
                             </Form.Group>
@@ -78,7 +71,7 @@ export class CreateForm extends Component {
                                     data='total'
                                     name='Total'
                                     func={e => { this.setState({ total: e.target.value }) }}
-                                    valid={validTotal}
+                                    valid={this.isTotalValid()}
                                 />
                             </Form.Group>
                             <Form.Group as={Col} md="2">
@@ -88,7 +81,7 @@ export class CreateForm extends Component {
                                     data='note'
                                     name='Note'
                                     func={e => { this.setState({ note: e.target.value }) }}
-                                    valid={validNote}
+                                    valid={this.isNoteValid()}
                                 />
                             </Form.Group>
                             <Form.Group as={Col} md="2">
@@ -105,6 +98,7 @@ export class CreateForm extends Component {
         )
     }
 
+    // Lifecycle methods.
     componentDidMount() {
         authService
             .getUser()
@@ -115,22 +109,7 @@ export class CreateForm extends Component {
             });
     }    
 
-    clearInputs = () => {
-        this.merchant.clear();
-        this.note.clear();
-        this.total.clear();
-        this.date.clear();
-        this.category.clear();
-    }
-
-    fillFields = () => {
-        this.merchant.fill(this.state.merchant);
-        this.note.fill(this.state.note);
-        this.total.fill(this.state.total);
-        this.date.fill(this.state.date);
-        this.category.fill(this.state.categoryId);
-    }
-
+    // State change methods.
     fillInputs = id => {
         getIncome(id)
             .then(income => {
@@ -153,7 +132,7 @@ export class CreateForm extends Component {
                     this.resetState();
                     this.props.refresh();
                     notify("Successfuly create an Income!");
-                }    
+                }
             });
     }
 
@@ -196,6 +175,23 @@ export class CreateForm extends Component {
         });
     }
 
+    // Helper methods.
+    clearInputs = () => {
+        this.merchant.clear();
+        this.note.clear();
+        this.total.clear();
+        this.date.clear();
+        this.category.clear();
+    }
+
+    fillFields = () => {
+        this.merchant.fill(this.state.merchant);
+        this.note.fill(this.state.note);
+        this.total.fill(this.state.total);
+        this.date.fill(this.state.date);
+        this.category.fill(this.state.categoryId);
+    }
+
     getPayload = () => {
         let payload = {
             merchant: this.state.merchant,
@@ -214,4 +210,11 @@ export class CreateForm extends Component {
         this.clearInputs();
         this.resetState();
     }
+
+    // Validation methods.
+    isMerchantValid = () => this.state.merchant.length <= 50;
+    isDateValid = () => isValid(parseISO(this.state.date));
+    isCategoryValid = () => this.state.categoryId !== "";
+    isTotalValid = () => this.state.total >= 0.01;
+    isNoteValid = () => this.state.note.length <= 200;
 }

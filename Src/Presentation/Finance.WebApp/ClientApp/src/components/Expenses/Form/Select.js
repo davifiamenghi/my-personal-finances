@@ -12,10 +12,6 @@ export class Select extends Component {
         }
     }
 
-    componentDidMount() {
-        this.getExpenseCategories();
-    }
-
     render() {
         return (
             <Form.Control as="select"
@@ -34,18 +30,24 @@ export class Select extends Component {
         )
     }
 
-    clear() {
+    // Lifecycle methods.
+    componentDidMount() {
+        this.getExpenseCategories();
+    }
 
+    // State change methods.
+    getExpenseCategories = () => {
+        getAllExpenseCategories()
+            .then(data => this.setState({ options: data.categories }))
+            .catch(err => console.log(err));
+    }
+
+    // Helper methods.
+    clear() {
         this.option.value = "";
     }
 
     fill(id) {
         this.option.value = id;
-    }
-
-    getExpenseCategories = () => {
-        getAllExpenseCategories()
-            .then(data => this.setState({ options: data.categories }))
-            .catch(err => console.log(err));
     }
 }

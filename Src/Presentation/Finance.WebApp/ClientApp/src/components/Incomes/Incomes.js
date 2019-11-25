@@ -69,6 +69,21 @@ export class Incomes extends Component {
     }
 
     // State change methods.
+    populateIncomesData = () => {
+        let isValidMonthAndYear = this.validateMonthAndYear();
+
+        if (isValidMonthAndYear) {
+            getAllIncomes(this.state.month, this.state.year)
+                .then(data => {
+                    if (data.errors) {
+                        collectCashflowFilterErrors(data.errors);
+                        return;
+                    }
+                    this.setState({ incomes: data, loading: false })
+                });
+        }
+    }
+
     onMonthChange = (event) => {
         this.setState({
             month: event.target.value
@@ -85,21 +100,6 @@ export class Incomes extends Component {
         this.setState({
             incomeId: id
         });
-    }
-
-    populateIncomesData = () => {
-        let isValidMonthAndYear = this.validateMonthAndYear();
-
-        if (isValidMonthAndYear) {
-            getAllIncomes(this.state.month, this.state.year)
-                .then(data => {
-                    if (data.errors) {
-                        collectCashflowFilterErrors(data.errors);
-                        return;
-                    }
-                    this.setState({ incomes: data, loading: false })
-                });
-        }        
     }
 
     // Validation methods.

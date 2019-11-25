@@ -69,6 +69,21 @@ export class Expenses extends Component {
     }
 
     // State change methods.
+    populateExpensesData = () => {
+        let isValidMonthAndYear = this.validateMonthAndYear();
+
+        if (isValidMonthAndYear) {
+            getAllExpenses(this.state.month, this.state.year)
+                .then(data => {
+                    if (data.errors) {
+                        collectCashflowFilterErrors(data.errors);
+                        return;
+                    }
+                    this.setState({ expenses: data, loading: false })
+                });
+        }
+    }
+
     onMonthChange = (event) => {
         this.setState({
             month: event.target.value
@@ -85,21 +100,6 @@ export class Expenses extends Component {
         this.setState({
             expenseId: id
         });
-    }
-
-    populateExpensesData = () => {
-        let isValidMonthAndYear = this.validateMonthAndYear();
-
-        if (isValidMonthAndYear) {
-            getAllExpenses(this.state.month, this.state.year)
-                .then(data => {
-                    if (data.errors) {
-                        collectCashflowFilterErrors(data.errors);
-                        return;
-                    }
-                    this.setState({ expenses: data, loading: false })
-                });
-        }
     }
 
     // Validation methods.

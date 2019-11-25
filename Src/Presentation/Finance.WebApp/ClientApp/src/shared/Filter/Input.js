@@ -11,6 +11,7 @@ export class Input extends Component {
                 onChange={this.props.timeChange}
                 placeholder={this.props.placeholder}
                 style={{ border: this.props.validate ? '1px solid #0062cc' : '1px solid red' }}
+                autoComplete="off"
             />
         )
     }

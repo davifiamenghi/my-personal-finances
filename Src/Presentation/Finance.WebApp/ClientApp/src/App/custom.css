@@ -1,24 +1,22 @@
 /* Provide sufficient contrast against white background */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
 body {
     font-family: 'Open Sans', sans-serif;
 }
 
-h1, h2, h3, h4, h5, th, button {
-    font-family: 'Oswald', sans-serif;
-}
-
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 code {
-  color: #E01A76;
+    color: #E01A76;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .form-group, .form-row {
@@ -40,7 +38,7 @@ code {
 }
 
 .action {
-    padding: 6px 21px 4px 21px;
+    padding: 7px 21px 5px 21px;
 }
 
 .firstColumn {
@@ -64,10 +62,51 @@ code {
     border-radius: 0px;
 }
 
+label {
+    font-weight: bold;
+}
+
 .flowEditDelete {
     width: 35%;
 }
 
 .react-confirm-alert-overlay {
     background: rgba(255, 255, 255, 0.4);
+}
+
+.react-confirm-alert-button-group > button:first-child:hover {
+    background: #C82333;
+}
+
+.react-confirm-alert-button-group > button:last-child:hover {
+    background: #0069D9;
+}
+
+.css-an1o9t, [data-css-an1o9t] {
+    font-weight: bold;
+    color: white;
+    font-size: 16px;
+}
+
+.Toastify__toast--default {
+    background: #343A40;
+    color: #aaa;
+}
+
+.Toastify__close-button--default {
+    color: white;
+}
+
+.categoryInput {
+    padding-left: 15px !important;
+}
+
+.cancel {
+    margin-left: 5px;
+    background-color: #343A40;
+    color: white;
+}
+
+.cancel:hover {
+    background-color: #292F34;
 }

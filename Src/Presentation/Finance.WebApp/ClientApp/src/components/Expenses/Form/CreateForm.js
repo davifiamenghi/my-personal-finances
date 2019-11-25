@@ -3,9 +3,9 @@ import { Input } from '../../../shared/Form/Input';
 import { SubmitButton } from '../../../shared/Form/SubmitButton';
 import { Select } from './Select';
 import authService from '../../api-authorization/AuthorizeService';
-import { getIncome } from '../../../services/income-service';
-import { createIncome } from '../../../services/income-service';
-import { updateIncome } from '../../../services/income-service';
+import { getExpense } from '../../../services/expense-service';
+import { createExpense } from '../../../services/expense-service';
+import { updateExpense } from '../../../services/expense-service';
 import { isValid, parseISO } from 'date-fns';
 import { collectCashflowErrors } from '../../../services/error-service';
 import { notify } from '../../../services/error-service';
@@ -101,7 +101,7 @@ export class CreateForm extends Component {
                         </Form.Row>
                     </Form>
                 </Row>
-            </Container>            
+            </Container>
         )
     }
 
@@ -113,7 +113,7 @@ export class CreateForm extends Component {
                     userId: user.sub
                 });
             });
-    }    
+    }
 
     clearInputs = () => {
         this.merchant.clear();
@@ -132,9 +132,9 @@ export class CreateForm extends Component {
     }
 
     fillInputs = id => {
-        getIncome(id)
-            .then(income => {
-                this.updateState(income);
+        getExpense(id)
+            .then(expense => {
+                this.updateState(expense);
                 this.fillFields();
                 this.setState({ isCreate: false });
             });
@@ -144,7 +144,7 @@ export class CreateForm extends Component {
         event.preventDefault();
         let payload = this.getPayload();
 
-        createIncome(payload)
+        createExpense(payload)
             .then((res) => {
                 if (res) {
                     collectCashflowErrors(res.errors);
@@ -152,8 +152,8 @@ export class CreateForm extends Component {
                 } else {
                     this.resetState();
                     this.props.refresh();
-                    notify("Successfuly create an Income!");
-                }    
+                    notify("Successfuly create an Expense!");
+                }
             });
     }
 
@@ -161,7 +161,7 @@ export class CreateForm extends Component {
         event.preventDefault();
         let payload = this.getPayload();
 
-        updateIncome(payload)
+        updateExpense(payload)
             .then((res) => {
                 if (res) {
                     collectCashflowErrors(res.errors);
@@ -169,7 +169,7 @@ export class CreateForm extends Component {
                 } else {
                     this.resetState();
                     this.props.refresh();
-                    notify("Successfuly update an Income!");
+                    notify("Successfuly update an Expense!");
                 }
             });
     }
@@ -185,13 +185,13 @@ export class CreateForm extends Component {
         });
     }
 
-    updateState = income => {
+    updateState = expense => {
         this.setState({
-            merchant: income.merchant,
-            date: income.date,
-            total: income.total,
-            categoryId: income.categoryId,
-            note: income.note,
+            merchant: expense.merchant,
+            date: expense.date,
+            total: expense.total,
+            categoryId: expense.categoryId,
+            note: expense.note,
             isCreate: false
         });
     }
@@ -204,7 +204,7 @@ export class CreateForm extends Component {
             categoryId: this.state.categoryId,
             note: this.state.note,
             userId: this.state.userId,
-            id: this.props.incomeId
+            id: this.props.expenseId
         }
 
         return payload;

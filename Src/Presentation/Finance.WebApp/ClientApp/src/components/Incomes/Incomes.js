@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+﻿import React, { Component, Fragment } from 'react';
 import { Filter } from '../../shared/Filter/Filter';
 import { CreateForm } from './Form/CreateForm';
 import { Table } from './Table/Table';
@@ -37,7 +37,7 @@ export class Incomes extends Component {
 
     renderIncomesTable(data) {
         return (
-            <div>
+            <Fragment>
                 <h2>Monthly Incomes</h2>
                 <br />
                 <p className="reference">* When you update income, if you do not chose a date, the Income will be updated with the same date.</p>
@@ -52,18 +52,18 @@ export class Incomes extends Component {
 
                 <CreateForm
                     refresh={this.populateIncomesData}
-                    ref={instance => { this.fillInputs = instance; }}
+                    ref={instance => { this.createForm = instance; }}
                     incomeId={this.state.incomeId}
                 />
 
                 <Table
                     incomeIdChange={this.onIncomeIdChange}
-                    editIncome={() => this.fillInputs.fillInputs(this.state.incomeId)}
+                    editIncome={() => this.createForm.fillInputs(this.state.incomeId)}
+                    reset={() => this.createForm.cancel()}
                     refresh={this.populateIncomesData}
                     data={data}
                 />
-
-            </div>
+            </Fragment>
         );
     }
 

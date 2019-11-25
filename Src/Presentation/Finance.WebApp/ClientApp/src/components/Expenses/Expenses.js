@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Filter } from '../../shared/Filter/Filter';
 import { CreateForm } from './Form/CreateForm';
-import { Table } from './Table/Table';
+import { TableExpenses } from './Table/TableExpenses';
 import { getAllExpenses } from '../../services/expense-service';
 import { notify } from '../../services/error-service';
 import { collectCashflowFilterErrors } from '../../services/error-service';
@@ -31,10 +31,6 @@ export class Expenses extends Component {
         );
     }
 
-    componentDidMount() {
-        this.populateExpensesData();
-    }
-
     renderExpensesTable(data) {
         return (
             <Fragment>
@@ -56,7 +52,7 @@ export class Expenses extends Component {
                     expenseId={this.state.expenseId}
                 />
 
-                <Table
+                <TableExpenses
                     expenseIdChange={this.onExpenseIdChange}
                     editExpense={() => this.createForm.fillInputs(this.state.expenseId)}
                     reset={() => this.createForm.cancel()}
@@ -67,6 +63,12 @@ export class Expenses extends Component {
         );
     }
 
+    // Lifecycle methods.
+    componentDidMount() {
+        this.populateExpensesData();
+    }
+
+    // State change methods.
     onMonthChange = (event) => {
         this.setState({
             month: event.target.value
@@ -100,6 +102,7 @@ export class Expenses extends Component {
         }
     }
 
+    // Validation methods.
     validateMonthAndYear = () => {
         let isValidMonth = this.state.month >= 1 && this.state.month <= 12;
         let isValidYear = this.state.year >= 1 && this.state.year <= 9999;

@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 export class SubmitButton extends Component {
     render() {
         return (
-            <Button type="submit" variant={`${this.getColor()} action`} onClick={this.props.clearInputs}>{this.getText()}</Button>
+            <Button type="submit" variant={`${this.getColor()}`} onClick={this.props.clearInputs}>{this.getText()}</Button>
         )
     }   
 

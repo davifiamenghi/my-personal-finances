@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Filter } from '../../shared/Filter/Filter';
-import { Form } from './Form/Form';
+import { CreateForm } from './Form/CreateForm';
 import { Table } from './Table/Table';
 import { getAllExpenses } from '../../services/expense-service';
 import { notify } from '../../services/error-service';
@@ -10,11 +10,11 @@ export class Expenses extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {            
+        this.state = {
             month: new Date().getMonth() + 1,
             year: new Date().getFullYear(),
             expenses: [],
-            loading: true, 
+            loading: true,
             expenseId: ''
         };
     }
@@ -32,15 +32,15 @@ export class Expenses extends Component {
     }
 
     componentDidMount() {
-        this.populateExpensesData();        
+        this.populateExpensesData();
     }
 
     renderExpensesTable(data) {
         return (
-            <div>
+            <Fragment>
                 <h2>Monthly Expenses</h2>
                 <br />
-                <p className="reference">* When you update expense, if you do not chose a date, the expense will be updated with the same date.</p>
+                <p className="reference">* When you update expense, if you do not chose a date, the Expense will be updated with the same date.</p>
                 <Filter
                     ref='filter'
                     monthChange={this.onMonthChange}
@@ -50,20 +50,20 @@ export class Expenses extends Component {
                     year={this.state.year}
                 />
 
-                <Form
+                <CreateForm
                     refresh={this.populateExpensesData}
-                    ref={instance => { this.fillInputs = instance; }}
+                    ref={instance => { this.createForm = instance; }}
                     expenseId={this.state.expenseId}
                 />
 
                 <Table
                     expenseIdChange={this.onExpenseIdChange}
-                    editExpense={() => this.fillInputs.fillInputs(this.state.expenseId)}
+                    editExpense={() => this.createForm.fillInputs(this.state.expenseId)}
+                    reset={() => this.createForm.cancel()}
                     refresh={this.populateExpensesData}
                     data={data}
                 />
-                
-            </div>
+            </Fragment>
         );
     }
 
@@ -93,13 +93,12 @@ export class Expenses extends Component {
                 .then(data => {
                     if (data.errors) {
                         collectCashflowFilterErrors(data.errors);
-                        console.log(data);
                         return;
                     }
                     this.setState({ expenses: data, loading: false })
                 });
-        }        
-    }    
+        }
+    }
 
     validateMonthAndYear = () => {
         let isValidMonth = this.state.month >= 1 && this.state.month <= 12;

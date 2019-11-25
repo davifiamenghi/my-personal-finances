@@ -26,7 +26,9 @@ export class Table extends Component {
                             income={income}
                             incomeIdChange={this.props.incomeIdChange}
                             editIncome={this.props.editIncome}
-                            deleteIncome={this.delete} />                        
+                            deleteIncome={this.delete}
+                            reset={this.props.reset}
+                        />                        
                     )}
                 </tbody>
             </table>
@@ -42,7 +44,8 @@ export class Table extends Component {
                     label: 'Yes',
                     onClick: () => deleteIncome(id)
                                     .then(() => {
-                                        this.props.refresh()
+                                        this.props.refresh();
+                                        this.props.reset();
                                         notify("Successfully delete an Income!");
                                     })
                 },

@@ -12,6 +12,7 @@ export class Filter extends Component {
                 <br />
                 <Row>                    
                     <Form.Group as={Col} md="2">
+                        <Form.Label>Month:</Form.Label>
                         <Input
                             ref={month => this.month = month}
                             name="Month"
@@ -21,6 +22,7 @@ export class Filter extends Component {
                         />
                     </Form.Group>
                     <Form.Group as={Col} md="2">
+                        <Form.Label>Year:</Form.Label>
                         <Input
                             ref={year => this.year = year}
                             name="Year"
@@ -30,7 +32,8 @@ export class Filter extends Component {
                         />
                     </Form.Group>
                     <Form.Group as={Col} md="2">
-                        <Button variant="primary" onClick={this.props.refresh}>Get Cashflows</Button>
+                        <Form.Label style={{ color: '#FFF' }}>Action:</Form.Label>
+                        <Button variant="primary action" onClick={this.props.refresh}>Get Cashflows</Button>
                     </Form.Group>                    
                 </Row>
                 <br />

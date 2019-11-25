@@ -55,6 +55,5 @@ export class TableExpenses extends Component {
                 }
             ]
         })
-
     }
 }

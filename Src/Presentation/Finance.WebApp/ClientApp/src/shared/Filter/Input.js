@@ -1,12 +1,12 @@
-﻿import React, { Component } from 'react'
+﻿import React, { Component } from 'react';
+import { Form } from 'react-bootstrap';
 
 export class Input extends Component {
 
     render() {
         return (
-            <input
+            <Form.Control
                 ref={input => this.input = input}
-                className="form-control"
                 name={this.props.name}
                 onChange={this.props.timeChange}
                 placeholder={this.props.placeholder}

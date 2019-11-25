@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { getAllIncomeCategories } from '../../../services/incomeCategory-service';
+import { Form } from 'react-bootstrap';
 
 export class Select extends Component {
     constructor() {
@@ -17,21 +18,19 @@ export class Select extends Component {
 
     render() {
         return (
-            <div className="form-group">
-                <select
-                    defaultValue={this.state.selectedValue}
-                    ref={option => this.option = option}
-                    className="form-control col-md-12"
-                    onChange={(e) => this.props.func(e)}
-                    id={this.props.data}
-                    name={this.props.data}
-                    style={{ border: this.props.valid ? '1px solid #0062cc' : '1px solid red' }}
-                >
-                    <option value="" key="0" disabled>Select Category</option>
-                    {this.state.options.map(option =>
-                        <option key={option.id} value={option.id}>{option.name}</option>)}
-                </select>
-            </div>
+            <Form.Control as="select"
+                defaultValue={this.state.selectedValue}
+                ref={option => this.option = option}
+                className="form-control col-md-12"
+                onChange={(e) => this.props.func(e)}
+                id={this.props.data}
+                name={this.props.data}
+                style={{ border: this.props.valid ? '1px solid #0062cc' : '1px solid red' }}
+            >
+                <option value="" key="0" disabled>Select Category</option>
+                {this.state.options.map(option =>
+                    <option key={option.id} value={option.id}>{option.name}</option>)}
+            </Form.Control>
         )
     }
 

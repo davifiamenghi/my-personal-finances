@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Filter } from '../../shared/Filter/Filter';
-import { Form } from './Form/Form';
+import { CreateForm } from './Form/CreateForm';
 import { Table } from './Table/Table';
 import { getAllIncomes } from '../../services/income-service';
 import { notify } from '../../services/error-service';
@@ -50,7 +50,7 @@ export class Incomes extends Component {
                     year={this.state.year}
                 />
 
-                <Form
+                <CreateForm
                     refresh={this.populateIncomesData}
                     ref={instance => { this.fillInputs = instance; }}
                     incomeId={this.state.incomeId}

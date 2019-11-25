@@ -1,18 +1,14 @@
 ﻿import React, { Component } from 'react'
-
+import { Form } from 'react-bootstrap';
 
 export class Input extends Component {
 
     render() {
-        return (
-            <div className="form-row">
-                    {this.getInput()}
-            </div>
-        )
+        return (this.getInput())
     }
 
     clear() {
-        this.input.value = '';       
+        this.input.value = '';
     }
 
     fill(value) {
@@ -23,11 +19,10 @@ export class Input extends Component {
     getInput = () => {
         if (this.props.type === 'number') {
             return (
-                <input
+                <Form.Control
                     ref={input => this.input = input}
                     min="1"
                     step="0.01"
-                    className="form-control col-md-12"
                     onChange={(e) => this.props.func(e)}
                     id={this.props.data}
                     name={this.props.data}
@@ -38,9 +33,8 @@ export class Input extends Component {
             )
         } else if (this.props.name === 'date') {
             return (
-                <input
+                <Form.Control
                     ref={input => this.input = input}
-                    className="form-control col-md-12"
                     onChange={(e) => this.props.func(e)}
                     id={this.props.data}
                     name={this.props.data}
@@ -50,9 +44,8 @@ export class Input extends Component {
             )
         } else {
             return (
-                <input
+                <Form.Control
                     ref={input => this.input = input}
-                    className="form-control col-md-12"
                     onChange={(e) => this.props.func(e)}
                     id={this.props.data}
                     name={this.props.data}

@@ -1,5 +1,6 @@
-﻿import React, { Component, Fragment } from 'react';
+﻿import React, { Component } from 'react';
 import { Input } from '../Filter/Input';
+import { Container, Row, Form, Col, Button } from 'react-bootstrap';
 
 export class Filter extends Component {
     render() {
@@ -7,10 +8,10 @@ export class Filter extends Component {
         let validateYear = this.props.year >= 1 && this.props.year <= 9999;
 
         return (
-            <Fragment>
+            <Container>
                 <br />
-                <div className="form-row">
-                    <div className="col-md-2">
+                <Row>                    
+                    <Form.Group as={Col} md="2">
                         <Input
                             ref={month => this.month = month}
                             name="Month"
@@ -18,8 +19,8 @@ export class Filter extends Component {
                             placeholder={this.props.month}
                             validate={validateMonth}
                         />
-                    </div>
-                    <div className="col-md-2">
+                    </Form.Group>
+                    <Form.Group as={Col} md="2">
                         <Input
                             ref={year => this.year = year}
                             name="Year"
@@ -27,11 +28,14 @@ export class Filter extends Component {
                             placeholder={this.props.year}
                             validate={validateYear}
                         />
-                    </div>
-                    <button className="btn btn-primary" onClick={this.props.refresh}>Get Cashflows</button>
-                </div>
+                    </Form.Group>
+                    <Form.Group as={Col} md="2">
+                        <Button variant="primary" onClick={this.props.refresh}>Get Cashflows</Button>
+                    </Form.Group>                    
+                </Row>
                 <br />
-            </Fragment>
+            </Container>
+
         )
     }
 

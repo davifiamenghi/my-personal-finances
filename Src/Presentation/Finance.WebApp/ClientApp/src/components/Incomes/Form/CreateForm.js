@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Input } from './Input';
-import { Button } from './Button';
+import { SubmitButton } from './SubmitButton';
 import { Select } from './Select';
 import authService from '../../api-authorization/AuthorizeService';
 import { getIncome } from '../../../services/income-service';
@@ -9,8 +9,10 @@ import { updateIncome } from '../../../services/income-service';
 import { isValid, parseISO } from 'date-fns';
 import { collectCashflowErrors } from '../../../services/error-service';
 import { notify } from '../../../services/error-service';
+import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 
-export class Form extends Component {
+
+export class CreateForm extends Component {
     constructor() {
         super()
 
@@ -35,68 +37,70 @@ export class Form extends Component {
         let validTotal = this.state.total >= 0.01;
 
         return (
-            <div className="container">
-                <div className="row">                   
-                    <form onSubmit={this.state.isCreate ? this.create : this.update} className="form-row">
-                        <div className="col-md-2">
-                            <Input
-                                ref={merchant => this.merchant = merchant}
-                                type='text'
-                                data='merchant'
-                                name='Merchant'
-                                func={e => { this.setState({ merchant: e.target.value }) }}
-                                valid={validMerchant}
-                            />
-                        </div>
-                        <div className="col-md-2">
-                            <Input
-                                ref={date => this.date = date}
-                                type='date'
-                                data='date'
-                                name='Date'
-                                func={e => { this.setState({ date: e.target.value }) }}
-                                valid={validDate}
-                            />
-                        </div>
-                        <div className="col-md-2">
-                            <Select
-                                ref={category => this.category = category}
-                                data="category"
-                                name='Category'
-                                func={e => { this.setState({ categoryId: e.target.value }) }}
-                                valid={validCategory}
-                            >
-                            </Select>
-                        </div>
-                        <div className="col-md-2">
-                            <Input
-                                ref={total => this.total = total}
-                                type='number'
-                                data='total'
-                                name='Total'
-                                func={e => { this.setState({ total: e.target.value }) }}
-                                valid={validTotal}
-                            />
-                        </div>
-                        <div className="col-md-2">
-                            <Input
-                                ref={note => this.note = note}
-                                type='text'
-                                data='note'
-                                name='Note'
-                                func={e => { this.setState({ note: e.target.value }) }}
-                                valid={validNote}
-                            />
-                        </div>
-                        <div className="col-md-2">
-                            <Button
-                                clearInputs={this.clearInputs}
-                                isCreate={this.state.isCreate}
-                            />
-                        </div>
-                    </form>
-                </div>
-            </div>            
+            <Container>
+                <Row>
+                    <Form onSubmit={this.state.isCreate ? this.create : this.update}>
+                        <Form.Row>
+                            <Form.Group as={Col} md="2">
+                                <Input
+                                    ref={merchant => this.merchant = merchant}
+                                    type='text'
+                                    data='merchant'
+                                    name='Merchant'
+                                    func={e => { this.setState({ merchant: e.target.value }) }}
+                                    valid={validMerchant}
+                                />
+                            </Form.Group>
+                            <Form.Group as={Col} md="2">
+                                <Input
+                                    ref={date => this.date = date}
+                                    type='date'
+                                    data='date'
+                                    name='Date'
+                                    func={e => { this.setState({ date: e.target.value }) }}
+                                    valid={validDate}
+                                />
+                            </Form.Group>
+                            <Form.Group as={Col} md="2">
+                                <Select
+                                    ref={category => this.category = category}
+                                    data="category"
+                                    name='Category'
+                                    func={e => { this.setState({ categoryId: e.target.value }) }}
+                                    valid={validCategory}
+                                >
+                                </Select>
+                            </Form.Group>
+                            <Form.Group as={Col} md="2">
+                                <Input
+                                    ref={total => this.total = total}
+                                    type='number'
+                                    data='total'
+                                    name='Total'
+                                    func={e => { this.setState({ total: e.target.value }) }}
+                                    valid={validTotal}
+                                />
+                            </Form.Group>
+                            <Form.Group as={Col} md="2">
+                                <Input
+                                    ref={note => this.note = note}
+                                    type='text'
+                                    data='note'
+                                    name='Note'
+                                    func={e => { this.setState({ note: e.target.value }) }}
+                                    valid={validNote}
+                                />
+                            </Form.Group>
+                            <Form.Group as={Col} md="1">
+                                <SubmitButton
+                                    clearInputs={this.clearInputs}
+                                    isCreate={this.state.isCreate}
+                                />
+                            </Form.Group>
+                        </Form.Row>
+                    </Form>
+                </Row>
+            </Container>            
         )
     }
 

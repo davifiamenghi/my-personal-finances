@@ -1,14 +1,15 @@
 ﻿import React, { Component } from 'react';
-import { TableRow } from '../Table/TableRow';
+import { TableRow } from './TableRow';
 import { deleteIncome } from '../../../services/income-service';
 import { notify } from '../../../services/error-service';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
+import { Table } from 'react-bootstrap';
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
-export class Table extends Component {
+export class TableIncomes extends Component {
     render() {
         return (
-            <table className='table table-striped' aria-labelledby="tabelLabel">
+            <Table striped hover responsive="sm">
                 <thead className='thead-dark'>
                     <tr className="centered">
                         <th>Merchat</th>
@@ -31,7 +32,7 @@ export class Table extends Component {
                         />                        
                     )}
                 </tbody>
-            </table>
+            </Table>
         )
     }
 

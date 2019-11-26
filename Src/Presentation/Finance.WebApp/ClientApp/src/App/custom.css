@@ -29,7 +29,7 @@ code {
     margin: 0;
 }
 
-.last-row {
+.totals-row {
     font-weight: bold;
 }
 
@@ -79,7 +79,7 @@ label {
 }
 
 .react-confirm-alert-button-group > button:last-child:hover {
-    background: #0069D9;
+    background: #218838;
 }
 
 .css-an1o9t, [data-css-an1o9t] {
@@ -110,3 +110,51 @@ label {
 .cancel:hover {
     background-color: #292F34;
 }
+
+.slider {
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.carousel-caption {
+    bottom: 250px;
+}
+
+/*header, footer {
+    color: white;
+    background: #343A40;
+}*/
+
+.navbar {
+    padding: 1.5rem 1rem;
+}
+
+footer {
+    margin-top: 100px;
+}
+
+.mb-3, .my-3 {
+    margin-bottom: 0 !important;
+}
+
+.home-info {
+    margin: 80px 0;
+    padding: 20px 15px;    
+    text-align: center;
+}
+
+.home-info h3 {
+    font-weight: bold;
+}
+
+.home-info a {
+    color: white;
+}
+
+.home-info container {
+    border: 1px solid #343A40;
+}
+
+/*.text-dark {
+    color: white !important;
+}*/

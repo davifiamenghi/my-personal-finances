@@ -13,6 +13,6 @@ export class SubmitButton extends Component {
     }
 
     getColor = () => {
-        return this.props.isCreate ? "primary" : "info"
+        return this.props.isCreate ? "primary" : "success"
     }
 }

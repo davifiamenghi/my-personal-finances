@@ -1,7 +1,6 @@
 ﻿import React, { Component, Fragment } from 'react';
 import { Filter } from '../../shared/Filter/Filter';
 import { TableReport } from './Table/TableReport';
-import { TableNetflows} from './Table/TableNetflows';
 import { getExpensesByCategory } from '../../services/expenseCategory-service';
 import { getIncomesByCategory } from '../../services/incomeCategory-service';
 import { notify } from '../../services/error-service';
@@ -50,30 +49,28 @@ export class Report extends Component {
 
                 <h4>Monthly Incomes</h4>
                 <TableReport
+                    rowKey={11}
                     refresh={this.populateIncomesData}
                     flows={incomes}
                     totals={totalIncomes}
-                />
-                <br />
-
-                <TableNetflows
                     netflow={(this.state.totalIncomes * this.state.payToYourself).toFixed(2)}
-                    label="Pay To Yourselef First"
-                    number={6} />
+                    label="Pay To Yourself First"
+                    number={6}
+                    styleRow="table-warning"
+                />
                 <br />
 
                 <h4>Monthly Expenses</h4>
                 <TableReport
+                    rowKey={12}
                     refresh={this.populateExpensesData}
                     flows={expenses}
                     totals={totalExpenses}
-                />
-                <br />
-
-                <TableNetflows
                     netflow={(this.state.totalIncomes - (this.state.totalIncomes * this.state.payToYourself) - this.state.totalExpenses).toFixed(2)}
                     label="Net Cashflow"
-                    number={10} />
+                    number={10}
+                    styleRow={(this.state.totalIncomes - (this.state.totalIncomes * this.state.payToYourself) - this.state.totalExpenses) < 0 ? "table-danger" : "table-success"}
+                />
 
             </Fragment>
         );

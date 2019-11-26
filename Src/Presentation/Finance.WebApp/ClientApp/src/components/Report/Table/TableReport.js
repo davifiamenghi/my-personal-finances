@@ -23,11 +23,16 @@ export class TableReport extends Component {
                             totals={this.props.totals}
                         />                        
                     )}
-                    <tr key={10} className="table-success last-row">                        
+                    <tr key={this.props.rowKey} className="table-primary totals-row">                        
                         <td colSpan="2">Total</td>
                         <td>{(this.props.totals).toFixed(2)} lv.</td>
                         <td>{total.toFixed(2)}%</td>
                     </tr>
+                    <tr key={this.props.number} className={this.props.styleRow + " totals-row"}>
+                        <td>{this.props.label}</td>
+                        <td>{this.props.number}</td>
+                        <td colSpan="2">{this.props.netflow} lv.</td>
+                    </tr>                    
                 </tbody>
             </Table>
         )

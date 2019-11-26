@@ -38,6 +38,7 @@
   <ItemGroup>
     <None Remove="ClientApp\src\components\Incomes\Form\Form.js~RF4172d26.TMP" />
     <None Remove="ClientApp\src\components\Incomes\Form\Form.js~RF425f61f.TMP" />
+    <None Remove="ClientApp\src\components\Report\Report.js~RFe1904df.TMP" />
   </ItemGroup>
 
   <ItemGroup>

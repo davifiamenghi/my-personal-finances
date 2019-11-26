@@ -1,6 +1,7 @@
-﻿import React, { Component } from 'react';
+﻿import React, { Component, Fragment } from 'react';
 import { Filter } from '../../shared/Filter/Filter';
-import { Table } from './Table/Table';
+import { TableReport } from './Table/TableReport';
+import { TableNetflows} from './Table/TableNetflows';
 import { getExpensesByCategory } from '../../services/expenseCategory-service';
 import { getIncomesByCategory } from '../../services/incomeCategory-service';
 import { notify } from '../../services/error-service';
@@ -33,13 +34,9 @@ export class Report extends Component {
         );
     }
 
-    componentDidMount() {
-        this.populateData();
-    }
-
     renderExpensesTable(expenses, totalExpenses, incomes, totalIncomes) {
         return (
-            <div>
+            <Fragment>
                 <h2>Monthly Report</h2>
 
                 <Filter
@@ -52,54 +49,42 @@ export class Report extends Component {
                 />
 
                 <h4>Monthly Incomes</h4>
-                <Table
+                <TableReport
                     refresh={this.populateIncomesData}
                     flows={incomes}
                     totals={totalIncomes}
                 />
                 <br />
-                <table className='table table-bordered table-warning table-sm' aria-labelledby="tabelLabel">
-                    <tbody>
-                        <tr className="last-row">
-                            <td className="firstColumn">Pay to Yourself</td>
-                            <td className="secondColumn">6</td>
-                            <td>{(this.state.totalIncomes * this.state.payToYourself).toFixed(2)} lv.</td>
-                        </tr>
-                    </tbody>
-                </table>
+
+                <TableNetflows
+                    netflow={(this.state.totalIncomes * this.state.payToYourself).toFixed(2)}
+                    label="Pay To Yourselef First"
+                    number={6} />
                 <br />
+
                 <h4>Monthly Expenses</h4>
-                <Table
+                <TableReport
                     refresh={this.populateExpensesData}
                     flows={expenses}
                     totals={totalExpenses}
                 />
                 <br />
-                <table className='table table-bordered table-danger table-sm' aria-labelledby="tabelLabel">
-                    <tbody>
-                        <tr className="last-row">
-                            <td className="firstColumn">Net Cashflow</td>
-                            <td className="secondColumn">10</td>
-                            <td colSpan="2">{(this.state.totalIncomes - (this.state.totalIncomes * this.state.payToYourself) - this.state.totalExpenses).toFixed(2)} lv.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+
+                <TableNetflows
+                    netflow={(this.state.totalIncomes - (this.state.totalIncomes * this.state.payToYourself) - this.state.totalExpenses).toFixed(2)}
+                    label="Net Cashflow"
+                    number={10} />
+
+            </Fragment>
         );
     }
 
-    onMonthChange = (event) => {
-        this.setState({
-            month: event.target.value
-        });
+    // Lifecycle methods.
+    componentDidMount() {
+        this.populateData();
     }
 
-    onYearChange = (event) => {
-        this.setState({
-            year: event.target.value
-        });
-    }
-
+    // State change methods.
     populateData = () => {
         let isValidMonthAndYear = this.validateMonthAndYear();
 
@@ -126,6 +111,19 @@ export class Report extends Component {
         }
     }
 
+    onMonthChange = (event) => {
+        this.setState({
+            month: event.target.value
+        });
+    }
+
+    onYearChange = (event) => {
+        this.setState({
+            year: event.target.value
+        });
+    }
+
+    // Validation methods.
     validateMonthAndYear = () => {
         let isValidMonth = this.state.month >= 1 && this.state.month <= 12;
         let isValidYear = this.state.year >= 1 && this.state.year <= 9999;

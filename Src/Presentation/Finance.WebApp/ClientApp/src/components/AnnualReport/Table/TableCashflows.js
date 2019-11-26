@@ -1,13 +1,14 @@
 ﻿import React, { Component } from 'react';
 import { TableRow } from '../Table/TableRow';
+import { Table } from 'react-bootstrap';
 
-export class Table extends Component {
+export class TableCashflows extends Component {
     render() {
         let totalSavings = this.props.totalIncomes - this.props.totalExpenses < 0 ? 0 : this.props.totalIncomes - this.props.totalExpenses;
         let totalSavingsPer = this.props.totalIncomes === 0 ? 0 : (((this.props.totalIncomes - this.props.totalExpenses) / this.props.totalIncomes) * 100);
         
         return (
-            <table className='table table-striped table-bordered' aria-labelledby="tabelLabel">
+            <Table striped bordered hover>
                 <thead className='thead-dark'>
                     <tr>
                         <th>Month</th>
@@ -33,7 +34,7 @@ export class Table extends Component {
                         <td>{totalSavingsPer.toFixed(2)}%</td>
                     </tr>
                 </tbody>
-            </table>
+            </Table>
         )
     }
 }

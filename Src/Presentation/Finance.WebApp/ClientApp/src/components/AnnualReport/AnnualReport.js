@@ -1,6 +1,6 @@
-﻿import React, { Component } from 'react';
+﻿import React, { Component, Fragment } from 'react';
 import { Filter } from './Filter/Filter';
-import { Table } from './Table/Table';
+import { TableCashflows } from './Table/TableCashflows';
 import { getExpensesByYear } from '../../services/expense-service';
 import { getIncomesByYear } from '../../services/income-service';
 import { notify } from '../../services/error-service';
@@ -33,70 +33,70 @@ export class AnnualReport extends Component {
         );
     }
 
-    componentDidMount() {
-        this.populateData();
-    }
-
     renderExpensesTable() {
         return (
-            <div>
+            <Fragment>
                 <h2>Annual Report</h2>
-                <br />
-
                 <Filter
                     ref='filter'
                     yearChange={this.onYearChange}
                     refresh={this.populateData}
                     year={this.state.year}
+                    validate={this.isValidYear()}
                 />
-
-                <Table
+                <TableCashflows
                     cashflows={this.state.cashflows}
                     totalIncomes={this.state.totalIncomes}
                     totalExpenses={this.state.totalExpenses}
                 />
-            </div>
+            </Fragment>
         );
     }
-    
+
+    // Lifecycle methods.
+    componentDidMount() {
+        this.populateData();
+    }
+
+    // State change methods.  
+    populateData = () => {
+        let isFilterValid = this.validateYear();
+
+        if (isFilterValid) {
+            getIncomesByYear(this.state.year)
+                .then(incomes => {
+                    getExpensesByYear(this.state.year)
+                        .then(expenses => {
+                            if (incomes.errors || expenses.errors) {
+                                if (incomes.errors) collectCashflowFilterErrors(incomes.errors);
+                                if (expenses.errors) collectCashflowFilterErrors(expenses.errors);
+                                return;
+                            }
+                            this.setState({
+                                cashflows: {
+                                    incomes: incomes.incomeSums,
+                                    expenses: expenses.expenseSums,
+                                },
+                                totalIncomes: incomes.totals,
+                                totalExpenses: expenses.totals,
+                                loading: false
+                            });
+                        });
+                });
+        }
+    }
+
     onYearChange = (event) => {
         this.setState({
             year: event.target.value
         });
     }
 
-    populateData = () => {
-        let isFilterValid = this.validateYear();
-
-        if (isFilterValid) {
-            getIncomesByYear(this.state.year)
-            .then(incomes => {
-                getExpensesByYear(this.state.year)
-                    .then(expenses => {
-                        if (incomes.errors || expenses.errors) {
-                            if (incomes.errors) collectCashflowFilterErrors(incomes.errors);
-                            if (expenses.errors) collectCashflowFilterErrors(expenses.errors);
-                            return;
-                        }
-                        this.setState({
-                            cashflows: {
-                                incomes: incomes.incomeSums,
-                                expenses: expenses.expenseSums,
-                            },
-                            totalIncomes: incomes.totals,
-                            totalExpenses: expenses.totals,
-                            loading: false
-                        });
-                    });
-                });
-        }
-        
-    }
+    // Validation methods.
+    isValidYear = () => this.state.year >= 1 && this.state.year <= 9999;
 
     validateYear = () => {
-        let isValidYear = this.state.year >= 1 && this.state.year <= 9999;
-
-        if (!isValidYear) {
+        if (!this.isValidYear()) {
 
             notify("Invalid Year!");
             this.refs.filter.fillFields();

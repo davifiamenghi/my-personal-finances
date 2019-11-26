@@ -4,8 +4,6 @@ import { Container, Row, Form, Col, Button } from 'react-bootstrap';
 
 export class Filter extends Component {
     render() {
-        let validateYear = this.props.year >= 1 && this.props.year <= 9999;
-
         return (
             <Container>
                 <br />
@@ -17,7 +15,7 @@ export class Filter extends Component {
                             name="Year"
                             timeChange={this.props.yearChange}
                             placeholder={this.props.year}
-                            validate={validateYear}
+                            validate={this.props.validate}
                         />
                     </Form.Group>
                     <Form.Group as={Col} md="2">

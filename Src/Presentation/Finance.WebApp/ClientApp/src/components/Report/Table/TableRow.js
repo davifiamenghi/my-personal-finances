@@ -1,8 +1,6 @@
 ﻿import React, { Component } from 'react';
 
 export class TableRow extends Component {
-   
-
     render() {
         let savingPer = this.props.flow.sum === 0 ? 0 : ((this.props.flow.sum / this.props.totals) * 100);
         return (

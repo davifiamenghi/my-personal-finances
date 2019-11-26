@@ -1,14 +1,15 @@
 ﻿import React, { Component } from 'react';
 import { Input } from './Input';
-import { Button } from './Button';
+import { CreateButton } from './CreateButton';
 import { Select } from './Select';
+import { Form } from 'react-bootstrap';
 import authService from '../../api-authorization/AuthorizeService';
 import { createExpenseCategory } from '../../../services/expenseCategory-service';
 import { createIncomeCategory } from '../../../services/incomeCategory-service';
 import { collectCategoriesErrors } from '../../../services/error-service';
 import { notify } from '../../../services/error-service';
 
-export class Form extends Component {
+export class FormCategory extends Component {
     constructor() {
         super()
 
@@ -21,36 +22,37 @@ export class Form extends Component {
     }
 
     render() {
-        let validateName = this.state.name.length >= 1 && this.state.name.length <= 20;
-        let validateIncomeTypeId = this.state.typeId >= 1 && this.state.typeId <= 5;
-        let validateExpenseTypeId = this.state.typeId >= 7 && this.state.typeId <= 9;
-
         return (
-            <form onSubmit={this.create} className="form-group">
-                <Input
-                    ref={name => this.name = name}
-                    type='text'
-                    data='name'
-                    name='Category Name'
-                    func={e => { this.setState({ name: e.target.value }) }}
-                    validate={validateName}
-                />
-                
-                <Select
-                    ref={typeId => this.typeId = typeId}
-                    data="typeId"
-                    name='TypeId'
-                    func={e => { this.setState({ typeId: e.target.value }) }}
-                    validate={this.props.isIncome ? validateIncomeTypeId : validateExpenseTypeId}
-                    isIncome={this.props.isIncome}
-                >
-                </Select>
-                
-                <Button clearInputs={this.clearInputs} />
-            </form>
+            <Form onSubmit={this.create}>
+                <Form.Group>
+                    <Input
+                        ref={name => this.name = name}
+                        type='text'
+                        data='name'
+                        name='Category Name'
+                        func={e => { this.setState({ name: e.target.value }) }}
+                        validate={this.isValidName()}
+                    />
+                </Form.Group>
+                <Form.Group>
+                    <Select
+                        ref={typeId => this.typeId = typeId}
+                        data="typeId"
+                        name='TypeId'
+                        func={e => { this.setState({ typeId: e.target.value }) }}
+                        validate={this.isValidCashflowTypeId()}
+                        isIncome={this.props.isIncome}
+                    >
+                    </Select>
+                </Form.Group>
+                <Form.Group>
+                    <CreateButton clearInputs={this.clearInputs} />
+                </Form.Group>
+            </Form>
         )
     }
 
+    // Lifecycle methods.
     componentDidMount() {
         authService
             .getUser()
@@ -61,11 +63,7 @@ export class Form extends Component {
             });
     }
 
-    clearInputs = () => {
-        this.name.clear();
-        this.typeId.clear();
-    }
-
+    // State change methods.
     create = event => {
         event.preventDefault();
 
@@ -103,6 +101,12 @@ export class Form extends Component {
         });
     }
 
+    // Helper methods.
+    clearInputs = () => {
+        this.name.clear();
+        this.typeId.clear();
+    }    
+
     getPayload = () => {
         let payload = {
             name: this.state.name,
@@ -118,16 +122,16 @@ export class Form extends Component {
         this.typeId.fill(this.state.typeId);
     }
 
+    // Validation methods.
+    isValidName = () => this.state.name.length >= 1 && this.state.name.length <= 20;
+    isValidCashflowTypeId = () => this.props.isIncome ?
+        this.state.typeId >= 1 && this.state.typeId <= 5 : this.state.typeId >= 7 && this.state.typeId <= 9;
+
     validateNameAndType = () => {
-        let isValidName = this.state.name.length >= 1 && this.state.name.length <= 20;
+        if (!this.isValidName() || !this.isValidCashflowTypeId()) {
 
-        let isValidCashflowTypeId = this.props.isIncome ?
-            this.state.typeId >= 1 && this.state.typeId <= 5 : this.state.typeId >= 7 && this.state.typeId <= 9;
-
-        if (!isValidName || !isValidCashflowTypeId) {
-
-            if (!isValidName) notify("Name cannot be empty and logner than 20 characters!");
-            if (!isValidCashflowTypeId) notify("Please, select Cashflow Type!");
+            if (!this.isValidName()) notify("Name cannot be empty and logner than 20 characters!");
+            if (!this.isValidCashflowTypeId()) notify("Please, select Cashflow Type!");
 
             this.fillFields();
 

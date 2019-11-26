@@ -1,9 +1,10 @@
 ﻿import React, { Component } from 'react';
+import { Table } from 'react-bootstrap';
 
 export class TableCashflowTypes extends Component {
     render() {
         return (
-            <table className='table table-striped table-bordered table-sm' aria-labelledby="tabelLabel">
+            <Table striped bordered hover size="sm">
                 <thead className='thead-dark'>
                     <tr>
                         <th className='centered'>Id</th>
@@ -18,7 +19,7 @@ export class TableCashflowTypes extends Component {
                         </tr> 
                     )}
                 </tbody>
-            </table>
+            </Table>
         )
     }
 }

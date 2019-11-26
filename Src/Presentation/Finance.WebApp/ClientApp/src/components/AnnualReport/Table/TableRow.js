@@ -20,5 +20,3 @@ export class TableRow extends Component {
         )
     }
 }
-
-//let savingPer = this.props.flow.sum === 0 ? 0 : ((this.props.flow.sum / this.props.totals) * 100);

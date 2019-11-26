@@ -1,11 +1,12 @@
 ﻿import React, { Component } from 'react';
-import { TableRow } from '../Table/TableRow';
+import { TableRow } from './TableRow';
+import { Table } from 'react-bootstrap';
 
-export class Table extends Component {
+export class TableReport extends Component {
     render() {
         let total = this.props.totals === 0 ? 0 : 100;
         return (
-            <table className='table table-striped table-bordered table-sm' aria-labelledby="tabelLabel">
+            <Table striped bordered hover size="sm">
                 <thead className='thead-dark'>
                     <tr>
                         <th className="firstColumn">Category</th>
@@ -28,7 +29,7 @@ export class Table extends Component {
                         <td>{total.toFixed(2)}%</td>
                     </tr>
                 </tbody>
-            </table>
+            </Table>
         )
     }
 }

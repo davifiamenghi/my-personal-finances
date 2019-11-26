@@ -23,6 +23,7 @@
     "rimraf": "^2.6.2"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.11.2",
     "ajv": "^6.9.1",
     "cross-env": "^5.2.0",
     "eslint": "^5.12.0",

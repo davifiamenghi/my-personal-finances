@@ -30,12 +30,6 @@ export class CreateForm extends Component {
     }
 
     render() {
-        let validMerchant = this.state.merchant.length <= 50;
-        let validDate = isValid(parseISO(this.state.date));
-        let validCategory = this.state.categoryId !== "";
-        let validNote = this.state.note.length <= 200;
-        let validTotal = this.state.total >= 0.01;
-
         return (
             <Container>
                 <Row>

@@ -3,13 +3,14 @@ import { TableRow } from './TableRow';
 import { deleteExpenseCategory } from '../../../services/expenseCategory-service';
 import { deleteIncomeCategory } from '../../../services/incomeCategory-service';
 import { notify } from '../../../services/error-service';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
+import { confirmAlert } from 'react-confirm-alert'; 
+import { Table } from 'react-bootstrap';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
-export class Table extends Component {
+export class TableCategories extends Component {
     render() {
         return (
-            <table className='table table-striped table-bordered table-sm' aria-labelledby="tabelLabel">
+            <Table striped bordered hover size="sm">
                 <thead className='thead-dark'>
                     <tr>
                         <th>{this.props.isIncome ? "Income Categories" : "Expense Categories"}</th>
@@ -26,7 +27,7 @@ export class Table extends Component {
                         />
                     )}
                 </tbody>
-            </table>
+            </Table>
         )
     }
 

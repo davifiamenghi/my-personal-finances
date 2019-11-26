@@ -1,10 +1,11 @@
 ﻿import React, { Component } from 'react';
-import { Table } from './Table/Table';
-import { Form } from './Form/Form';
+import { TableCategories } from './Table/TableCategories';
+import { FormCategory } from './Form/FormCategory';
 import { TableCashflowTypes } from './Table/TableCashflowTypes';
 import { getAllExpenseCategories } from '../../services/expenseCategory-service';
 import { getAllIncomeCategories } from '../../services/incomeCategory-service';
 import { getAllCashflowTypes } from '../../services/cashflowType-service';
+import { Container, Row, Col } from 'react-bootstrap';
 
 export class Categories extends Component {
     constructor(props) {
@@ -29,64 +30,59 @@ export class Categories extends Component {
         );
     }
 
+    renderExpensesTable(expenseCategories, incomeCategories, cashflowTypes) {
+        return (
+            <Container>
+                <Row>
+                    <Col md={5}>
+                        <h2> Create Income Category</h2>
+                        <FormCategory
+                            isIncome={true}
+                            refresh={this.populateData}
+                        />
+                    </Col>
+                    <Col md={2}>
+                    </Col>
+                    <Col md={5}>
+                        <h2> Create Expense Category</h2>
+                        <FormCategory
+                            isIncome={false}
+                            refresh={this.populateData}
+                        />
+                    </Col>
+                </Row>
+                <Row className="mt-5">
+                    <Col md={4}>
+                        <TableCategories
+                            refresh={this.populateData}
+                            categories={incomeCategories}
+                            isIncome={true}
+                        />
+                    </Col>
+                    <Col md={4}>
+                        <TableCashflowTypes
+                            refresh={this.populateData}
+                            cashflowTypes={cashflowTypes}
+                        />
+                    </Col>
+                    <Col md={4}>
+                        <TableCategories
+                            refresh={this.populateData}
+                            categories={expenseCategories}
+                            isIncome={false}
+                        />
+                    </Col>
+                </Row>
+            </Container>
+        );
+    }
+
+    // Lifecycle methods.
     componentDidMount() {
         this.populateData();
     }
 
-    renderExpensesTable(expenseCategories, incomeCategories, cashflowTypes) {
-        return (
-            <div>
-                <div className="container mt-5 mb-5">
-                    <div className="row">
-                        <div className="col-md-5">
-                            <h2> Create Income Category</h2>
-                            <Form
-                                isIncome={true}
-                                refresh={this.populateData}
-                            />
-                        </div>
-                        <div className="col-md-2">
-                        </div>
-                        <div className="col-md-5">
-                            <h2> Create Expense Category</h2>
-                            <Form
-                                isIncome={false}
-                                refresh={this.populateData}
-                            />
-                        </div>
-                    </div>
-                </div>
-
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-4">
-                            <Table
-                                refresh={this.populateData}
-                                categories={incomeCategories}
-                                isIncome={true}
-                            />
-                        </div>
-
-                        <div className="col-md-4">
-                            <TableCashflowTypes
-                                refresh={this.populateData}
-                                cashflowTypes={cashflowTypes}
-                            />
-                        </div>
-
-                        <div className="col-md-4">
-                            <Table
-                                refresh={this.populateData}
-                                categories={expenseCategories}
-                                isIncome={false}
-                            />
-                        </div>                        
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
+    // State change methods.
     populateExpenseCategoriesData = () => {
         getAllExpenseCategories()
             .then(data => {
@@ -94,8 +90,7 @@ export class Categories extends Component {
                     expenseCategories: data.categories,
                     loading: false
                 })
-            })
-            .catch(err => console.log(err));
+            });
     }
 
     populateIncomeCategoriesData = () => {
@@ -105,8 +100,7 @@ export class Categories extends Component {
                     incomeCategories: data.categories,
                     loading: false
                 })
-            })
-            .catch(err => console.log(err));
+            });
     }
 
     populateCashflowsTypesData = () => {
@@ -116,10 +110,10 @@ export class Categories extends Component {
                     cashflowTypes: data.cashflowTypes,
                     loading: false
                 })
-            })
-            .catch(err => console.log(err));
+            });
     }
 
+    // Helper methods.
     populateData = () => {
         this.populateIncomeCategoriesData();
         this.populateExpenseCategoriesData();
